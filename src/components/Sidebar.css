@@ -1,0 +1,6 @@
+#sidebar {
+    flex-direction: column;
+    background-color: lightgray;
+    height: 100vh;
+    width: 300px;
+}
