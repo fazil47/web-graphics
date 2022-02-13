@@ -33,11 +33,11 @@ function App() {
   // Configure Firebase.
   const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-    authDomain: "web-graphics-137be.firebaseapp.com",
-    projectId: "web-graphics-137be",
-    storageBucket: "web-graphics-137be.appspot.com",
-    messagingSenderId: "1090133408047",
-    appId: "1:1090133408047:web:6aa83f21ac15feefb989da",
+    authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.REACT_APP_FIREBASE_APP_ID,
   };
   const firebaseApp = initializeApp(firebaseConfig);
 
