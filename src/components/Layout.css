@@ -1,4 +1,9 @@
 #layout {
   display: flex;
+  flex-direction: column;
+}
+
+#layout-horiz-content {
+  display: flex;
   flex-direction: row;
 }

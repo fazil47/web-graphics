@@ -6,6 +6,7 @@ import SidebarContent from "./SidebarContent";
 export default function Sidebar() {
   return (
     <div id="sidebar">
+      <SidebarContent path="/" name="Home" />
       <SidebarContent path="line" name="Lines" />
       <SidebarContent path="circle" name="Circles" />
       <SidebarContent path="ellipse" name="Ellipses" />
