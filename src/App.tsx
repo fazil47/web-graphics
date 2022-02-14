@@ -24,11 +24,10 @@ import Ellipses from "./components/pages/Ellipses";
 import Transformations from "./components/pages/Transformations";
 import ThreeD from "./components/pages/ThreeD";
 
+// TODO: Move Firebase stuff to a different component and use custom authentication components
 function App() {
   const [isSignedIn, setIsSignedIn] = useState(false); // Local signed-in state.
   const [isAuthenticating, setIsAuthenticating] = useState(true); // Firebase signing-in progress state.
-
-  console.log("REACT_APP_FIREBASE_API_KEY: ", process.env.REACT_APP_FIREBASE_API_KEY);
 
   // Configure Firebase.
   const firebaseConfig = {
