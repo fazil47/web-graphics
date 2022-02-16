@@ -1,29 +1,49 @@
 import React from "react";
 
-export default function Quiz(props: any) {
-  const [answered, setAnswered] = React.useState(false);
+interface QuizProps {
+  quizInfo: { options: Array<string>; answerIndex: number; question: string };
+  initialQuizState?: QuizState;
+  HandleProgress?: (quizState: QuizState) => void;
+}
+
+export enum QuizState {
+  Unanswered,
+  Correct,
+  Incorrect,
+}
+
+export default function Quiz({
+  quizInfo,
+  HandleProgress,
+  initialQuizState = QuizState.Unanswered,
+}: QuizProps) {
   const [selection, setSelection] = React.useState(0); // Index of option selected
-  const [correct, setCorrect] = React.useState(false);
+  const [quizState, setQuizState] = React.useState(initialQuizState);
 
   const SelectionHandler = (event: any) => {
-    let index = props.quizInfo.options.indexOf(event.target.value);
+    let index = quizInfo.options.indexOf(event.target.value);
     setSelection(index);
   };
 
   const SubmitHandler = (event: any) => {
     event.preventDefault();
-    setAnswered(true);
-    setCorrect(props.quizInfo.answerIndex === selection);
+    const isCorrect = quizInfo.answerIndex === selection;
+    setQuizState(isCorrect ? QuizState.Correct : QuizState.Incorrect);
+
+    if (HandleProgress) {
+      HandleProgress(isCorrect ? QuizState.Correct : QuizState.Incorrect);
+    }
   };
 
   return (
     <form>
-      <p>Q: {props.quizInfo.question}</p>
-      {props.quizInfo.options.map((option: number) => {
+      <p>Q: {quizInfo.question}</p>
+      {quizInfo.options.map((option: string) => {
         return (
           <label key={option}>
             <input
               type="radio"
+              checked={selection === quizInfo.options.indexOf(option)}
               onChange={SelectionHandler}
               name="quiz"
               value={option}
@@ -34,7 +54,11 @@ export default function Quiz(props: any) {
       })}
       <br />
       <button onClick={SubmitHandler}>Submit</button>
-      {answered && (correct ? <p>Correct</p> : <p>Incorrect</p>)}
+      {quizState === QuizState.Correct ? (
+        <p>Correct</p>
+      ) : quizState === QuizState.Incorrect ? (
+        <p>Incorrect</p>
+      ) : null}
     </form>
   );
 }
