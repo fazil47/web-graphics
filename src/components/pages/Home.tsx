@@ -16,7 +16,7 @@ export default function Home() {
   };
 
   return (
-    <Page>
+    <Page pageName="home">
       <h1>Home</h1>
       <h2>A sample quiz</h2>
       <Quiz quizInfo={quizInfo1} />

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 interface QuizProps {
   quizInfo: { options: Array<string>; answerIndex: number; question: string };
@@ -17,7 +17,7 @@ export default function Quiz({
   HandleProgress,
   initialQuizState = QuizState.Unanswered,
 }: QuizProps) {
-  const [selection, setSelection] = React.useState(0); // Index of option selected
+  const [selection, setSelection] = React.useState<number>(); // Index of option selected
   const [quizState, setQuizState] = React.useState(initialQuizState);
 
   const SelectionHandler = (event: any) => {
@@ -34,6 +34,10 @@ export default function Quiz({
       HandleProgress(isCorrect ? QuizState.Correct : QuizState.Incorrect);
     }
   };
+
+  useEffect(() => {
+    setQuizState(initialQuizState);
+  }, [initialQuizState]);
 
   return (
     <form>

@@ -4,7 +4,7 @@ import Page from "../Page";
 
 export default function Circles() {
   return (
-    <Page>
+    <Page pageName="circles">
       <h1>Circles</h1>
     </Page>
   );

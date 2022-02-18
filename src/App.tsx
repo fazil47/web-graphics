@@ -4,7 +4,6 @@ import "./App.css";
 
 // Firebase
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
-import { initializeApp } from "firebase/app";
 import {
   getAuth,
   onAuthStateChanged,
@@ -12,6 +11,7 @@ import {
   GoogleAuthProvider,
   EmailAuthProvider,
 } from "firebase/auth";
+import { InitializeFirebaseApp } from "./utils/firebase/FirebaseUtils";
 
 // Custom Components
 import Layout from "./components/Layout";
@@ -25,21 +25,12 @@ import Transformations from "./components/pages/Transformations";
 import ThreeD from "./components/pages/ThreeD";
 
 // TODO: Move Firebase stuff to a different component and use custom authentication components
+// TODO: Use Redux to hold Firebase objects
 function App() {
   const [isSignedIn, setIsSignedIn] = useState(false); // Local signed-in state.
   const [isAuthenticating, setIsAuthenticating] = useState(true); // Firebase signing-in progress state.
 
-  // Configure Firebase.
-  const firebaseConfig = {
-    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-    authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-    projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-    storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
-    appId: process.env.REACT_APP_FIREBASE_APP_ID,
-  };
-  const firebaseApp = initializeApp(firebaseConfig);
-
+  const firebaseApp = InitializeFirebaseApp();
   const firebaseAuth = getAuth(firebaseApp);
 
   // Configure FirebaseUI.
