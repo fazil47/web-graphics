@@ -19,7 +19,16 @@ interface PageProps {
   children: React.ReactNode;
 }
 
+enum FirebaseRequestResponse {
+  Success,
+  PageNotFound,
+  DocumentNotFound,
+  Error,
+  InvalidData,
+}
+
 export default function Page({ pageName, children }: PageProps) {
+  const [quizCount, SetQuizCount] = React.useState(0);
   const [quizStates, SetQuizStates] = React.useState<Array<QuizState>>([]);
   const [firestore, SetFirestore] = React.useState<Firestore>();
   const [student, SetStudent] = React.useState<User>();
@@ -37,18 +46,22 @@ export default function Page({ pageName, children }: PageProps) {
       currentUser = student as User;
     }
 
-    const storedQuizStates = await ReadFromFirebase(
+    const { data: storedQuizStates, responseType } = await ReadFromFirebase(
       firestore as Firestore,
       currentUser,
       pageName
     );
 
-    if (!storedQuizStates) {
+    if (responseType === FirebaseRequestResponse.Error) {
+      console.log("Error reading from firebase");
+      return;
+    } else if (responseType === FirebaseRequestResponse.InvalidData) {
+      console.log("Invalid data used to read from firebase");
       return;
     }
 
     if (updatedQuizStates.length > 0) {
-      if (storedQuizStates.length === 0) {
+      if (responseType === FirebaseRequestResponse.DocumentNotFound) {
         await AddToFirebase(
           updatedQuizStates,
           firestore as Firestore,
@@ -63,12 +76,14 @@ export default function Page({ pageName, children }: PageProps) {
           pageName
         );
       }
-    } else {
-      SetQuizStates(storedQuizStates);
+    } else if (responseType === FirebaseRequestResponse.Success) {
+      console.log("Setting quizStates to storedQuizStates");
+      SetQuizStates(storedQuizStates as Array<QuizState>);
     }
   }
 
   function HandlePageProgress(quizIndex: number, quizState: QuizState): void {
+    console.log("HandlePageProgress", quizIndex, quizState, quizStates);
     let newQuizStates = [...quizStates];
     newQuizStates[quizIndex] = quizState;
     SetQuizStates(newQuizStates);
@@ -104,13 +119,22 @@ export default function Page({ pageName, children }: PageProps) {
             (quizState === QuizState.Correct ? 1 : 0) + accumulatedValue,
           0
         )) /
-      quizStates.length;
+      quizCount;
     return progress;
   }
 
   useEffect(() => {
     const auth = getAuth();
     SetStudent(auth.currentUser as User);
+
+    let quizCount = 0;
+    React.Children.forEach(children, (child) => {
+      if (React.isValidElement(child) && child.type === Quiz) {
+        quizCount++;
+      }
+    });
+    SetQuizCount(quizCount);
+    SetQuizStates(new Array(quizCount).fill(QuizState.Unanswered));
 
     const firestore = getFirestore(InitializeFirebaseApp());
     SetFirestore(firestore);
@@ -135,10 +159,13 @@ async function ReadFromFirebase(
   firestore: Firestore,
   student: User,
   pageName: string
-): Promise<Array<QuizState> | undefined> {
+): Promise<{
+  data?: Array<QuizState>;
+  responseType: FirebaseRequestResponse;
+}> {
   console.log("Reading from firebase");
   if (!student) {
-    return undefined;
+    return { responseType: FirebaseRequestResponse.InvalidData };
   }
 
   try {
@@ -146,13 +173,22 @@ async function ReadFromFirebase(
       doc(firestore as Firestore, "students", student.uid as string)
     );
     if (docSnapshot.exists()) {
-      return docSnapshot.data()[pageName].quizStates;
+      const data = docSnapshot.data();
+      console.log(data);
+      if (data && data[pageName]) {
+        return {
+          data: data[pageName].quizStates,
+          responseType: FirebaseRequestResponse.Success,
+        };
+      } else {
+        return { responseType: FirebaseRequestResponse.PageNotFound };
+      }
     } else {
-      return [];
+      return { responseType: FirebaseRequestResponse.DocumentNotFound };
     }
   } catch (e) {
     console.error("Error reading document: ", e);
-    return undefined;
+    return { responseType: FirebaseRequestResponse.Error };
   }
 }
 
@@ -161,10 +197,11 @@ async function AddToFirebase(
   firestore: Firestore,
   student: User,
   pageName: string
-) {
+): Promise<FirebaseRequestResponse> {
   console.log("Adding to firebase");
   if (quizStates.length === 0) {
-    throw new Error("Cannot add empty quizStates to firebase");
+    // throw new Error("Cannot add empty quizStates to firebase");
+    return FirebaseRequestResponse.InvalidData;
   }
 
   try {
@@ -176,7 +213,10 @@ async function AddToFirebase(
     );
   } catch (e) {
     console.error("Error adding document: ", e);
+    return FirebaseRequestResponse.Error;
   }
+
+  return FirebaseRequestResponse.Success;
 }
 
 async function UpdateFirebase(
@@ -184,10 +224,11 @@ async function UpdateFirebase(
   firestore: Firestore,
   student: User,
   pageName: string
-) {
+): Promise<FirebaseRequestResponse> {
   console.log("Updating firebase");
   if (quizStates.length === 0) {
-    throw new Error("Cannot update with an empty quizStates array");
+    // throw new Error("Cannot update with an empty quizStates array");
+    return FirebaseRequestResponse.InvalidData;
   }
 
   try {
@@ -199,5 +240,8 @@ async function UpdateFirebase(
     );
   } catch (e) {
     console.error("Error updating document: ", e);
+    return FirebaseRequestResponse.Error;
   }
+
+  return FirebaseRequestResponse.Success;
 }
