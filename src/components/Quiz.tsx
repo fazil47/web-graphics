@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 interface QuizProps {
   quizInfo: { options: Array<string>; answerIndex: number; question: string };
   initialQuizState?: QuizState;
-  HandleProgress?: (quizState: QuizState) => void;
+  handleQuizStateUpdate?: (quizState: QuizState) => void;
 }
 
 export enum QuizState {
@@ -14,11 +14,15 @@ export enum QuizState {
 
 export default function Quiz({
   quizInfo,
-  HandleProgress,
+  handleQuizStateUpdate,
   initialQuizState = QuizState.Unanswered,
 }: QuizProps) {
   const [selection, setSelection] = React.useState<number>(); // Index of option selected
   const [quizState, setQuizState] = React.useState(initialQuizState);
+
+  useEffect(() => {
+    setQuizState(initialQuizState);
+  }, [initialQuizState]);
 
   const SelectionHandler = (event: any) => {
     let index = quizInfo.options.indexOf(event.target.value);
@@ -30,14 +34,12 @@ export default function Quiz({
     const isCorrect = quizInfo.answerIndex === selection;
     setQuizState(isCorrect ? QuizState.Correct : QuizState.Incorrect);
 
-    if (HandleProgress) {
-      HandleProgress(isCorrect ? QuizState.Correct : QuizState.Incorrect);
+    if (handleQuizStateUpdate) {
+      handleQuizStateUpdate(
+        isCorrect ? QuizState.Correct : QuizState.Incorrect
+      );
     }
   };
-
-  useEffect(() => {
-    setQuizState(initialQuizState);
-  }, [initialQuizState]);
 
   return (
     <form>

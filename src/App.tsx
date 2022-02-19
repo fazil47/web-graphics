@@ -5,13 +5,18 @@ import "./App.css";
 // Firebase
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import {
-  getAuth,
   onAuthStateChanged,
   signOut,
   GoogleAuthProvider,
   EmailAuthProvider,
+  Auth,
 } from "firebase/auth";
-import { InitializeFirebaseApp } from "./utils/firebase/FirebaseUtils";
+import {
+  initializeFirebaseApp,
+  getFirebaseAuth,
+  FirebaseAppContext,
+  FirebaseAuthContext,
+} from "./utils/firebase/FirebaseUtils";
 
 // Custom Components
 import Layout from "./components/Layout";
@@ -23,21 +28,18 @@ import Circles from "./components/pages/Circles";
 import Ellipses from "./components/pages/Ellipses";
 import Transformations from "./components/pages/Transformations";
 import ThreeD from "./components/pages/ThreeD";
+import { FirebaseApp } from "firebase/app";
 
-// TODO: Move Firebase stuff to a different component and use custom authentication components
-// TODO: Use Redux to hold Firebase objects
-function App() {
+// TODO: Use custom authentication components
+function App(): JSX.Element {
   const [isSignedIn, setIsSignedIn] = useState(false); // Local signed-in state.
   const [isAuthenticating, setIsAuthenticating] = useState(true); // Firebase signing-in progress state.
-
-  const firebaseApp = InitializeFirebaseApp();
-  const firebaseAuth = getAuth(firebaseApp);
+  const [firebaseApp, setFirebaseApp] = useState<FirebaseApp>(); // Firebase app instance.
+  const [firebaseAuth, setFirebaseAuth] = useState<Auth>(); // Firebase auth object.
 
   // Configure FirebaseUI.
   const uiConfig = {
-    // Popup signin flow rather than redirect flow.
     signInFlow: "popup",
-    // We will display Google and Facebook as auth providers.
     signInOptions: [
       GoogleAuthProvider.PROVIDER_ID,
       EmailAuthProvider.PROVIDER_ID,
@@ -50,17 +52,21 @@ function App() {
 
   // Listen to the Firebase Auth state and set the local state.
   useEffect(() => {
+    const firebaseApp = initializeFirebaseApp();
+    const firebaseAuth = getFirebaseAuth(firebaseApp);
+    setFirebaseApp(firebaseApp);
+    setFirebaseAuth(firebaseAuth);
+
     setIsAuthenticating(true);
     const unregisterAuthObserver = onAuthStateChanged(firebaseAuth, (user) => {
       setIsSignedIn(!!user);
       setIsAuthenticating(false);
     });
     return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function LogoutHandler() {
-    await signOut(firebaseAuth);
+    await signOut(firebaseAuth as Auth);
   }
 
   if (isAuthenticating) {
@@ -81,16 +87,20 @@ function App() {
 
   return (
     <div className="App">
-      <Routes>
-        <Route path="/" element={<Layout LogoutHandler={LogoutHandler} />}>
-          <Route index element={<Home />} />
-          <Route path="line" element={<Lines />} />
-          <Route path="circle" element={<Circles />} />
-          <Route path="ellipse" element={<Ellipses />} />
-          <Route path="transformation" element={<Transformations />} />
-          <Route path="3d" element={<ThreeD />} />
-        </Route>
-      </Routes>
+      <FirebaseAppContext.Provider value={firebaseApp as FirebaseApp}>
+        <FirebaseAuthContext.Provider value={firebaseAuth as Auth}>
+          <Routes>
+            <Route path="/" element={<Layout LogoutHandler={LogoutHandler} />}>
+              <Route index element={<Home />} />
+              <Route path="line" element={<Lines />} />
+              <Route path="circle" element={<Circles />} />
+              <Route path="ellipse" element={<Ellipses />} />
+              <Route path="transformation" element={<Transformations />} />
+              <Route path="3d" element={<ThreeD />} />
+            </Route>
+          </Routes>
+        </FirebaseAuthContext.Provider>
+      </FirebaseAppContext.Provider>
     </div>
   );
 }
