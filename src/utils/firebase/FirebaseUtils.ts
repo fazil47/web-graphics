@@ -42,6 +42,14 @@ export async function syncPageWithFirebase({
     pageName: string;
     updatedQuizStates?: Array<QuizState>;
 }): Promise<Array<QuizState> | undefined> {
+    if (!currentUser) {
+        console.error("User isn't logged in");
+        return;
+    } else if (!firestore) {
+        console.error("Firestore instance isn't valid");
+        return;
+    }
+
     const { storedQuizStates, responseType } = await readFromFirebase(
         firestore,
         currentUser,
@@ -49,10 +57,10 @@ export async function syncPageWithFirebase({
     );
 
     if (responseType === FirebaseRequestResponse.Error) {
-        console.log("Error reading from firebase");
+        console.error("Error reading from Firebase");
         return;
     } else if (responseType === FirebaseRequestResponse.InvalidData) {
-        console.log("Invalid data used to read from firebase");
+        console.error("Invalid data used to read from Firebase");
         return;
     }
 
@@ -60,20 +68,20 @@ export async function syncPageWithFirebase({
         if (responseType === FirebaseRequestResponse.DocumentNotFound) {
             await addToFirebase(
                 updatedQuizStates,
-                firestore as Firestore,
-                currentUser as User,
+                firestore,
+                currentUser,
                 pageName
             );
         } else {
             await updateFirebase(
                 updatedQuizStates,
-                firestore as Firestore,
-                currentUser as User,
+                firestore,
+                currentUser,
                 pageName
             );
         }
     } else if (responseType === FirebaseRequestResponse.Success) {
-        console.log("Setting quizStates to storedQuizStates");
+        console.log("Setting quizStates to storedQuizStates from Firebase");
         return storedQuizStates;
     }
 }
@@ -86,18 +94,17 @@ async function readFromFirebase(
     storedQuizStates?: Array<QuizState>;
     responseType: FirebaseRequestResponse;
 }> {
-    console.log("Reading from firebase");
+    console.log("Reading from Firebase");
     if (!student) {
         return { responseType: FirebaseRequestResponse.InvalidData };
     }
 
     try {
         const docSnapshot = await getDoc(
-            doc(firestore as Firestore, "students", student.uid as string)
+            doc(firestore, "students", student.uid)
         );
         if (docSnapshot.exists()) {
             const data = docSnapshot.data();
-            console.log(data);
             if (data && data[pageName]) {
                 return {
                     storedQuizStates: data[pageName].quizStates,
@@ -118,17 +125,17 @@ async function readFromFirebase(
 async function addToFirebase(
     quizStates: Array<QuizState>,
     firestore: Firestore,
-    student: User,
+    user: User,
     pageName: string
 ): Promise<FirebaseRequestResponse> {
-    console.log("Adding to firebase");
+    console.log("Adding to Firebase");
     if (quizStates.length === 0) {
         return FirebaseRequestResponse.InvalidData;
     }
 
     try {
         await setDoc(
-            doc(firestore as Firestore, "students", student?.uid as string),
+            doc(firestore, "students", user.uid),
             {
                 [pageName]: { quizStates: quizStates },
             }
@@ -144,7 +151,7 @@ async function addToFirebase(
 async function updateFirebase(
     quizStates: Array<QuizState>,
     firestore: Firestore,
-    student: User,
+    user: User,
     pageName: string
 ): Promise<FirebaseRequestResponse> {
     console.log("Updating firebase");
@@ -154,7 +161,7 @@ async function updateFirebase(
 
     try {
         await updateDoc(
-            doc(firestore as Firestore, "students", student?.uid as string),
+            doc(firestore, "students", user.uid),
             {
                 [pageName]: { quizStates: quizStates },
             }
