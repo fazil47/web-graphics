@@ -24,9 +24,14 @@ export default function Layout(props: any) {
     }
   }, [firebaseApp]);
 
+  // TODO: Use a better error component
+  if (!firestore) {
+    return <div>Firestore error</div>;
+  }
+
   return (
     <div id="layout">
-      <FirestoreContext.Provider value={firestore as Firestore}>
+      <FirestoreContext.Provider value={firestore}>
         <Navbar LogoutHandler={props.LogoutHandler} />
         <div id="layout-horiz-content">
           <Sidebar />

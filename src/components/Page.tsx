@@ -51,12 +51,16 @@ export default function Page({ pageName, children }: PageProps) {
     quizIndex: number,
     quizState: QuizState
   ): void => {
+    if (!firebaseAuth.currentUser) {
+      return;
+    }
+
     let newQuizStates = [...quizStates];
     newQuizStates[quizIndex] = quizState;
     setQuizStates(newQuizStates);
     syncPageWithFirebase({
       firestore,
-      currentUser: firebaseAuth.currentUser as User,
+      currentUser: firebaseAuth.currentUser,
       pageName,
       updatedQuizStates: newQuizStates,
     });
@@ -73,10 +77,16 @@ export default function Page({ pageName, children }: PageProps) {
             handleQuizStateUpdate(quizIndex, quizState);
           },
           initialQuizState: quizStates[quizIndex],
-        } as any);
+        });
       }
       return child;
     });
+
+    // TODO: Use a better error component
+    if (!childrenWithProps) {
+      return [<div>Error adding properties to this page's childrent</div>];
+    }
+
     return childrenWithProps as Array<JSX.Element>;
   };
 

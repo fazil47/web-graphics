@@ -30,7 +30,6 @@ import Transformations from "./components/pages/Transformations";
 import ThreeD from "./components/pages/ThreeD";
 import { FirebaseApp } from "firebase/app";
 
-// TODO: Use custom authentication components
 function App(): JSX.Element {
   const [isSignedIn, setIsSignedIn] = useState(false); // Local signed-in state.
   const [isAuthenticating, setIsAuthenticating] = useState(true); // Firebase signing-in progress state.
@@ -66,16 +65,21 @@ function App(): JSX.Element {
   }, []);
 
   async function LogoutHandler() {
-    await signOut(firebaseAuth as Auth);
+    if (firebaseAuth) {
+      await signOut(firebaseAuth);
+    }
   }
 
+  // TODO: Use a better loading component
   if (isAuthenticating) {
     return (
       <div>
         <p>Loading...</p>
       </div>
     );
-  } else if (!isSignedIn) {
+  }
+  // TODO: Use custom authentication components
+  if (!isSignedIn) {
     return (
       <div>
         <h1>Computer Graphics Learning Platform</h1>
@@ -84,11 +88,19 @@ function App(): JSX.Element {
       </div>
     );
   }
+  // TODO: Use a better error component
+  if (!firebaseApp || !firebaseAuth) {
+    return (
+      <div className="App">
+        <p>Firebase Error</p>
+      </div>
+    );
+  }
 
   return (
     <div className="App">
-      <FirebaseAppContext.Provider value={firebaseApp as FirebaseApp}>
-        <FirebaseAuthContext.Provider value={firebaseAuth as Auth}>
+      <FirebaseAppContext.Provider value={firebaseApp}>
+        <FirebaseAuthContext.Provider value={firebaseAuth}>
           <Routes>
             <Route path="/" element={<Layout LogoutHandler={LogoutHandler} />}>
               <Route index element={<Home />} />
