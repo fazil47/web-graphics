@@ -1,4 +1,7 @@
 #page {
-    flex-grow: 1;
-    padding: 10px;
+  @apply flex-grow px-5 pt-5 pb-2;
 }
+
+/* #page > * {
+  @apply py-4;
+} */

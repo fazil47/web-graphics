@@ -1,6 +1,7 @@
 #sidebar {
-    flex-direction: column;
+    /* flex-direction: column;
     background-color: lightgray;
     height: 100vh;
-    width: 300px;
+    max-width: 300px; */
+    @apply flex flex-col bg-gray-100 dark:bg-gray-700 w-48 min-h-screen min-w-[200px];
 }

@@ -1,9 +1,10 @@
 #layout {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 }
 
-#layout-horiz-content {
+#layoutContent {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  flex-grow: 1;
 }

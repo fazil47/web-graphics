@@ -32,9 +32,9 @@ export default function Layout(props: any) {
   return (
     <div id="layout">
       <FirestoreContext.Provider value={firestore}>
-        <Navbar LogoutHandler={props.LogoutHandler} />
-        <div id="layout-horiz-content">
-          <Sidebar />
+        <Sidebar />
+        <div id="layoutContent">
+          <Navbar LogoutHandler={props.LogoutHandler} />
           <Outlet />
         </div>
       </FirestoreContext.Provider>

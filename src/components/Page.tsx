@@ -104,8 +104,8 @@ export default function Page({ pageName, children }: PageProps) {
 
   return (
     <div id="page">
-      {quizStates.length > 0 && <p>Progress: {getProgressPercentage()}%</p>}
-      <div>{getchildrenWithProps()}</div>
+      {quizStates.length > 0 && <h3>Progress: {getProgressPercentage()}%</h3>}
+      {getchildrenWithProps()}
     </div>
   );
 }

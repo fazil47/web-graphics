@@ -1,15 +1,20 @@
 import React, { useEffect } from "react";
-
-interface QuizProps {
-  quizInfo: { options: Array<string>; answerIndex: number; question: string };
-  initialQuizState?: QuizState;
-  handleQuizStateUpdate?: (quizState: QuizState) => void;
-}
+import "./Quiz.css";
 
 export enum QuizState {
   Unanswered,
   Correct,
   Incorrect,
+}
+interface QuizProps {
+  quizInfo: {
+    options: Array<string>;
+    answerIndex: number;
+    question: string;
+    hint?: string;
+  };
+  initialQuizState?: QuizState;
+  handleQuizStateUpdate?: (quizState: QuizState) => void;
 }
 
 export default function Quiz({
@@ -42,28 +47,36 @@ export default function Quiz({
   };
 
   return (
-    <form>
-      <p>Q: {quizInfo.question}</p>
-      {quizInfo.options.map((option: string) => {
-        return (
-          <label key={option}>
-            <input
-              type="radio"
-              checked={selection === quizInfo.options.indexOf(option)}
-              onChange={SelectionHandler}
-              name="quiz"
-              value={option}
-            />
-            {option}
-          </label>
-        );
-      })}
-      <br />
-      <button onClick={SubmitHandler}>Submit</button>
+    <form className="quizForm">
+      <p className="quizQuestion">Q: {quizInfo.question}</p>
+      <div className="flex flex-col w-full">
+        {quizInfo.options.map((option: string) => {
+          const isSelected = selection === quizInfo.options.indexOf(option);
+          const labelClassName = `quizOptionLabel ${
+            isSelected ? " labelSelected" : ""
+          }`;
+          return (
+            <label key={option} className={labelClassName}>
+              <input
+                className="quizOptionInput"
+                type="radio"
+                checked={isSelected}
+                onChange={SelectionHandler}
+                name="quiz"
+                value={option}
+              />
+              {option}
+            </label>
+          );
+        })}
+      </div>
+      <button className="quizSubmitButton" onClick={SubmitHandler}>
+        Submit
+      </button>
       {quizState === QuizState.Correct ? (
-        <p>Correct</p>
+        <p className="correctMessage">Correct</p>
       ) : quizState === QuizState.Incorrect ? (
-        <p>Incorrect</p>
+        <p className="incorrectMessage">Incorrect {quizInfo.hint}</p>
       ) : null}
     </form>
   );
