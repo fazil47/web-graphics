@@ -1,9 +1,9 @@
 import React from "react";
-import "./Navbar.css";
+import "./Menubar.css";
 
-export default function Navbar(props: any) {
+export default function Menubar(props: any) {
   return (
-    <div id="navbar">
+    <div id="menubar">
       <button onClick={props.LogoutHandler}>Logout</button>
     </div>
   );

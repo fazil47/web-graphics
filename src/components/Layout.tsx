@@ -4,7 +4,7 @@ import { Firestore } from "firebase/firestore";
 import "./Layout.css";
 
 import Sidebar from "./Sidebar";
-import Navbar from "./Navbar";
+import Menubar from "./Menubar";
 
 import {
   FirebaseAppContext,
@@ -34,7 +34,7 @@ export default function Layout(props: any) {
       <FirestoreContext.Provider value={firestore}>
         <Sidebar />
         <div id="layoutContent">
-          <Navbar LogoutHandler={props.LogoutHandler} />
+          <Menubar LogoutHandler={props.LogoutHandler} />
           <Outlet />
         </div>
       </FirestoreContext.Provider>

@@ -1,0 +1,7 @@
+#menubar {
+    @apply flex flex-row justify-end py-2 mx-5 place-items-center border-b-2;
+}
+
+#menubar > * {
+    @apply p-2 mx-2 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-md;
+}

@@ -15,12 +15,21 @@
     @apply text-base;
   }
   h1 {
-    @apply text-4xl font-bold mt-9 mb-1;
+    @apply text-4xl font-bold;
+  }
+  h1:not(:first-child) {
+    @apply mt-9 mb-1;
   }
   h2 {
-    @apply text-2xl font-bold mt-9 mb-1;
+    @apply text-2xl font-bold;
+  }
+  h2:not(:first-child) {
+    @apply mt-9 mb-1;
   }
   h3 {
-    @apply text-xl font-bold my-1;
+    @apply text-xl font-bold;
+  }
+  h3:not(:first-child) {
+    @apply my-1;
   }
 }

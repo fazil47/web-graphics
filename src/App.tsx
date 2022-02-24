@@ -20,6 +20,7 @@ import {
 
 // Custom Components
 import Layout from "./components/Layout";
+import Authentication from "./components/Authentication";
 
 // Pages
 import Home from "./components/pages/Home";
@@ -78,22 +79,21 @@ function App(): JSX.Element {
       </div>
     );
   }
-  // TODO: Use custom authentication components
-  if (!isSignedIn) {
-    return (
-      <div>
-        <h1>Computer Graphics Learning Platform</h1>
-        <p>Please sign-in:</p>
-        <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebaseAuth} />
-      </div>
-    );
-  }
   // TODO: Use a better error component
   if (!firebaseApp || !firebaseAuth) {
     return (
       <div className="App">
         <p>Firebase Error</p>
       </div>
+    );
+  }
+
+  // TODO: Use custom authentication components
+  if (!isSignedIn) {
+    return (
+      <FirebaseAuthContext.Provider value={firebaseAuth}>
+        <Authentication />
+      </FirebaseAuthContext.Provider>
     );
   }
 
