@@ -1,16 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 
 // Firebase
-import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
-import {
-  onAuthStateChanged,
-  signOut,
-  GoogleAuthProvider,
-  EmailAuthProvider,
-  Auth,
-} from "firebase/auth";
+import { onAuthStateChanged, signOut, Auth } from "firebase/auth";
 import {
   initializeFirebaseApp,
   getFirebaseAuth,
@@ -30,25 +23,13 @@ import Ellipses from "./components/pages/Ellipses";
 import Transformations from "./components/pages/Transformations";
 import ThreeD from "./components/pages/ThreeD";
 import { FirebaseApp } from "firebase/app";
+import ShadingModels from "./components/pages/ShadingModels";
 
 function App(): JSX.Element {
   const [isSignedIn, setIsSignedIn] = useState(false); // Local signed-in state.
   const [isAuthenticating, setIsAuthenticating] = useState(true); // Firebase signing-in progress state.
   const [firebaseApp, setFirebaseApp] = useState<FirebaseApp>(); // Firebase app instance.
   const [firebaseAuth, setFirebaseAuth] = useState<Auth>(); // Firebase auth object.
-
-  // Configure FirebaseUI.
-  const uiConfig = {
-    signInFlow: "popup",
-    signInOptions: [
-      GoogleAuthProvider.PROVIDER_ID,
-      EmailAuthProvider.PROVIDER_ID,
-    ],
-    callbacks: {
-      // Avoid redirects after sign-in.
-      signInSuccessWithAuthResult: () => false,
-    },
-  };
 
   // Listen to the Firebase Auth state and set the local state.
   useEffect(() => {
@@ -104,11 +85,12 @@ function App(): JSX.Element {
           <Routes>
             <Route path="/" element={<Layout LogoutHandler={LogoutHandler} />}>
               <Route index element={<Home />} />
-              <Route path="line" element={<Lines />} />
-              <Route path="circle" element={<Circles />} />
-              <Route path="ellipse" element={<Ellipses />} />
-              <Route path="transformation" element={<Transformations />} />
+              <Route path="lines" element={<Lines />} />
+              <Route path="circles" element={<Circles />} />
+              <Route path="ellipses" element={<Ellipses />} />
+              <Route path="transformations" element={<Transformations />} />
               <Route path="3d" element={<ThreeD />} />
+              <Route path="shading_models" element={<ShadingModels />} />
             </Route>
           </Routes>
         </FirebaseAuthContext.Provider>

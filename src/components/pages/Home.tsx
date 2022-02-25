@@ -1,25 +1,21 @@
 import Page from "../Page";
-import Quiz from "../Quiz";
 
 export default function Home() {
-  const quizInfo1 = {
-    question: "What is the capital of India?",
-    options: ["New Delhi", "Mumbai", "Chennai", "Kolkata"],
-    answerIndex: 0,
-  };
-  const quizInfo2 = {
-    question: "What is the capital of USA?",
-    options: ["New Orleans", "Washington DC", "New York", "Seattle"],
-    answerIndex: 1,
-  };
-
   return (
     <Page pageName="home">
       <h1>Home</h1>
-      <h2>A sample quiz</h2>
-      <Quiz quizInfo={quizInfo1} />
-      <h2>Another quiz</h2>
-      <Quiz quizInfo={quizInfo2} />
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Cras adipiscing enim
+        eu turpis. Molestie at elementum eu facilisis sed odio morbi. Id porta
+        nibh venenatis cras sed felis eget. Non curabitur gravida arcu ac tortor
+        dignissim. Elit sed vulputate mi sit amet mauris commodo quis. Vel elit
+        scelerisque mauris pellentesque pulvinar pellentesque habitant morbi
+        tristique. Senectus et netus et malesuada. Orci sagittis eu volutpat
+        odio facilisis mauris sit amet massa. Nisi quis eleifend quam adipiscing
+        vitae. Justo donec enim diam vulputate. Feugiat nibh sed pulvinar proin
+        gravida.
+      </p>
     </Page>
   );
 }

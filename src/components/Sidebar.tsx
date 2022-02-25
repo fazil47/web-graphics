@@ -7,11 +7,12 @@ export default function Sidebar() {
   return (
     <div id="sidebar">
       <SidebarContent path="" name="Home" />
-      <SidebarContent path="line" name="Lines" />
-      <SidebarContent path="circle" name="Circles" />
-      <SidebarContent path="ellipse" name="Ellipses" />
-      <SidebarContent path="transformation" name="Transformations" />
+      <SidebarContent path="lines" name="Lines" />
+      <SidebarContent path="circles" name="Circles" />
+      <SidebarContent path="ellipses" name="Ellipses" />
+      <SidebarContent path="transformations" name="Transformations" />
       <SidebarContent path="3d" name="3D" />
+      <SidebarContent path="shading_models" name="Shading Models" />
     </div>
   );
 }

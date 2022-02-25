@@ -1,4 +1,5 @@
 import React from "react";
+import "./Authentication.css";
 
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import { GoogleAuthProvider, EmailAuthProvider } from "firebase/auth";
@@ -20,9 +21,8 @@ export default function Authentication() {
   };
 
   return (
-    <div>
-      <h1>Computer Graphics Learning Platform</h1>
-      <p>Please sign-in:</p>
+    <div id="authDiv">
+      <h1 id="authHeading">Computer Graphics Learning Platform</h1>
       <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebaseAuth} />
     </div>
   );
