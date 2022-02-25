@@ -18,14 +18,14 @@ class TempGraphicsGouraud extends Component {
     const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     const sphereRadius = 1;
-    const sphereWidthSegments = 16;
-    const sphereHeightSegments = 8;
+    const sphereWidthSegments = 8;
+    const sphereHeightSegments = 4;
     const geometry = new THREE.SphereGeometry(
       sphereRadius,
       sphereWidthSegments,
       sphereHeightSegments
     );
-    const material = new THREE.MeshLambertMaterial({ color: "#333333" });
+    const material = new THREE.MeshLambertMaterial({ color: "#555555" });
     const sphere = new THREE.Mesh(geometry, material);
 
     {
