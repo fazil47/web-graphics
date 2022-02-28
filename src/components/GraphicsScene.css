@@ -1,3 +1,7 @@
-canvas {
-    @apply my-4 rounded-md;
+/* canvas {
+  @apply rounded-md h-64 w-64 bg-purple-500;
+} */
+
+.graphicsScene {
+  @apply h-[250px] !important;
 }

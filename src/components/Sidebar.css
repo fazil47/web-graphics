@@ -3,5 +3,5 @@
     background-color: lightgray;
     height: 100vh;
     max-width: 300px; */
-    @apply flex flex-col bg-gray-100 dark:bg-gray-700 w-48 min-h-screen min-w-[200px];
+    @apply flex flex-col bg-gray-100 dark:bg-gray-700 w-48 h-screen min-w-[200px];
 }

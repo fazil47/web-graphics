@@ -12,7 +12,7 @@ import {
 
 import Page from "../Page";
 import Quiz from "../Quiz";
-// import GraphicsScene from "../GraphicsScene";
+import GraphicsScene from "../GraphicsScene";
 
 import TempGraphicsGouraud from "../TempGraphicsGouraud";
 import TempGraphicsPhong from "../TempGraphicsPhong";
@@ -100,11 +100,11 @@ export default function ShadingModels() {
         scene={phongScene}
         camera={phongCamera}
       /> */}
-      {/* <GraphicsScene /> */}
-      <h1>Gouraud Shading</h1>
+      <GraphicsScene />
+      {/* <h1>Gouraud Shading</h1>
       <TempGraphicsGouraud />
       <h1>Phong Shading</h1>
-      <TempGraphicsPhong />
+      <TempGraphicsPhong /> */}
       <Quiz quizInfo={quizInfo1} />
     </Page>
   );

@@ -1,5 +1,29 @@
+import "./GraphicsScene.css";
+import { useEffect, useState, useRef } from "react";
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls } from "@react-three/drei";
+
+// Important: Canvas component needs to have it's height set either through inline styling or by using the !important CSS property,
+// otherwise it's height will keep increasing.
+
+const Box = () => {
+  return (
+    <mesh rotation={[90, 0, 20]}>
+      <boxBufferGeometry attach="geometry" args={[3, 3, 3]} />
+      <meshLambertMaterial attach="material" color="blue" />
+    </mesh>
+  );
+};
+
 export default function GraphicsScene() {
-  return <div />;
+  return (
+    <Canvas className="graphicsScene">
+      <OrbitControls enableZoom={false} enablePan={false} />
+      <Box />
+      <ambientLight intensity={0.5} />
+      <directionalLight intensity={1} position={[-2, 5, 2]} />
+    </Canvas>
+  );
 }
 
 // import { useEffect, useRef, useState } from "react";
