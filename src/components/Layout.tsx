@@ -23,6 +23,11 @@ export default function Layout({
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+  // To update three.js canvas elements size
+  useEffect(() => {
+    window.dispatchEvent(new Event("resize"));
+  }, [isSidebarOpen]);
+
   useEffect(() => {
     const firestore = getFirestoreObject(firebaseApp);
     if (firestore) {

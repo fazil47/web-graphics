@@ -1,7 +1,7 @@
 .graphicsScene {
-  @apply rounded-md bg-black m-4 mx-auto p-4 h-[450px] w-[450px] !important;
+  @apply rounded-md bg-black shadow-lg my-5 p-4 !important;
 }
 
-.graphicsScene > canvas {
-  @apply mx-auto !important;
+.graphicsSceneMount {
+  @apply mx-auto h-[350px] !important;
 }

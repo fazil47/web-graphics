@@ -1,52 +1,89 @@
 import "./GraphicsScene.css";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef } from "react";
 import {
-  BoxGeometry,
-  Mesh,
-  MeshBasicMaterial,
+  Euler,
+  OrthographicCamera,
   PerspectiveCamera,
   Scene,
+  Vector3,
   WebGLRenderer,
 } from "three";
 
-export default function GraphicsScene() {
+interface GraphicsSceneProps {
+  update: (time: number) => void;
+  scene: Scene;
+  camera?: OrthographicCamera | PerspectiveCamera;
+  cameraPosition?: Vector3;
+  cameraRotation?: Euler;
+}
+
+export default function GraphicsScene({
+  update,
+  scene,
+  camera,
+  cameraPosition = new Vector3(0, 0, 0),
+  cameraRotation = new Euler(0, 0, 0),
+}: GraphicsSceneProps) {
   const mountRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const current_mount = mountRef.current;
+    const renderer = new WebGLRenderer();
+    let onMountResize = () => {};
 
     if (current_mount) {
-      var scene = new Scene();
-      var camera = new PerspectiveCamera(75, 1, 0.1, 1000);
-      var renderer = new WebGLRenderer();
+      let sceneCamera: OrthographicCamera | PerspectiveCamera =
+        new PerspectiveCamera(
+          50,
+          current_mount.clientWidth / current_mount.clientHeight,
+          0.1,
+          1000
+        );
+      if (camera) {
+        sceneCamera = camera;
+      }
+      sceneCamera.position.copy(cameraPosition);
+      sceneCamera.rotation.copy(cameraRotation);
 
-      renderer.setSize(400, 400);
+      renderer.setSize(current_mount.clientWidth, current_mount.clientHeight);
       current_mount.appendChild(renderer.domElement);
 
-      var geometry = new BoxGeometry(1, 1, 1);
-      var material = new MeshBasicMaterial({ color: 0x00ff00 });
-      var cube = new Mesh(geometry, material);
-
-      scene.add(cube);
-      camera.position.z = 5;
-
-      var animate = function () {
-        requestAnimationFrame(animate);
-        cube.rotation.x += 0.01;
-        cube.rotation.y += 0.01;
-        renderer.render(scene, camera);
+      const updateRender = (time: number) => {
+        update(time);
+        renderer.render(scene, sceneCamera);
+        requestAnimationFrame(updateRender);
       };
 
-      animate();
+      onMountResize = () => {
+        const canvas = renderer.domElement;
+        canvas.style.width = current_mount.clientWidth + "px";
+        canvas.style.height = current_mount.clientHeight + "px";
+        renderer.setSize(current_mount.clientWidth, current_mount.clientHeight);
+        if (sceneCamera.type === "PerspectiveCamera") {
+          sceneCamera.aspect =
+            current_mount.clientWidth / current_mount.clientHeight;
+        }
+        sceneCamera.updateProjectionMatrix();
+        renderer.setSize(current_mount.clientWidth, current_mount.clientHeight);
+      };
+
+      updateRender(0);
     }
+
+    window.addEventListener("resize", onMountResize);
 
     // Cleanup
     return () => {
       if (current_mount) {
         current_mount.removeChild(renderer.domElement);
       }
+      window.removeEventListener("resize", onMountResize);
     };
-  }, []);
+  }, [camera, scene, cameraPosition, cameraRotation, update]);
 
-  return <div className="graphicsScene" ref={mountRef}></div>;
+  return (
+    <div className="graphicsScene">
+      <div className="graphicsSceneMount" ref={mountRef}></div>
+    </div>
+  );
 }

@@ -1,9 +1,5 @@
 #sidebar {
-  /* flex-direction: column;
-    background-color: lightgray;
-    height: 100vh;
-    max-width: 300px; */
-  @apply absolute z-10 shadow-2xl sm:relative sm:shadow-md flex flex-col bg-gray-100 dark:bg-gray-700 w-48 h-screen min-w-[200px];
+  @apply absolute z-20 drop-shadow-2xl sm:static sm:drop-shadow-md flex flex-col bg-gray-100 dark:bg-gray-700 w-48 h-screen min-w-[200px];
 }
 
 #sidebarContent {

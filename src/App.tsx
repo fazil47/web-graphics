@@ -14,6 +14,7 @@ import {
 // Custom Components
 import Layout from "./components/Layout";
 import Authentication from "./components/Authentication";
+import LoadingIndicator from "./components/LoadingIndicator";
 
 // Pages
 import Home from "./components/pages/Home";
@@ -52,13 +53,8 @@ function App(): JSX.Element {
     }
   }
 
-  // TODO: Use a better loading component
   if (isAuthenticating) {
-    return (
-      <div>
-        <p>Loading...</p>
-      </div>
-    );
+    return <LoadingIndicator />;
   }
   // TODO: Use a better error component
   if (!firebaseApp || !firebaseAuth) {
