@@ -12,10 +12,21 @@ import {
   getFirestoreObject,
 } from "../utils/firebase/FirebaseUtils";
 
-export default function Layout(props: any) {
+export default function Layout({
+  logoutHandler,
+}: {
+  logoutHandler: () => Promise<void>;
+}) {
   const [firestore, setFirestore] = useState<Firestore>();
 
   const firebaseApp = useContext(FirebaseAppContext);
+
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  // To update three.js canvas elements size
+  useEffect(() => {
+    window.dispatchEvent(new Event("resize"));
+  }, [isSidebarOpen]);
 
   useEffect(() => {
     const firestore = getFirestoreObject(firebaseApp);
@@ -32,9 +43,18 @@ export default function Layout(props: any) {
   return (
     <div id="layout">
       <FirestoreContext.Provider value={firestore}>
-        <Sidebar />
+        <Sidebar
+          isOpen={isSidebarOpen}
+          closeSidebar={() => {
+            setIsSidebarOpen(false);
+          }}
+        />
         <div id="layoutContent">
-          <Menubar LogoutHandler={props.LogoutHandler} />
+          <Menubar
+            logoutHandler={logoutHandler}
+            isSidebarOpen={isSidebarOpen}
+            setSidebarOpen={setIsSidebarOpen}
+          />
           <Outlet />
         </div>
       </FirestoreContext.Provider>

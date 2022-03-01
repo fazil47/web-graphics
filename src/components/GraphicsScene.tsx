@@ -1,144 +1,89 @@
-export default function GraphicsScene() {
-  return <div />;
+import "./GraphicsScene.css";
+import { useEffect, useRef } from "react";
+import {
+  Euler,
+  OrthographicCamera,
+  PerspectiveCamera,
+  Scene,
+  Vector3,
+  WebGLRenderer,
+} from "three";
+
+interface GraphicsSceneProps {
+  update: (time: number) => void;
+  scene: Scene;
+  camera?: OrthographicCamera | PerspectiveCamera;
+  cameraPosition?: Vector3;
+  cameraRotation?: Euler;
 }
 
-// import { useEffect, useRef, useState } from "react";
-// import {
-//   BufferGeometry,
-//   DirectionalLight,
-//   Material,
-//   Mesh,
-//   MeshLambertMaterial,
-//   MeshPhongMaterial,
-//   OrthographicCamera,
-//   PerspectiveCamera,
-//   Scene,
-//   SphereGeometry,
-//   WebGL1Renderer,
-// } from "three";
-// import "./GraphicsScene.css";
+export default function GraphicsScene({
+  update,
+  scene,
+  camera,
+  cameraPosition = new Vector3(0, 0, 0),
+  cameraRotation = new Euler(0, 0, 0),
+}: GraphicsSceneProps) {
+  const mountRef = useRef<HTMLDivElement>(null);
 
-// // interface GraphicsSceneProps {
-// //   start: () => void;
-// //   update: (time?: number) => void;
-// //   scene: Scene;
-// //   camera: PerspectiveCamera | OrthographicCamera;
-// // }
-// export default function GraphicsScene() {
-//   const [gouraudCanvas, setGouraudCanvas] =
-//     useState<HTMLCanvasElement | null>();
-//   const [phongCanvas, setPhongCanvas] = useState<HTMLCanvasElement | null>();
-//   const gouraudCanvasRef = useRef<HTMLCanvasElement | null>(null);
-//   const phongCanvasRef = useRef<HTMLCanvasElement | null>(null);
-//   // let gouraudCanvas =
-//   //   document.querySelector<HTMLCanvasElement>("gouraudCanvas");
-//   // let phongCanvas = document.querySelector<HTMLCanvasElement>("phongCanvas");
+  useEffect(() => {
+    const current_mount = mountRef.current;
+    const renderer = new WebGLRenderer();
+    let onMountResize = () => {};
 
-//   useEffect(() => {
-//     setGouraudCanvas(
-//       document.querySelector<HTMLCanvasElement>("gouraudCanvas")
-//     );
-//     setPhongCanvas(document.querySelector<HTMLCanvasElement>("phongCanvas"));
-//   }, [gouraudCanvasRef, phongCanvasRef]);
-//   // const [scene, setScene] = useState<Scene>();
-//   // const [renderer, setRenderer] = useState<WebGL1Renderer>();
+    if (current_mount) {
+      let sceneCamera: OrthographicCamera | PerspectiveCamera =
+        new PerspectiveCamera(
+          50,
+          current_mount.clientWidth / current_mount.clientHeight,
+          0.1,
+          1000
+        );
+      if (camera) {
+        sceneCamera = camera;
+      }
+      sceneCamera.position.copy(cameraPosition);
+      sceneCamera.rotation.copy(cameraRotation);
 
-//   // Runs once
-//   // useEffect(() => {
-//   //   if (canvas.current) {
-//   //     setRenderer(new WebGL1Renderer({ canvas: canvas.current }));
-//   //   }
-//   //   setScene(new Scene());
-//   //   start();
-//   // }, []);
+      renderer.setSize(current_mount.clientWidth, current_mount.clientHeight);
+      current_mount.appendChild(renderer.domElement);
 
-//   if (!gouraudCanvasRef.current || !phongCanvasRef.current) {
-//     return (
-//       <div>
-//         <canvas ref={gouraudCanvasRef} className="graphicsScene" />
-//         <canvas ref={phongCanvasRef} className="graphicsScene" />
-//       </div>
-//     );
-//   }
+      const updateRender = (time: number) => {
+        update(time);
+        renderer.render(scene, sceneCamera);
+        requestAnimationFrame(updateRender);
+      };
 
-//   const gouraudRenderer = new WebGL1Renderer({
-//     canvas: gouraudCanvasRef.current,
-//   });
-//   const phongRenderer = new WebGL1Renderer({ canvas: phongCanvasRef.current });
+      onMountResize = () => {
+        const canvas = renderer.domElement;
+        canvas.style.width = current_mount.clientWidth + "px";
+        canvas.style.height = current_mount.clientHeight + "px";
+        renderer.setSize(current_mount.clientWidth, current_mount.clientHeight);
+        if (sceneCamera.type === "PerspectiveCamera") {
+          sceneCamera.aspect =
+            current_mount.clientWidth / current_mount.clientHeight;
+        }
+        sceneCamera.updateProjectionMatrix();
+        renderer.setSize(current_mount.clientWidth, current_mount.clientHeight);
+      };
 
-//   const fov = 75;
-//   const aspect = 2; // the canvas default
-//   const near = 0.1;
-//   const far = 5;
+      updateRender(0);
+    }
 
-//   const gouraudCamera = new PerspectiveCamera(fov, aspect, near, far);
-//   const gouraudScene = new Scene();
+    window.addEventListener("resize", onMountResize);
 
-//   const phongCamera = new PerspectiveCamera(fov, aspect, near, far);
-//   const phongScene = new Scene();
+    // Cleanup
+    return () => {
+      if (current_mount) {
+        current_mount.removeChild(renderer.domElement);
+      }
+      window.removeEventListener("resize", onMountResize);
+    };
+  }, [camera, scene, cameraPosition, cameraRotation, update]);
 
-//   {
-//     const color = 0xffffff;
-//     const intensity = 1;
-//     const light = new DirectionalLight(color, intensity);
-//     light.position.set(-1, 2, 4);
-//     gouraudScene.add(light);
-//     phongScene.add(light);
-//   }
-
-//   const sphereRadius = 1;
-//   const sphereWidthSegments = 16;
-//   const sphereHeightSegments = 16;
-//   const sphereGeometry = new SphereGeometry(
-//     sphereRadius,
-//     sphereWidthSegments,
-//     sphereHeightSegments
-//   );
-
-//   function makeMeshInstance({
-//     geometry,
-//     material,
-//     x = 0,
-//     y = 0,
-//     z = 0,
-//   }: {
-//     geometry: BufferGeometry;
-//     material: Material;
-//     x?: number;
-//     y?: number;
-//     z?: number;
-//   }) {
-//     const mesh = new Mesh(geometry, material);
-//     mesh.position.set(x, y, z);
-//     return mesh;
-//   }
-
-//   const gouraudMaterial = new MeshLambertMaterial({ color: 0xffffff });
-//   const gouraudSphereMesh = makeMeshInstance({
-//     geometry: sphereGeometry,
-//     material: gouraudMaterial,
-//   });
-//   gouraudScene.add(gouraudSphereMesh);
-
-//   const phongMaterial = new MeshPhongMaterial({ color: 0xffffff });
-//   const phongSphereMesh = makeMeshInstance({
-//     geometry: sphereGeometry,
-//     material: phongMaterial,
-//   });
-//   phongScene.add(phongSphereMesh);
-
-//   // Runs every frame
-//   function render(time: number) {
-//     gouraudRenderer.render(gouraudScene, gouraudCamera);
-//     phongRenderer.render(phongScene, phongCamera);
-//     requestAnimationFrame(render);
-//   }
-//   requestAnimationFrame(render);
-
-//   return (
-//     <div>
-//       <canvas ref={gouraudCanvasRef} className="graphicsScene" />
-//       <canvas ref={phongCanvasRef} className="graphicsScene" />
-//     </div>
-//   );
-// }
+  return (
+    <div className="graphicsScene">
+      <div className="graphicsSceneMount" ref={mountRef}></div>
+    </div>
+  );
+}

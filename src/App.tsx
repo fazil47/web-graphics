@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import "./App.css";
 
 // Firebase
+import { FirebaseApp } from "firebase/app";
 import { onAuthStateChanged, signOut, Auth } from "firebase/auth";
 import {
   initializeFirebaseApp,
@@ -14,15 +15,10 @@ import {
 // Custom Components
 import Layout from "./components/Layout";
 import Authentication from "./components/Authentication";
+import LoadingIndicator from "./components/LoadingIndicator";
 
 // Pages
 import Home from "./components/pages/Home";
-import Lines from "./components/pages/Lines";
-import Circles from "./components/pages/Circles";
-import Ellipses from "./components/pages/Ellipses";
-import Transformations from "./components/pages/Transformations";
-import ThreeD from "./components/pages/ThreeD";
-import { FirebaseApp } from "firebase/app";
 import ShadingModels from "./components/pages/ShadingModels";
 
 function App(): JSX.Element {
@@ -46,19 +42,14 @@ function App(): JSX.Element {
     return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
   }, []);
 
-  async function LogoutHandler() {
+  async function logoutHandler() {
     if (firebaseAuth) {
       await signOut(firebaseAuth);
     }
   }
 
-  // TODO: Use a better loading component
   if (isAuthenticating) {
-    return (
-      <div>
-        <p>Loading...</p>
-      </div>
-    );
+    return <LoadingIndicator />;
   }
   // TODO: Use a better error component
   if (!firebaseApp || !firebaseAuth) {
@@ -83,13 +74,8 @@ function App(): JSX.Element {
       <FirebaseAppContext.Provider value={firebaseApp}>
         <FirebaseAuthContext.Provider value={firebaseAuth}>
           <Routes>
-            <Route path="/" element={<Layout LogoutHandler={LogoutHandler} />}>
+            <Route path="/" element={<Layout logoutHandler={logoutHandler} />}>
               <Route index element={<Home />} />
-              <Route path="lines" element={<Lines />} />
-              <Route path="circles" element={<Circles />} />
-              <Route path="ellipses" element={<Ellipses />} />
-              <Route path="transformations" element={<Transformations />} />
-              <Route path="3d" element={<ThreeD />} />
               <Route path="shading_models" element={<ShadingModels />} />
             </Route>
           </Routes>

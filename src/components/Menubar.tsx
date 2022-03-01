@@ -1,10 +1,25 @@
 import React from "react";
 import "./Menubar.css";
 
-export default function Menubar(props: any) {
+import NavigationButton from "./buttons/NavigationButton";
+
+export default function Menubar({
+  logoutHandler,
+  isSidebarOpen,
+  setSidebarOpen,
+}: {
+  logoutHandler: () => Promise<void>;
+  isSidebarOpen: boolean;
+  setSidebarOpen: (isOpen: boolean) => void;
+}) {
   return (
     <div id="menubar">
-      <button onClick={props.LogoutHandler}>Logout</button>
+      <div id="leftMenuItems">
+        <NavigationButton isOpen={isSidebarOpen} setIsOpen={setSidebarOpen} />
+      </div>
+      <div id="rightMenuItems">
+        <button onClick={logoutHandler}>Logout</button>
+      </div>
     </div>
   );
 }

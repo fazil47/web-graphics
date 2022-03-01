@@ -1,0 +1,7 @@
+.loadingIndicator {
+  @apply rounded-md m-4 p-4 flex flex-row justify-center align-middle;
+}
+
+.loadingSpinner {
+  @apply animate-spin -ml-1 mr-3 mt-[2px] h-5 w-5 text-black dark:text-white;
+}
