@@ -12,10 +12,8 @@ import {
 
 import Page from "../Page";
 import Quiz from "../Quiz";
-import GraphicsScene from "../GraphicsScene";
 
-import TempGraphicsGouraud from "../TempGraphicsGouraud";
-import TempGraphicsPhong from "../TempGraphicsPhong";
+import GraphicsScene from "../GraphicsScene";
 
 export default function ShadingModels() {
   const quizInfo1 = {
@@ -88,18 +86,6 @@ export default function ShadingModels() {
   return (
     <Page pageName="shading_models">
       <h1>Shading Models</h1>
-      {/* <GraphicsScene
-        start={() => {}}
-        update={() => {}}
-        scene={gouraudScene}
-        camera={gouraudCamera}
-      />
-      <GraphicsScene
-        start={() => {}}
-        update={() => {}}
-        scene={phongScene}
-        camera={phongCamera}
-      /> */}
       <GraphicsScene />
       {/* <h1>Gouraud Shading</h1>
       <TempGraphicsGouraud />

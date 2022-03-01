@@ -1,7 +1,11 @@
 #menubar {
-    @apply flex flex-row justify-end py-2 mx-5 place-items-center border-b-2 dark:border-gray-500;
+  @apply flex flex-row justify-between py-2 mx-5 place-items-center border-b-2 dark:border-gray-500 select-none;
 }
 
-#menubar > * {
-    @apply p-2 mx-2 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-md;
+#menubar > div > * {
+  @apply mx-2 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-md hover:cursor-pointer;
+}
+
+#menubar > div > button {
+  @apply p-2;
 }

@@ -1,5 +1,5 @@
 #page {
-  @apply flex-grow px-5 pt-5 pb-2 h-screen overflow-y-scroll;
+  @apply flex-grow px-5 pt-5 pb-2 h-screen overflow-y-scroll min-w-[500px] !important;
 }
 
 /* #page > * {

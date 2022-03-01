@@ -1,7 +1,7 @@
-/* canvas {
-  @apply rounded-md h-64 w-64 bg-purple-500;
-} */
-
 .graphicsScene {
-  @apply h-[250px] !important;
+  @apply rounded-md bg-black m-4 mx-auto p-4 h-[450px] w-[450px] !important;
+}
+
+.graphicsScene > canvas {
+  @apply mx-auto !important;
 }

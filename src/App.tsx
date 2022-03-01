@@ -46,7 +46,7 @@ function App(): JSX.Element {
     return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
   }, []);
 
-  async function LogoutHandler() {
+  async function logoutHandler() {
     if (firebaseAuth) {
       await signOut(firebaseAuth);
     }
@@ -83,7 +83,7 @@ function App(): JSX.Element {
       <FirebaseAppContext.Provider value={firebaseApp}>
         <FirebaseAuthContext.Provider value={firebaseAuth}>
           <Routes>
-            <Route path="/" element={<Layout LogoutHandler={LogoutHandler} />}>
+            <Route path="/" element={<Layout logoutHandler={logoutHandler} />}>
               <Route index element={<Home />} />
               <Route path="lines" element={<Lines />} />
               <Route path="circles" element={<Circles />} />

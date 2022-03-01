@@ -1,168 +1,52 @@
 import "./GraphicsScene.css";
 import { useEffect, useState, useRef } from "react";
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
-
-// Important: Canvas component needs to have it's height set either through inline styling or by using the !important CSS property,
-// otherwise it's height will keep increasing.
-
-const Box = () => {
-  return (
-    <mesh rotation={[90, 0, 20]}>
-      <boxBufferGeometry attach="geometry" args={[3, 3, 3]} />
-      <meshLambertMaterial attach="material" color="blue" />
-    </mesh>
-  );
-};
+import {
+  BoxGeometry,
+  Mesh,
+  MeshBasicMaterial,
+  PerspectiveCamera,
+  Scene,
+  WebGLRenderer,
+} from "three";
 
 export default function GraphicsScene() {
-  return (
-    <Canvas className="graphicsScene">
-      <OrbitControls enableZoom={false} enablePan={false} />
-      <Box />
-      <ambientLight intensity={0.5} />
-      <directionalLight intensity={1} position={[-2, 5, 2]} />
-    </Canvas>
-  );
+  const mountRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const current_mount = mountRef.current;
+
+    if (current_mount) {
+      var scene = new Scene();
+      var camera = new PerspectiveCamera(75, 1, 0.1, 1000);
+      var renderer = new WebGLRenderer();
+
+      renderer.setSize(400, 400);
+      current_mount.appendChild(renderer.domElement);
+
+      var geometry = new BoxGeometry(1, 1, 1);
+      var material = new MeshBasicMaterial({ color: 0x00ff00 });
+      var cube = new Mesh(geometry, material);
+
+      scene.add(cube);
+      camera.position.z = 5;
+
+      var animate = function () {
+        requestAnimationFrame(animate);
+        cube.rotation.x += 0.01;
+        cube.rotation.y += 0.01;
+        renderer.render(scene, camera);
+      };
+
+      animate();
+    }
+
+    // Cleanup
+    return () => {
+      if (current_mount) {
+        current_mount.removeChild(renderer.domElement);
+      }
+    };
+  }, []);
+
+  return <div className="graphicsScene" ref={mountRef}></div>;
 }
-
-// import { useEffect, useRef, useState } from "react";
-// import {
-//   BufferGeometry,
-//   DirectionalLight,
-//   Material,
-//   Mesh,
-//   MeshLambertMaterial,
-//   MeshPhongMaterial,
-//   OrthographicCamera,
-//   PerspectiveCamera,
-//   Scene,
-//   SphereGeometry,
-//   WebGL1Renderer,
-// } from "three";
-// import "./GraphicsScene.css";
-
-// // interface GraphicsSceneProps {
-// //   start: () => void;
-// //   update: (time?: number) => void;
-// //   scene: Scene;
-// //   camera: PerspectiveCamera | OrthographicCamera;
-// // }
-// export default function GraphicsScene() {
-//   const [gouraudCanvas, setGouraudCanvas] =
-//     useState<HTMLCanvasElement | null>();
-//   const [phongCanvas, setPhongCanvas] = useState<HTMLCanvasElement | null>();
-//   const gouraudCanvasRef = useRef<HTMLCanvasElement | null>(null);
-//   const phongCanvasRef = useRef<HTMLCanvasElement | null>(null);
-//   // let gouraudCanvas =
-//   //   document.querySelector<HTMLCanvasElement>("gouraudCanvas");
-//   // let phongCanvas = document.querySelector<HTMLCanvasElement>("phongCanvas");
-
-//   useEffect(() => {
-//     setGouraudCanvas(
-//       document.querySelector<HTMLCanvasElement>("gouraudCanvas")
-//     );
-//     setPhongCanvas(document.querySelector<HTMLCanvasElement>("phongCanvas"));
-//   }, [gouraudCanvasRef, phongCanvasRef]);
-//   // const [scene, setScene] = useState<Scene>();
-//   // const [renderer, setRenderer] = useState<WebGL1Renderer>();
-
-//   // Runs once
-//   // useEffect(() => {
-//   //   if (canvas.current) {
-//   //     setRenderer(new WebGL1Renderer({ canvas: canvas.current }));
-//   //   }
-//   //   setScene(new Scene());
-//   //   start();
-//   // }, []);
-
-//   if (!gouraudCanvasRef.current || !phongCanvasRef.current) {
-//     return (
-//       <div>
-//         <canvas ref={gouraudCanvasRef} className="graphicsScene" />
-//         <canvas ref={phongCanvasRef} className="graphicsScene" />
-//       </div>
-//     );
-//   }
-
-//   const gouraudRenderer = new WebGL1Renderer({
-//     canvas: gouraudCanvasRef.current,
-//   });
-//   const phongRenderer = new WebGL1Renderer({ canvas: phongCanvasRef.current });
-
-//   const fov = 75;
-//   const aspect = 2; // the canvas default
-//   const near = 0.1;
-//   const far = 5;
-
-//   const gouraudCamera = new PerspectiveCamera(fov, aspect, near, far);
-//   const gouraudScene = new Scene();
-
-//   const phongCamera = new PerspectiveCamera(fov, aspect, near, far);
-//   const phongScene = new Scene();
-
-//   {
-//     const color = 0xffffff;
-//     const intensity = 1;
-//     const light = new DirectionalLight(color, intensity);
-//     light.position.set(-1, 2, 4);
-//     gouraudScene.add(light);
-//     phongScene.add(light);
-//   }
-
-//   const sphereRadius = 1;
-//   const sphereWidthSegments = 16;
-//   const sphereHeightSegments = 16;
-//   const sphereGeometry = new SphereGeometry(
-//     sphereRadius,
-//     sphereWidthSegments,
-//     sphereHeightSegments
-//   );
-
-//   function makeMeshInstance({
-//     geometry,
-//     material,
-//     x = 0,
-//     y = 0,
-//     z = 0,
-//   }: {
-//     geometry: BufferGeometry;
-//     material: Material;
-//     x?: number;
-//     y?: number;
-//     z?: number;
-//   }) {
-//     const mesh = new Mesh(geometry, material);
-//     mesh.position.set(x, y, z);
-//     return mesh;
-//   }
-
-//   const gouraudMaterial = new MeshLambertMaterial({ color: 0xffffff });
-//   const gouraudSphereMesh = makeMeshInstance({
-//     geometry: sphereGeometry,
-//     material: gouraudMaterial,
-//   });
-//   gouraudScene.add(gouraudSphereMesh);
-
-//   const phongMaterial = new MeshPhongMaterial({ color: 0xffffff });
-//   const phongSphereMesh = makeMeshInstance({
-//     geometry: sphereGeometry,
-//     material: phongMaterial,
-//   });
-//   phongScene.add(phongSphereMesh);
-
-//   // Runs every frame
-//   function render(time: number) {
-//     gouraudRenderer.render(gouraudScene, gouraudCamera);
-//     phongRenderer.render(phongScene, phongCamera);
-//     requestAnimationFrame(render);
-//   }
-//   requestAnimationFrame(render);
-
-//   return (
-//     <div>
-//       <canvas ref={gouraudCanvasRef} className="graphicsScene" />
-//       <canvas ref={phongCanvasRef} className="graphicsScene" />
-//     </div>
-//   );
-// }
