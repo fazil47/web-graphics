@@ -19,11 +19,6 @@ export default function Sidebar({
       </div>
       <div id="sidebarContent">
         <SidebarContentItem path="" name="Home" />
-        <SidebarContentItem path="lines" name="Lines" />
-        <SidebarContentItem path="circles" name="Circles" />
-        <SidebarContentItem path="ellipses" name="Ellipses" />
-        <SidebarContentItem path="transformations" name="Transformations" />
-        <SidebarContentItem path="3d" name="3D" />
         <SidebarContentItem path="shading_models" name="Shading Models" />
       </div>
     </div>

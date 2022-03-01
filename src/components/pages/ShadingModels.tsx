@@ -37,14 +37,14 @@ export default function ShadingModels() {
   const geometry = new SphereGeometry(radius, widthSegments, heightSegments);
 
   function makeInstance(geometry: any, material: Material, x: number) {
-    const cube = new Mesh(geometry, material);
-    scene.add(cube);
-    cube.position.x = x;
-    cube.position.z = -3;
-    return cube;
+    const sphere = new Mesh(geometry, material);
+    scene.add(sphere);
+    sphere.position.x = x;
+    sphere.position.z = -3;
+    return sphere;
   }
 
-  const cubes = [
+  const spheres = [
     makeInstance(geometry, new MeshBasicMaterial({ color: 0x44aa88 }), 0),
     makeInstance(geometry, new MeshLambertMaterial({ color: 0x8844aa }), -2.5),
     makeInstance(geometry, new MeshPhongMaterial({ color: 0xaa8844 }), 2.5),
@@ -57,11 +57,11 @@ export default function ShadingModels() {
         scene={scene}
         update={(time: number) => {
           time *= 0.001; // convert time to seconds
-          cubes.forEach((cube, ndx) => {
+          spheres.forEach((sphere, ndx) => {
             const speed = 1 + ndx * 0.1;
             const rot = time * speed;
-            cube.rotation.x = rot;
-            cube.rotation.y = rot;
+            sphere.rotation.x = rot;
+            sphere.rotation.y = rot;
           });
         }}
         cameraPosition={new Vector3(0, 0, 3)}

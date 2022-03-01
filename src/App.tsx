@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import "./App.css";
 
 // Firebase
+import { FirebaseApp } from "firebase/app";
 import { onAuthStateChanged, signOut, Auth } from "firebase/auth";
 import {
   initializeFirebaseApp,
@@ -18,12 +19,6 @@ import LoadingIndicator from "./components/LoadingIndicator";
 
 // Pages
 import Home from "./components/pages/Home";
-import Lines from "./components/pages/Lines";
-import Circles from "./components/pages/Circles";
-import Ellipses from "./components/pages/Ellipses";
-import Transformations from "./components/pages/Transformations";
-import ThreeD from "./components/pages/ThreeD";
-import { FirebaseApp } from "firebase/app";
 import ShadingModels from "./components/pages/ShadingModels";
 
 function App(): JSX.Element {
@@ -81,11 +76,6 @@ function App(): JSX.Element {
           <Routes>
             <Route path="/" element={<Layout logoutHandler={logoutHandler} />}>
               <Route index element={<Home />} />
-              <Route path="lines" element={<Lines />} />
-              <Route path="circles" element={<Circles />} />
-              <Route path="ellipses" element={<Ellipses />} />
-              <Route path="transformations" element={<Transformations />} />
-              <Route path="3d" element={<ThreeD />} />
               <Route path="shading_models" element={<ShadingModels />} />
             </Route>
           </Routes>
