@@ -1,5 +1,5 @@
 #authDiv {
-  @apply mx-auto max-w-screen-md max-h-screen my-10 text-center rounded-lg 
+  @apply mx-10 max-h-screen my-10 text-center rounded-lg 
   bg-gray-100 dark:bg-gray-700 dark:text-white drop-shadow-md p-5 !important;
 }
 

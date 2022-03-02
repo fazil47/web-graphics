@@ -1,5 +1,5 @@
 #menubar {
-  @apply flex flex-row justify-between py-2 mx-5 place-items-center border-b-2 dark:border-gray-500 select-none;
+  @apply flex flex-row justify-between py-2 ml-5 mr-[29px] place-items-center border-b-2 dark:border-gray-500 select-none;
 }
 
 #menubar > div > * {
