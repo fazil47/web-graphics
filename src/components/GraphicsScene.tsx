@@ -10,11 +10,12 @@ import {
 } from "three";
 
 interface GraphicsSceneProps {
-  update: (time: number) => void;
+  update?: (time: number) => void;
   scene: Scene;
   camera?: OrthographicCamera | PerspectiveCamera;
   cameraPosition?: Vector3;
   cameraRotation?: Euler;
+  children?: React.ReactNode;
 }
 
 export default function GraphicsScene({
@@ -23,6 +24,7 @@ export default function GraphicsScene({
   camera,
   cameraPosition = new Vector3(0, 0, 0),
   cameraRotation = new Euler(0, 0, 0),
+  children,
 }: GraphicsSceneProps) {
   const mountRef = useRef<HTMLDivElement>(null);
 
@@ -49,7 +51,9 @@ export default function GraphicsScene({
       current_mount.appendChild(renderer.domElement);
 
       const updateRender = (time: number) => {
-        update(time);
+        if (update) {
+          update(time);
+        }
         renderer.render(scene, sceneCamera);
         requestAnimationFrame(updateRender);
       };
@@ -84,6 +88,7 @@ export default function GraphicsScene({
   return (
     <div className="graphicsScene">
       <div className="graphicsSceneMount" ref={mountRef}></div>
+      {children}
     </div>
   );
 }
