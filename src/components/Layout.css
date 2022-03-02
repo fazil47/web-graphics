@@ -3,5 +3,5 @@
 }
 
 #layoutContent {
-  @apply flex flex-col flex-grow overflow-y-auto min-w-[500px] !important;
+  @apply flex flex-col flex-grow overflow-y-auto !important;
 }
