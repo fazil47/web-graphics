@@ -81,7 +81,6 @@ export async function syncPageWithFirebase({
             );
         }
     } else if (responseType === FirebaseRequestResponse.Success) {
-        console.log("Setting quizStates to storedQuizStates from Firebase");
         return storedQuizStates;
     }
 }
@@ -94,7 +93,6 @@ async function readFromFirebase(
     storedQuizStates?: Array<QuizState>;
     responseType: FirebaseRequestResponse;
 }> {
-    console.log("Reading from Firebase");
     if (!student) {
         return { responseType: FirebaseRequestResponse.InvalidData };
     }
@@ -128,7 +126,6 @@ async function addToFirebase(
     user: User,
     pageName: string
 ): Promise<FirebaseRequestResponse> {
-    console.log("Adding to Firebase");
     if (quizStates.length === 0) {
         return FirebaseRequestResponse.InvalidData;
     }
@@ -154,7 +151,6 @@ async function updateFirebase(
     user: User,
     pageName: string
 ): Promise<FirebaseRequestResponse> {
-    console.log("Updating firebase");
     if (quizStates.length === 0) {
         return FirebaseRequestResponse.InvalidData;
     }
