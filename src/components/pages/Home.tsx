@@ -13,7 +13,7 @@ export default function Home() {
         scelerisque mauris pellentesque pulvinar pellentesque habitant morbi
         tristique. Senectus et netus et malesuada. Orci sagittis eu volutpat
         odio facilisis mauris sit amet massa. Nisi quis eleifend quam adipiscing
-        vitae. Justo donec enim diam vulputate. Feugiat nibh sed pulvinar proin.
+        vitae. Justo donec enim diam vulputate.
       </p>
     </Page>
   );
