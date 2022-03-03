@@ -19,7 +19,10 @@ export default function Slider({
   const [value, setValue] = useState(0);
   return (
     <label className="slider">
-      <span>{label}</span>
+      <div>
+        <span>{label}:</span>
+        <span>{value}</span>
+      </div>
       <input
         value={value}
         type="range"
@@ -32,7 +35,6 @@ export default function Slider({
           onChange(value);
         }}
       />
-      <span>{value}</span>
     </label>
   );
 }
