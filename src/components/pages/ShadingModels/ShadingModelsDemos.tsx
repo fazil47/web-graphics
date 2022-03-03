@@ -76,8 +76,8 @@ export function FlatShadingDemo() {
     >
       <Slider
         label="Light Orbit"
-        min="0"
-        max="360"
+        min="-180"
+        max="180"
         onChange={(value) => {
           lightGroup.rotation.y = (value * Math.PI) / 180;
         }}
@@ -119,8 +119,8 @@ export function GouraudShadingDemo() {
     >
       <Slider
         label="Light Orbit"
-        min="0"
-        max="360"
+        min="-180"
+        max="180"
         onChange={(value) => {
           lightGroup.rotation.y = (value * Math.PI) / 180;
         }}
@@ -162,8 +162,8 @@ export function PhongShadingDemo() {
     >
       <Slider
         label="Light Orbit"
-        min="0"
-        max="360"
+        min="-180"
+        max="180"
         onChange={(value) => {
           lightGroup.rotation.y = (value * Math.PI) / 180;
         }}

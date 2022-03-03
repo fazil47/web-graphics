@@ -1,15 +1,15 @@
 .slider {
-  @apply flex flex-row align-middle justify-between m-1 py-2 px-4 bg-white dark:bg-gray-800 rounded-md !important;
+  @apply flex flex-col align-middle justify-between max-w-[500px] mx-auto my-1 py-2 px-4 bg-white dark:bg-gray-800 rounded-md !important;
 }
 
 .slider > input[type="range"] {
-  @apply mt-[1.5px] !important;
+  @apply m-1 !important;
 }
 
 .slider > div {
-  @apply flex flex-row align-middle justify-evenly text-center !important;
+  @apply m-1 flex flex-row align-middle justify-evenly text-center !important;
 }
 
 .slider > div > span:nth-child(2) {
-  @apply ml-1 w-[24px] !important;
+  @apply ml-1 w-[30px] !important;
 }
