@@ -12,6 +12,10 @@
   @apply rounded-md drop-shadow-none bg-gray-100 dark:bg-gray-700 !important;
 }
 
+#authDiv .firebaseui-card-header {
+  @apply rounded-none !important;
+}
+
 #authDiv button {
   @apply rounded-md !important;
 }
