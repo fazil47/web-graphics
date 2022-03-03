@@ -1,0 +1,15 @@
+.slider {
+  @apply flex flex-row align-middle justify-between m-1 p-2 bg-white dark:bg-gray-800 rounded-md !important;
+}
+
+.slider > span:nth-child(1) {
+  @apply ml-1 flex align-middle justify-center !important;
+}
+
+.slider > span:nth-child(3) {
+  @apply w-8 mr-1 flex align-middle justify-center text-center !important;
+}
+
+.slider > input[type="range"] {
+  @apply mt-[3px] !important;
+}

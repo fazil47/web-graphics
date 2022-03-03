@@ -2,17 +2,6 @@
   @apply rounded-md bg-black shadow-lg my-5 p-4 !important;
 }
 
-.graphicsScene > label {
-  @apply flex flex-row align-middle justify-evenly m-2 p-2 bg-white dark:bg-gray-800 rounded-md !important;
-}
-
-.graphicsScene > label > span {
-}
-
-.graphicsScene > label > input[type="range"] {
-  @apply mt-[3px] !important;
-}
-
 .graphicsSceneMount {
   @apply mx-auto h-[350px] !important;
 }

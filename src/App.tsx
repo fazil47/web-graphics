@@ -19,7 +19,7 @@ import LoadingIndicator from "./components/LoadingIndicator";
 
 // Pages
 import Home from "./components/pages/Home";
-import ShadingModels from "./components/pages/ShadingModels";
+import ShadingModels from "./components/pages/ShadingModels/ShadingModels";
 
 function App(): JSX.Element {
   const [isSignedIn, setIsSignedIn] = useState(false); // Local signed-in state.
