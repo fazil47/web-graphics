@@ -10,7 +10,8 @@ import {
 
 export default function ShadingModels() {
   const quizInfo1 = {
-    question: "Using which shading model can you get highlights?",
+    question:
+      "In which interpolation technique is the normal at each point calculated?",
     options: ["Gouraud Shading", "Phong Shading", "Flat Shading"],
     answerIndex: 1,
   };
