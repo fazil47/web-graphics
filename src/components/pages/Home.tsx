@@ -11,9 +11,7 @@ export default function Home() {
         nibh venenatis cras sed felis eget. Non curabitur gravida arcu ac tortor
         dignissim. Elit sed vulputate mi sit amet mauris commodo quis. Vel elit
         scelerisque mauris pellentesque pulvinar pellentesque habitant morbi
-        tristique. Senectus et netus et malesuada. Orci sagittis eu volutpat
-        odio facilisis mauris sit amet massa. Nisi quis eleifend quam adipiscing
-        vitae.
+        tristique. Senectus et netus et malesuada.
       </p>
     </Page>
   );
