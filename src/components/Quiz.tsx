@@ -16,21 +16,22 @@ interface QuizProps {
   };
   initialQuizState?: QuizState;
   handleQuizStateUpdate?: (quizState: QuizState) => void;
-  initialSelection?: number;
 }
 
 export default function Quiz({
   quizInfo,
   handleQuizStateUpdate,
   initialQuizState = QuizState.Unanswered,
-  initialSelection,
 }: QuizProps) {
   const [selection, setSelection] = React.useState<number>(); // Index of option selected
   const [quizState, setQuizState] = React.useState(initialQuizState);
 
   useEffect(() => {
     setQuizState(initialQuizState);
-  }, [initialQuizState]);
+    if (initialQuizState === QuizState.Correct) {
+      setSelection(quizInfo.answerIndex);
+    }
+  }, [initialQuizState, quizInfo.answerIndex]);
 
   const SelectionHandler = (event: any) => {
     let index = quizInfo.options.indexOf(event.target.value);
@@ -57,12 +58,7 @@ export default function Quiz({
       <p className="quizQuestion">Q: {quizInfo.question}</p>
       <div className="flex flex-col w-full">
         {quizInfo.options.map((option: string) => {
-          let isSelected;
-          if (initialSelection) {
-            isSelected = initialSelection === quizInfo.options.indexOf(option);
-          } else {
-            isSelected = selection === quizInfo.options.indexOf(option);
-          }
+          const isSelected = selection === quizInfo.options.indexOf(option);
           const labelClassName = `quizOptionLabel ${
             isSelected ? " labelSelected" : ""
           }`;
