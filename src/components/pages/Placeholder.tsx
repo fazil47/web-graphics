@@ -6,6 +6,8 @@ export default function Placeholder() {
     question: "Question?",
     options: ["Option 1", "Option 2", "Option 3"],
     answerIndex: 1,
+    hint: "Hint hint hint",
+    explanation: "Explanation explanation explanation",
   };
   return (
     <Page pageName="placeholder">

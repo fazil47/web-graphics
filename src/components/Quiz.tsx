@@ -1,11 +1,17 @@
-import React, { useEffect } from "react";
+import { useState, useEffect } from "react";
 import "./Quiz.css";
 
-export enum QuizState {
+export enum QuizAnswerState {
   Unanswered,
   Correct,
   Incorrect,
 }
+
+export interface QuizState {
+  answerState: QuizAnswerState;
+  selection?: number;
+}
+
 interface QuizProps {
   quizInfo: {
     options: Array<string>;
@@ -21,32 +27,40 @@ interface QuizProps {
 export default function Quiz({
   quizInfo,
   handleQuizStateUpdate,
-  initialQuizState = QuizState.Unanswered,
+  initialQuizState = { answerState: QuizAnswerState.Unanswered, selection: -1 },
 }: QuizProps) {
-  const [selection, setSelection] = React.useState<number>(); // Index of option selected
-  const [quizState, setQuizState] = React.useState(initialQuizState);
+  const [currentSelection, setCurrentSelection] = useState<number | undefined>(
+    initialQuizState.selection
+  );
+  const [quizState, setQuizState] = useState<QuizState>(initialQuizState);
 
   useEffect(() => {
     setQuizState(initialQuizState);
-    if (initialQuizState === QuizState.Correct) {
-      setSelection(quizInfo.answerIndex);
-    }
-  }, [initialQuizState, quizInfo.answerIndex]);
+    setCurrentSelection(initialQuizState.selection);
+  }, [initialQuizState]);
 
   const SelectionHandler = (event: any) => {
     let index = quizInfo.options.indexOf(event.target.value);
-    setSelection(index);
+    setCurrentSelection(index);
   };
 
   const SubmitHandler = (event: any) => {
     event.preventDefault();
-    const isCorrect = quizInfo.answerIndex === selection;
-    setQuizState(isCorrect ? QuizState.Correct : QuizState.Incorrect);
+    const isCorrect = quizInfo.answerIndex === currentSelection;
+    setQuizState({
+      answerState: isCorrect
+        ? QuizAnswerState.Correct
+        : QuizAnswerState.Incorrect,
+      selection: currentSelection,
+    });
 
     if (handleQuizStateUpdate) {
-      handleQuizStateUpdate(
-        isCorrect ? QuizState.Correct : QuizState.Incorrect
-      );
+      handleQuizStateUpdate({
+        answerState: isCorrect
+          ? QuizAnswerState.Correct
+          : QuizAnswerState.Incorrect,
+        selection: currentSelection,
+      });
     }
   };
 
@@ -58,7 +72,8 @@ export default function Quiz({
       <p className="quizQuestion">Q: {quizInfo.question}</p>
       <div className="flex flex-col w-full">
         {quizInfo.options.map((option: string) => {
-          const isSelected = selection === quizInfo.options.indexOf(option);
+          const isSelected =
+            currentSelection === quizInfo.options.indexOf(option);
           const labelClassName = `quizOptionLabel ${
             isSelected ? " labelSelected" : ""
           }`;
@@ -80,10 +95,10 @@ export default function Quiz({
       <button className="quizSubmitButton" onClick={SubmitHandler}>
         Submit
       </button>
-      {quizState === QuizState.Correct ? (
-        <p className="correctMessage">{`Correct! ${explanation}`}</p>
-      ) : quizState === QuizState.Incorrect ? (
-        <p className="incorrectMessage">{`Incorrect ${hint}`}</p>
+      {quizState.answerState === QuizAnswerState.Correct ? (
+        <p className="correctMessage">{`Correct. ${explanation}`}</p>
+      ) : quizState.answerState === QuizAnswerState.Incorrect ? (
+        <p className="incorrectMessage">{`Incorrect. ${hint}`}</p>
       ) : null}
     </form>
   );

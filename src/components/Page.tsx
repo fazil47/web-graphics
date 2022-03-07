@@ -8,7 +8,7 @@ import {
   syncPageWithFirebase,
 } from "../utils/firebase/FirebaseUtils";
 
-import Quiz, { QuizState } from "./Quiz";
+import Quiz, { QuizAnswerState, QuizState } from "./Quiz";
 
 interface PageProps {
   pageName: string;
@@ -30,7 +30,7 @@ export default function Page({ pageName, children }: PageProps) {
       }
     });
     setQuizCount(quizCount);
-    setQuizStates(new Array(quizCount).fill(QuizState.Unanswered));
+    setQuizStates(new Array(quizCount).fill(QuizAnswerState.Unanswered));
 
     const initializeQuizStates = async (currentUser: User | null) => {
       const storedQuizStates = await syncPageWithFirebase({
@@ -96,7 +96,8 @@ export default function Page({ pageName, children }: PageProps) {
       (100 *
         quizStates.reduce(
           (accumulatedValue: number, quizState: QuizState) =>
-            (quizState === QuizState.Correct ? 1 : 0) + accumulatedValue,
+            (quizState.answerState === QuizAnswerState.Correct ? 1 : 0) +
+            accumulatedValue,
           0
         )) /
       quizCount;
