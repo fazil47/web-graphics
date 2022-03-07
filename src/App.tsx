@@ -23,7 +23,7 @@ import ShadingModels from "./components/pages/ShadingModels/ShadingModels";
 import Placeholder from "./components/pages/Placeholder";
 
 function App(): JSX.Element {
-  const [isSignedIn, setIsSignedIn] = useState(false); // Local signed-in state.
+  const [isAuthenticated, setIsAuthenticated] = useState(false); // Local signed-in state.
   const [isAuthenticating, setIsAuthenticating] = useState(true); // Firebase signing-in progress state.
   const [showAuthPage, setShowAuthPage] = useState(false); // Show the authentication page.
   const [firebaseApp, setFirebaseApp] = useState<FirebaseApp | null>(null); // Firebase app instance.
@@ -41,21 +41,21 @@ function App(): JSX.Element {
       const unregisterAuthObserver = onAuthStateChanged(
         firebaseAuth,
         (user) => {
-          setIsSignedIn(!!user);
+          setIsAuthenticated(!!user);
           setIsAuthenticating(false);
         }
       );
       return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
     } else {
       setIsAuthenticating(false);
-      setIsSignedIn(false);
+      setIsAuthenticated(false);
     }
   }, []);
 
   async function logoutHandler() {
     if (firebaseAuth) {
       await signOut(firebaseAuth);
-      setShowAuthPage(true);
+      // setShowAuthPage(true);
     }
   }
 
@@ -73,7 +73,7 @@ function App(): JSX.Element {
   // }
 
   // TODO: Use custom authentication components
-  if (!isSignedIn && firebaseAuth && showAuthPage) {
+  if (!isAuthenticated && firebaseAuth && showAuthPage) {
     return <Authentication firebaseAuth={firebaseAuth} />;
   }
 
@@ -90,6 +90,7 @@ function App(): JSX.Element {
                   showAuthPage={() => {
                     setShowAuthPage(true);
                   }}
+                  isAuthenticated={isAuthenticated}
                 />
               }
             >

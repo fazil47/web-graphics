@@ -15,9 +15,11 @@ import {
 export default function Layout({
   logoutHandler,
   showAuthPage,
+  isAuthenticated,
 }: {
   logoutHandler: () => Promise<void>;
   showAuthPage: () => void;
+  isAuthenticated: boolean;
 }) {
   const [firestore, setFirestore] = useState<Firestore | null>(null);
 
@@ -57,7 +59,7 @@ export default function Layout({
             showAuthPage={showAuthPage}
             isSidebarOpen={isSidebarOpen}
             setSidebarOpen={setIsSidebarOpen}
-            isAuthenticated={!!firebaseApp}
+            isAuthenticated={isAuthenticated}
           />
           <Outlet />
         </div>
