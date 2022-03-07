@@ -20,12 +20,14 @@ import LoadingIndicator from "./components/LoadingIndicator";
 // Pages
 import Home from "./components/pages/Home";
 import ShadingModels from "./components/pages/ShadingModels/ShadingModels";
+import Placeholder from "./components/pages/Placeholder";
 
 function App(): JSX.Element {
   const [isSignedIn, setIsSignedIn] = useState(false); // Local signed-in state.
   const [isAuthenticating, setIsAuthenticating] = useState(true); // Firebase signing-in progress state.
-  const [firebaseApp, setFirebaseApp] = useState<FirebaseApp>(); // Firebase app instance.
-  const [firebaseAuth, setFirebaseAuth] = useState<Auth>(); // Firebase auth object.
+  const [showAuthPage, setShowAuthPage] = useState(false); // Show the authentication page.
+  const [firebaseApp, setFirebaseApp] = useState<FirebaseApp | null>(null); // Firebase app instance.
+  const [firebaseAuth, setFirebaseAuth] = useState<Auth | null>(null); // Firebase auth object.
 
   // Listen to the Firebase Auth state and set the local state.
   useEffect(() => {
@@ -34,39 +36,45 @@ function App(): JSX.Element {
     setFirebaseApp(firebaseApp);
     setFirebaseAuth(firebaseAuth);
 
-    setIsAuthenticating(true);
-    const unregisterAuthObserver = onAuthStateChanged(firebaseAuth, (user) => {
-      setIsSignedIn(!!user);
+    if (firebaseAuth) {
+      setIsAuthenticating(true);
+      const unregisterAuthObserver = onAuthStateChanged(
+        firebaseAuth,
+        (user) => {
+          setIsSignedIn(!!user);
+          setIsAuthenticating(false);
+        }
+      );
+      return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
+    } else {
       setIsAuthenticating(false);
-    });
-    return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
+      setIsSignedIn(false);
+    }
   }, []);
 
   async function logoutHandler() {
     if (firebaseAuth) {
       await signOut(firebaseAuth);
+      setShowAuthPage(true);
     }
   }
 
   if (isAuthenticating) {
     return <LoadingIndicator />;
   }
-  // TODO: Use a better error component
-  if (!firebaseApp || !firebaseAuth) {
-    return (
-      <div className="App">
-        <p>Firebase Error</p>
-      </div>
-    );
-  }
+
+  // // TODO: Use a better error component
+  // if (!firebaseApp || !firebaseAuth) {
+  //   return (
+  //     <div className="App">
+  //       <p>Firebase Error</p>
+  //     </div>
+  //   );
+  // }
 
   // TODO: Use custom authentication components
-  if (!isSignedIn) {
-    return (
-      <FirebaseAuthContext.Provider value={firebaseAuth}>
-        <Authentication />
-      </FirebaseAuthContext.Provider>
-    );
+  if (!isSignedIn && firebaseAuth && showAuthPage) {
+    return <Authentication firebaseAuth={firebaseAuth} />;
   }
 
   return (
@@ -74,9 +82,20 @@ function App(): JSX.Element {
       <FirebaseAppContext.Provider value={firebaseApp}>
         <FirebaseAuthContext.Provider value={firebaseAuth}>
           <Routes>
-            <Route path="/" element={<Layout logoutHandler={logoutHandler} />}>
+            <Route
+              path="/"
+              element={
+                <Layout
+                  logoutHandler={logoutHandler}
+                  showAuthPage={() => {
+                    setShowAuthPage(true);
+                  }}
+                />
+              }
+            >
               <Route index element={<Home />} />
               <Route path="shading_models" element={<ShadingModels />} />
+              <Route path="placeholder" element={<Placeholder />} />
             </Route>
           </Routes>
         </FirebaseAuthContext.Provider>

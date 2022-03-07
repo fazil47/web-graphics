@@ -2,11 +2,14 @@ import React from "react";
 import "./Authentication.css";
 
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
-import { GoogleAuthProvider, EmailAuthProvider } from "firebase/auth";
-import { FirebaseAuthContext } from "../utils/firebase/FirebaseUtils";
+import { GoogleAuthProvider, EmailAuthProvider, Auth } from "firebase/auth";
 
-export default function Authentication() {
-  const firebaseAuth = React.useContext(FirebaseAuthContext);
+export default function Authentication({
+  firebaseAuth,
+}: {
+  firebaseAuth: Auth;
+}) {
+  // const firebaseAuth = React.useContext(FirebaseAuthContext);
 
   const uiConfig = {
     signInFlow: "popup",

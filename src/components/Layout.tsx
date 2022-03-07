@@ -14,10 +14,12 @@ import {
 
 export default function Layout({
   logoutHandler,
+  showAuthPage,
 }: {
   logoutHandler: () => Promise<void>;
+  showAuthPage: () => void;
 }) {
-  const [firestore, setFirestore] = useState<Firestore>();
+  const [firestore, setFirestore] = useState<Firestore | null>(null);
 
   const firebaseApp = useContext(FirebaseAppContext);
 
@@ -35,10 +37,10 @@ export default function Layout({
     }
   }, [firebaseApp]);
 
-  // TODO: Use a better error component
-  if (!firestore) {
-    return <div>Firestore error</div>;
-  }
+  // // TODO: Use a better error component
+  // if (!firestore) {
+  //   return <div>Firestore error</div>;
+  // }
 
   return (
     <div id="layout">
@@ -52,8 +54,10 @@ export default function Layout({
         <div id="layoutContent">
           <Menubar
             logoutHandler={logoutHandler}
+            showAuthPage={showAuthPage}
             isSidebarOpen={isSidebarOpen}
             setSidebarOpen={setIsSidebarOpen}
+            isAuthenticated={!!firebaseApp}
           />
           <Outlet />
         </div>

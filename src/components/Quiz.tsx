@@ -12,15 +12,18 @@ interface QuizProps {
     answerIndex: number;
     question: string;
     hint?: string;
+    explanation?: string;
   };
   initialQuizState?: QuizState;
   handleQuizStateUpdate?: (quizState: QuizState) => void;
+  initialSelection?: number;
 }
 
 export default function Quiz({
   quizInfo,
   handleQuizStateUpdate,
   initialQuizState = QuizState.Unanswered,
+  initialSelection,
 }: QuizProps) {
   const [selection, setSelection] = React.useState<number>(); // Index of option selected
   const [quizState, setQuizState] = React.useState(initialQuizState);
@@ -46,12 +49,20 @@ export default function Quiz({
     }
   };
 
+  const hint = quizInfo.hint ? quizInfo.hint : "";
+  const explanation = quizInfo.explanation ? quizInfo.explanation : "";
+
   return (
     <form className="quizForm">
       <p className="quizQuestion">Q: {quizInfo.question}</p>
       <div className="flex flex-col w-full">
         {quizInfo.options.map((option: string) => {
-          const isSelected = selection === quizInfo.options.indexOf(option);
+          let isSelected;
+          if (initialSelection) {
+            isSelected = initialSelection === quizInfo.options.indexOf(option);
+          } else {
+            isSelected = selection === quizInfo.options.indexOf(option);
+          }
           const labelClassName = `quizOptionLabel ${
             isSelected ? " labelSelected" : ""
           }`;
@@ -74,9 +85,9 @@ export default function Quiz({
         Submit
       </button>
       {quizState === QuizState.Correct ? (
-        <p className="correctMessage">Correct</p>
+        <p className="correctMessage">{`Correct! ${explanation}`}</p>
       ) : quizState === QuizState.Incorrect ? (
-        <p className="incorrectMessage">Incorrect {quizInfo.hint}</p>
+        <p className="incorrectMessage">{`Incorrect ${hint}`}</p>
       ) : null}
     </form>
   );

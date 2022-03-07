@@ -32,7 +32,7 @@ export default function Page({ pageName, children }: PageProps) {
     setQuizCount(quizCount);
     setQuizStates(new Array(quizCount).fill(QuizState.Unanswered));
 
-    const initializeQuizStates = async (currentUser: User) => {
+    const initializeQuizStates = async (currentUser: User | null) => {
       const storedQuizStates = await syncPageWithFirebase({
         firestore,
         currentUser,
@@ -42,27 +42,28 @@ export default function Page({ pageName, children }: PageProps) {
         setQuizStates(storedQuizStates);
       }
     };
-    if (firebaseAuth.currentUser && firestore && quizCount > 0) {
-      initializeQuizStates(firebaseAuth.currentUser);
+    if (quizCount > 0) {
+      initializeQuizStates(firebaseAuth ? firebaseAuth.currentUser : null);
     }
-  }, [firebaseAuth.currentUser, firestore, children, pageName]);
+  }, [firebaseAuth, firestore, children, pageName]);
 
   const handleQuizStateUpdate = (
     quizIndex: number,
     quizState: QuizState
   ): void => {
-    if (!firebaseAuth.currentUser) {
-      return;
-    }
+    // TODO: Should I do something here?
+    // if (!firebaseAuth.currentUser) {
+    //   return;
+    // }
 
     let newQuizStates = [...quizStates];
     newQuizStates[quizIndex] = quizState;
     setQuizStates(newQuizStates);
     syncPageWithFirebase({
       firestore,
-      currentUser: firebaseAuth.currentUser,
+      currentUser: firebaseAuth ? firebaseAuth.currentUser : null,
       pageName,
-      updatedQuizStates: newQuizStates,
+      updatedPageQuizStates: newQuizStates,
     });
   };
 

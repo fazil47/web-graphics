@@ -15,13 +15,20 @@ const firebaseConfig = {
     appId: process.env.REACT_APP_FIREBASE_APP_ID,
 };
 
-export const initializeFirebaseApp = () => initializeApp(firebaseConfig);
-export const getFirebaseAuth = (firebaseApp = initializeFirebaseApp()) => getAuth(firebaseApp);
-export const getFirestoreObject = (firebaseApp = initializeFirebaseApp()) => getFirestore(firebaseApp);
+const isFirebaseConfigValid = () => {
+    for (const [, value] of Object.entries(firebaseConfig)) {
+        if (!value) { return false; }
+    }
+    return true;
+}
 
-export const FirebaseAppContext = createContext<FirebaseApp>(initializeFirebaseApp());
-export const FirebaseAuthContext = createContext<Auth>(getFirebaseAuth());
-export const FirestoreContext = createContext<Firestore>(getFirestoreObject());
+export const initializeFirebaseApp = () => isFirebaseConfigValid() ? initializeApp(firebaseConfig) : null;
+export const getFirebaseAuth = (firebaseApp = initializeFirebaseApp()) => firebaseApp ? getAuth(firebaseApp) : null;
+export const getFirestoreObject = (firebaseApp = initializeFirebaseApp()) => firebaseApp ? getFirestore(firebaseApp) : null;
+
+export const FirebaseAppContext = createContext<FirebaseApp | null>(initializeFirebaseApp());
+export const FirebaseAuthContext = createContext<Auth | null>(getFirebaseAuth());
+export const FirestoreContext = createContext<Firestore | null>(getFirestoreObject());
 
 enum FirebaseRequestResponse {
     Success,
@@ -31,23 +38,39 @@ enum FirebaseRequestResponse {
     InvalidData,
 }
 
+function syncWithLocalStorage({
+    pageName,
+    updatedPageQuizStates
+}: {
+    pageName: string;
+    updatedPageQuizStates?: Array<QuizState>;
+}): Array<QuizState> | undefined {
+    const storedQuizStates = JSON.parse(localStorage.getItem("quizStates") || "{}");
+    if (updatedPageQuizStates) {
+        const updatedQuizStates = storedQuizStates ? storedQuizStates : {};
+        updatedQuizStates[pageName] = updatedPageQuizStates;
+        localStorage.setItem("quizStates", JSON.stringify(updatedQuizStates));
+    } else {
+        return storedQuizStates[pageName] as Array<QuizState> | undefined;
+    }
+}
+
 export async function syncPageWithFirebase({
     firestore,
     currentUser,
     pageName,
-    updatedQuizStates,
+    updatedPageQuizStates,
 }: {
-    firestore: Firestore;
-    currentUser: User;
+    firestore: Firestore | null;
+    currentUser: User | null;
     pageName: string;
-    updatedQuizStates?: Array<QuizState>;
+    updatedPageQuizStates?: Array<QuizState>;
 }): Promise<Array<QuizState> | undefined> {
-    if (!currentUser) {
-        console.error("User isn't logged in");
-        return;
-    } else if (!firestore) {
-        console.error("Firestore instance isn't valid");
-        return;
+    // Sync with localStorage as well
+    const localQuizStates = syncWithLocalStorage({ pageName, updatedPageQuizStates });
+
+    if (!currentUser || !firestore) {
+        return localQuizStates;
     }
 
     const { storedQuizStates, responseType } = await readFromFirebase(
@@ -57,24 +80,22 @@ export async function syncPageWithFirebase({
     );
 
     if (responseType === FirebaseRequestResponse.Error) {
-        console.error("Error reading from Firebase");
         return;
     } else if (responseType === FirebaseRequestResponse.InvalidData) {
-        console.error("Invalid data used to read from Firebase");
         return;
     }
 
-    if (updatedQuizStates) {
+    if (updatedPageQuizStates) {
         if (responseType === FirebaseRequestResponse.DocumentNotFound) {
             await addToFirebase(
-                updatedQuizStates,
+                updatedPageQuizStates,
                 firestore,
                 currentUser,
                 pageName
             );
         } else {
             await updateFirebase(
-                updatedQuizStates,
+                updatedPageQuizStates,
                 firestore,
                 currentUser,
                 pageName
