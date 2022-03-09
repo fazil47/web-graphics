@@ -26,13 +26,13 @@ interface PageProps {
 export default function Page({ pageName, children }: PageProps) {
   const [quizCount, setQuizCount] = useState(0);
   const [quizStates, setQuizStates] = useState<Array<QuizState>>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isNotLoading, setIsNotLoading] = useState(false);
 
   const firebaseAuth = useContext(FirebaseAuthContext);
   const firestore = useContext(FirestoreContext);
 
   useEffect(() => {
-    setIsLoading(true);
+    setIsNotLoading(false);
 
     let quizCount = 0;
     Children.forEach(children, (child) => {
@@ -49,7 +49,7 @@ export default function Page({ pageName, children }: PageProps) {
         currentUser,
         pageName,
       });
-      setIsLoading(false);
+      setIsNotLoading(true);
       if (storedQuizStates) {
         setQuizStates(storedQuizStates);
       }
@@ -58,7 +58,7 @@ export default function Page({ pageName, children }: PageProps) {
     if (quizCount > 0) {
       initializeQuizStates(firebaseAuth ? firebaseAuth.currentUser : null);
     } else {
-      setIsLoading(false);
+      setIsNotLoading(true);
     }
   }, [firebaseAuth, firestore, children, pageName]);
 
@@ -114,7 +114,7 @@ export default function Page({ pageName, children }: PageProps) {
     return progress;
   };
 
-  if (isLoading === false) {
+  if (isNotLoading === true) {
     return (
       <div id="page">
         {quizCount > 0 && <h3>Progress: {getProgressPercentage()}%</h3>}
