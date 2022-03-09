@@ -113,14 +113,14 @@ export default function Page({ pageName, children }: PageProps) {
     return progress;
   };
 
-  if (isLoading) {
+  if (isLoading === false) {
+    return (
+      <div id="page">
+        {quizCount > 0 && <h3>Progress: {getProgressPercentage()}%</h3>}
+        {getchildrenWithProps()}
+      </div>
+    );
+  } else {
     return <LoadingIndicator />;
   }
-
-  return (
-    <div id="page">
-      {quizCount > 0 && <h3>Progress: {getProgressPercentage()}%</h3>}
-      {getchildrenWithProps()}
-    </div>
-  );
 }
