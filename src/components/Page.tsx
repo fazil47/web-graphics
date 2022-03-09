@@ -32,6 +32,8 @@ export default function Page({ pageName, children }: PageProps) {
   const firestore = useContext(FirestoreContext);
 
   useEffect(() => {
+    setIsLoading(true);
+
     let quizCount = 0;
     Children.forEach(children, (child) => {
       if (isValidElement(child) && child.type === Quiz) {
@@ -42,12 +44,12 @@ export default function Page({ pageName, children }: PageProps) {
     setQuizStates(new Array(quizCount).fill(QuizAnswerState.Unanswered));
 
     const initializeQuizStates = async (currentUser: User | null) => {
-      setIsLoading(true);
       const storedQuizStates = await syncPageWithFirebase({
         firestore,
         currentUser,
         pageName,
       });
+      setIsLoading(false);
       if (storedQuizStates) {
         setQuizStates(storedQuizStates);
       }
@@ -59,11 +61,6 @@ export default function Page({ pageName, children }: PageProps) {
       setIsLoading(false);
     }
   }, [firebaseAuth, firestore, children, pageName]);
-
-  // Sets isLoading to false whenever the quiz states change.
-  useEffect(() => {
-    setIsLoading(false);
-  }, [quizStates]);
 
   const handleQuizStateUpdate = (
     quizIndex: number,
