@@ -24,8 +24,7 @@ interface PageProps {
 }
 
 export default function Page({ pageName, children }: PageProps) {
-  // By default quizCount is one because the loading indicator is shown only when it's greater than zero.
-  const [quizCount, setQuizCount] = useState(1);
+  const [quizCount, setQuizCount] = useState(0);
   const [quizStates, setQuizStates] = useState<Array<QuizState>>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -54,8 +53,11 @@ export default function Page({ pageName, children }: PageProps) {
       }
       setIsLoading(false);
     };
+
     if (quizCount > 0) {
       initializeQuizStates(firebaseAuth ? firebaseAuth.currentUser : null);
+    } else {
+      setIsLoading(false);
     }
   }, [firebaseAuth, firestore, children, pageName]);
 
@@ -111,7 +113,7 @@ export default function Page({ pageName, children }: PageProps) {
     return progress;
   };
 
-  if (quizCount > 0 && isLoading) {
+  if (isLoading) {
     return <LoadingIndicator />;
   }
 
