@@ -24,15 +24,14 @@ interface PageProps {
 }
 
 export default function Page({ pageName, children }: PageProps) {
-  const [quizCount, setQuizCount] = useState(0);
   const [quizStates, setQuizStates] = useState<Array<QuizState>>([]);
-  const [isNotLoading, setIsNotLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const firebaseAuth = useContext(FirebaseAuthContext);
   const firestore = useContext(FirestoreContext);
 
   useEffect(() => {
-    setIsNotLoading(false);
+    setIsLoading(true);
 
     let quizCount = 0;
     Children.forEach(children, (child) => {
@@ -40,7 +39,6 @@ export default function Page({ pageName, children }: PageProps) {
         quizCount++;
       }
     });
-    setQuizCount(quizCount);
     setQuizStates(new Array(quizCount).fill(QuizAnswerState.Unanswered));
 
     const initializeQuizStates = async (currentUser: User | null) => {
@@ -49,7 +47,7 @@ export default function Page({ pageName, children }: PageProps) {
         currentUser,
         pageName,
       });
-      setIsNotLoading(true);
+      setIsLoading(false);
       if (storedQuizStates) {
         setQuizStates(storedQuizStates);
       }
@@ -58,7 +56,7 @@ export default function Page({ pageName, children }: PageProps) {
     if (quizCount > 0) {
       initializeQuizStates(firebaseAuth ? firebaseAuth.currentUser : null);
     } else {
-      setIsNotLoading(true);
+      setIsLoading(false);
     }
   }, [firebaseAuth, firestore, children, pageName]);
 
@@ -101,23 +99,20 @@ export default function Page({ pageName, children }: PageProps) {
     return childrenWithProps as Array<JSX.Element>;
   };
 
-  const getProgressPercentage = (): number => {
-    const progress =
-      (100 *
-        quizStates.reduce(
-          (accumulatedValue: number, quizState: QuizState) =>
-            (quizState.answerState === QuizAnswerState.Correct ? 1 : 0) +
-            accumulatedValue,
-          0
-        )) /
-      quizCount;
-    return progress;
-  };
+  const progressPercentage =
+    (100 *
+      quizStates.reduce(
+        (accumulatedValue: number, quizState: QuizState) =>
+          (quizState.answerState === QuizAnswerState.Correct ? 1 : 0) +
+          accumulatedValue,
+        0
+      )) /
+    quizStates.length;
 
-  if (isNotLoading === true) {
+  if (isLoading === false) {
     return (
       <div id="page">
-        {quizCount > 0 && <h3>Progress: {getProgressPercentage()}%</h3>}
+        {quizStates.length > 0 && <h3>Progress: {progressPercentage}%</h3>}
         {getchildrenWithProps()}
       </div>
     );
