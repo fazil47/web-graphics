@@ -51,7 +51,6 @@ export default function Page({ pageName, children }: PageProps) {
       if (storedQuizStates) {
         setQuizStates(storedQuizStates);
       }
-      setIsLoading(false);
     };
 
     if (quizCount > 0) {
@@ -60,6 +59,11 @@ export default function Page({ pageName, children }: PageProps) {
       setIsLoading(false);
     }
   }, [firebaseAuth, firestore, children, pageName]);
+
+  // Sets isLoading to false whenever the quiz states change.
+  useEffect(() => {
+    setIsLoading(false);
+  }, [quizStates]);
 
   const handleQuizStateUpdate = (
     quizIndex: number,
