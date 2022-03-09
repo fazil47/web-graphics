@@ -24,7 +24,8 @@ interface PageProps {
 }
 
 export default function Page({ pageName, children }: PageProps) {
-  const [quizCount, setQuizCount] = useState(0);
+  // By default quizCount is one because the loading indicator is shown only when it's greater than zero.
+  const [quizCount, setQuizCount] = useState(1);
   const [quizStates, setQuizStates] = useState<Array<QuizState>>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -32,6 +33,7 @@ export default function Page({ pageName, children }: PageProps) {
   const firestore = useContext(FirestoreContext);
 
   useEffect(() => {
+    setIsLoading(true);
     let quizCount = 0;
     Children.forEach(children, (child) => {
       if (isValidElement(child) && child.type === Quiz) {
@@ -42,7 +44,6 @@ export default function Page({ pageName, children }: PageProps) {
     setQuizStates(new Array(quizCount).fill(QuizAnswerState.Unanswered));
 
     const initializeQuizStates = async (currentUser: User | null) => {
-      setIsLoading(true);
       const storedQuizStates = await syncPageWithFirebase({
         firestore,
         currentUser,
@@ -110,13 +111,13 @@ export default function Page({ pageName, children }: PageProps) {
     return progress;
   };
 
-  if (quizStates.length > 0 && isLoading) {
+  if (quizCount > 0 && isLoading) {
     return <LoadingIndicator />;
   }
 
   return (
     <div id="page">
-      {quizStates.length > 0 && <h3>Progress: {getProgressPercentage()}%</h3>}
+      {quizCount > 0 && <h3>Progress: {getProgressPercentage()}%</h3>}
       {getchildrenWithProps()}
     </div>
   );

@@ -36,3 +36,7 @@
     @apply my-1;
   }
 }
+
+#root {
+  @apply h-screen;
+}
