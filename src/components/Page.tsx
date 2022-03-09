@@ -1,4 +1,11 @@
-import React, { useContext, useEffect } from "react";
+import {
+  Children,
+  cloneElement,
+  isValidElement,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import "./Page.css";
 
 import { User } from "firebase/auth";
@@ -9,6 +16,7 @@ import {
 } from "../utils/firebase/FirebaseUtils";
 
 import Quiz, { QuizAnswerState, QuizState } from "./Quiz";
+import LoadingIndicator from "./LoadingIndicator";
 
 interface PageProps {
   pageName: string;
@@ -16,16 +24,17 @@ interface PageProps {
 }
 
 export default function Page({ pageName, children }: PageProps) {
-  const [quizCount, setQuizCount] = React.useState(0);
-  const [quizStates, setQuizStates] = React.useState<Array<QuizState>>([]);
+  const [quizCount, setQuizCount] = useState(0);
+  const [quizStates, setQuizStates] = useState<Array<QuizState>>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const firebaseAuth = useContext(FirebaseAuthContext);
   const firestore = useContext(FirestoreContext);
 
   useEffect(() => {
     let quizCount = 0;
-    React.Children.forEach(children, (child) => {
-      if (React.isValidElement(child) && child.type === Quiz) {
+    Children.forEach(children, (child) => {
+      if (isValidElement(child) && child.type === Quiz) {
         quizCount++;
       }
     });
@@ -33,6 +42,7 @@ export default function Page({ pageName, children }: PageProps) {
     setQuizStates(new Array(quizCount).fill(QuizAnswerState.Unanswered));
 
     const initializeQuizStates = async (currentUser: User | null) => {
+      setIsLoading(true);
       const storedQuizStates = await syncPageWithFirebase({
         firestore,
         currentUser,
@@ -41,6 +51,7 @@ export default function Page({ pageName, children }: PageProps) {
       if (storedQuizStates) {
         setQuizStates(storedQuizStates);
       }
+      setIsLoading(false);
     };
     if (quizCount > 0) {
       initializeQuizStates(firebaseAuth ? firebaseAuth.currentUser : null);
@@ -51,11 +62,6 @@ export default function Page({ pageName, children }: PageProps) {
     quizIndex: number,
     quizState: QuizState
   ): void => {
-    // TODO: Should I do something here?
-    // if (!firebaseAuth.currentUser) {
-    //   return;
-    // }
-
     let newQuizStates = [...quizStates];
     newQuizStates[quizIndex] = quizState;
     setQuizStates(newQuizStates);
@@ -69,11 +75,11 @@ export default function Page({ pageName, children }: PageProps) {
 
   const getchildrenWithProps = (): Array<JSX.Element> => {
     let quizCount = 0;
-    const childrenWithProps = React.Children.map(children, (child) => {
-      if (React.isValidElement(child) && child.type === Quiz) {
+    const childrenWithProps = Children.map(children, (child) => {
+      if (isValidElement(child) && child.type === Quiz) {
         const quizIndex = quizCount;
         quizCount++;
-        return React.cloneElement(child, {
+        return cloneElement(child, {
           handleQuizStateUpdate: (quizState: QuizState) => {
             handleQuizStateUpdate(quizIndex, quizState);
           },
@@ -103,6 +109,10 @@ export default function Page({ pageName, children }: PageProps) {
       quizCount;
     return progress;
   };
+
+  if (quizStates.length > 0 && isLoading) {
+    return <LoadingIndicator />;
+  }
 
   return (
     <div id="page">

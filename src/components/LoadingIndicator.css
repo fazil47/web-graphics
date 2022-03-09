@@ -1,5 +1,5 @@
 .loadingIndicator {
-  @apply rounded-md m-4 p-4 flex flex-row justify-center align-middle;
+  @apply rounded-md m-auto h-[100%] p-4 flex flex-row justify-center align-middle items-center;
 }
 
 .loadingSpinner {

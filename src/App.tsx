@@ -63,16 +63,6 @@ function App(): JSX.Element {
     return <LoadingIndicator />;
   }
 
-  // // TODO: Use a better error component
-  // if (!firebaseApp || !firebaseAuth) {
-  //   return (
-  //     <div className="App">
-  //       <p>Firebase Error</p>
-  //     </div>
-  //   );
-  // }
-
-  // TODO: Use custom authentication components
   if (!isAuthenticated && firebaseAuth && showAuthPage) {
     return <Authentication firebaseAuth={firebaseAuth} />;
   }
