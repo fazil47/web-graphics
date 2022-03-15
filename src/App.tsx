@@ -21,6 +21,7 @@ import LoadingIndicator from "./components/LoadingIndicator";
 import Home from "./components/pages/Home";
 import ShadingModels from "./components/pages/ShadingModels/ShadingModels";
 import Placeholder from "./components/pages/Placeholder";
+import Projection from "./components/pages/Projection";
 
 function App(): JSX.Element {
   const [isAuthenticated, setIsAuthenticated] = useState(false); // Local signed-in state.
@@ -87,6 +88,7 @@ function App(): JSX.Element {
               <Route index element={<Home />} />
               <Route path="shading_models" element={<ShadingModels />} />
               <Route path="placeholder" element={<Placeholder />} />
+              <Route path="projection" element={<Projection />} />
             </Route>
           </Routes>
         </FirebaseAuthContext.Provider>
