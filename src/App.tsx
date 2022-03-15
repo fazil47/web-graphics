@@ -89,7 +89,6 @@ function App(): JSX.Element {
               <Route path="shading_models" element={<ShadingModels />} />
               <Route path="placeholder" element={<Placeholder />} />
               <Route path="projection" element={<Projection />} />
-              
             </Route>
           </Routes>
         </FirebaseAuthContext.Provider>

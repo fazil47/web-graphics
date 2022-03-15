@@ -22,7 +22,6 @@ export default function Sidebar({
         <SidebarContentItem path="shading_models" name="Shading Models" />
         <SidebarContentItem path="placeholder" name="Placeholder" />
         <SidebarContentItem path="projection" name="Projection" />
-
       </div>
     </div>
   );

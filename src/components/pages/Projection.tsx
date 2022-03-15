@@ -30,7 +30,7 @@ export default function Projection() {
     0.1,
     1000
   );
-  const persCameraPosition = new Vector3(1.98, 2.004, 1.990);
+  const persCameraPosition = new Vector3(1.98, 2.004, 1.99);
   const persCameraRotation = new Euler(
     (Math.PI / 180) * -45.2,
     (Math.PI / 180) * 35.03,
