@@ -7,10 +7,10 @@ import {
   Scene,
   Vector3,
 } from "three";
-import Page from "../Page";
-import Quiz from "../Quiz";
-import GraphicsScene from "../GraphicsScene";
-import Slider from "../Slider";
+import Page from "../../Page";
+import Quiz from "../../Quiz";
+import GraphicsScene from "../../GraphicsScene";
+import Slider from "../../Slider";
 
 export default function Projection() {
   const orthoScene = new Scene();
@@ -81,6 +81,14 @@ export default function Projection() {
             mesh1.rotation.y = (Math.PI * rotation) / 180;
           }}
         />
+        <Slider
+          label="Cube X translation"
+          min="-3"
+          max="3"
+          onChange={(distance) => {
+            mesh1.position.x = distance;
+          }}
+        />
       </GraphicsScene>
       <h2>Orthographic Projection</h2>
       <GraphicsScene
@@ -111,6 +119,14 @@ export default function Projection() {
           max="180"
           onChange={(rotation) => {
             mesh2.rotation.y = (Math.PI * rotation) / 180;
+          }}
+        />
+        <Slider
+          label="Cube X translation"
+          min="-3"
+          max="3"
+          onChange={(distance) => {
+            mesh2.position.x = distance;
           }}
         />
       </GraphicsScene>

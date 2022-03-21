@@ -33,7 +33,7 @@
     @apply text-xl font-bold;
   }
   h3:not(:first-child) {
-    @apply my-1;
+    @apply mt-9 mb-1;
   }
 }
 

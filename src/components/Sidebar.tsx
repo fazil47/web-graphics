@@ -21,8 +21,8 @@ export default function Sidebar({
         <SidebarContentItem path="" name="Home" />
         <SidebarContentItem path="modeling" name="Modeling" />
         <SidebarContentItem path="projection" name="Projection" />
+        <SidebarContentItem path="transformations" name="Transformations" />
         <SidebarContentItem path="shading_models" name="Shading Models" />
-        <SidebarContentItem path="placeholder" name="Placeholder" />
       </div>
     </div>
   );

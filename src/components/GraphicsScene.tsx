@@ -10,8 +10,9 @@ import {
 } from "three";
 
 interface GraphicsSceneProps {
-  update?: (time: number) => void;
   scene: Scene;
+  update?: (time: number) => void;
+  camera?: PerspectiveCamera | OrthographicCamera;
   cameraType?: string;
   cameraPosition?: Vector3;
   cameraRotation?: Euler;
@@ -20,8 +21,9 @@ interface GraphicsSceneProps {
 }
 
 export default function GraphicsScene({
-  update,
   scene,
+  update,
+  camera,
   cameraType = "perspective",
   cameraPosition,
   cameraRotation,
@@ -37,22 +39,46 @@ export default function GraphicsScene({
 
     if (current_mount) {
       let sceneCamera: OrthographicCamera | PerspectiveCamera;
-      if (cameraType === "orthographic") {
-        sceneCamera = new OrthographicCamera(
-          (orthographicCameraScale * current_mount.clientWidth) / -2,
-          (orthographicCameraScale * current_mount.clientWidth) / 2,
-          (orthographicCameraScale * current_mount.clientHeight) / 2,
-          (orthographicCameraScale * current_mount.clientHeight) / -2,
-          0.1,
-          1000
-        );
+      if (camera) {
+        if (camera.type === "OrthographicCamera") {
+          sceneCamera = camera as OrthographicCamera;
+          camera.left =
+            (orthographicCameraScale * current_mount.clientWidth) / -2;
+          camera.right =
+            (orthographicCameraScale * current_mount.clientWidth) / 2;
+          camera.top =
+            (orthographicCameraScale * current_mount.clientHeight) / 2;
+          camera.bottom =
+            (orthographicCameraScale * current_mount.clientHeight) / -2;
+          camera.near = 0.1;
+          camera.far = 1000;
+        } else {
+          sceneCamera = camera as PerspectiveCamera;
+          camera.fov = 50;
+          camera.aspect =
+            current_mount.clientWidth / current_mount.clientHeight;
+          camera.near = 0.1;
+          camera.far = 1000;
+        }
+        sceneCamera.updateProjectionMatrix();
       } else {
-        sceneCamera = new PerspectiveCamera(
-          50,
-          current_mount.clientWidth / current_mount.clientHeight,
-          0.1,
-          1000
-        );
+        if (cameraType === "orthographic") {
+          sceneCamera = new OrthographicCamera(
+            (orthographicCameraScale * current_mount.clientWidth) / -2,
+            (orthographicCameraScale * current_mount.clientWidth) / 2,
+            (orthographicCameraScale * current_mount.clientHeight) / 2,
+            (orthographicCameraScale * current_mount.clientHeight) / -2,
+            0.1,
+            1000
+          );
+        } else {
+          sceneCamera = new PerspectiveCamera(
+            50,
+            current_mount.clientWidth / current_mount.clientHeight,
+            0.1,
+            1000
+          );
+        }
       }
       if (cameraPosition) {
         sceneCamera.position.copy(cameraPosition);
@@ -115,10 +141,12 @@ export default function GraphicsScene({
     cameraRotation,
     update,
     orthographicCameraScale,
+    camera,
   ]);
 
   const controlsClassName =
-    "graphicsSceneControls " + (Children.count(children) > 1 ? "controlGrid" : "");
+    "graphicsSceneControls " +
+    (Children.count(children) > 1 ? "controlGrid" : "");
 
   return (
     <div className="graphicsScene">
