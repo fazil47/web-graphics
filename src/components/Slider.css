@@ -1,5 +1,5 @@
 .slider {
-  @apply flex flex-col align-middle justify-between max-w-[500px] mx-auto my-1 py-2 px-4 bg-white dark:bg-gray-800 rounded-md !important;
+  @apply flex flex-col align-middle justify-between !important;
 }
 
 .slider > input[type="range"] {

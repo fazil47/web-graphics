@@ -120,7 +120,7 @@ export default function GraphicsScene({
   return (
     <div className="graphicsScene">
       <div className="graphicsSceneMount" ref={mountRef}></div>
-      {children}
+      <div className="graphicsSceneControls">{children}</div>
     </div>
   );
 }

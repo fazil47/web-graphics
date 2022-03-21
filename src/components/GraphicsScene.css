@@ -5,3 +5,15 @@
 .graphicsSceneMount {
   @apply mx-auto h-[350px] !important;
 }
+
+.graphicsSceneControls {
+  @apply lg:grid lg:grid-cols-2;
+}
+
+.graphicsSceneControls > * {
+  @apply max-w-[500px] lg:w-[350px] mx-auto mb-2 py-2 px-4 bg-white dark:bg-gray-800 rounded-md !important;
+}
+
+.graphicsSceneControls > *:not(:last-child) {
+  @apply mb-4 lg:mb-2 !important;
+}
