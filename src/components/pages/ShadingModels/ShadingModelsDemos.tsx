@@ -11,7 +11,6 @@ import {
   Vector3,
 } from "three";
 import GraphicsScene from "../../GraphicsScene";
-import Slider from "../../Slider";
 import Checkbox from "../../Checkbox";
 
 export function UnshadedDemo() {
