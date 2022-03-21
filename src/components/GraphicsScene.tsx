@@ -8,7 +8,6 @@ import {
   Vector3,
   WebGLRenderer,
 } from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 interface GraphicsSceneProps {
   update?: (time: number) => void;
@@ -17,8 +16,6 @@ interface GraphicsSceneProps {
   cameraPosition?: Vector3;
   cameraRotation?: Euler;
   orthographicCameraScale?: number;
-  orbitControlsTarget?: Vector3;
-  orbitControlsEnabled?: boolean;
   children?: React.ReactNode;
 }
 
@@ -29,8 +26,6 @@ export default function GraphicsScene({
   cameraPosition,
   cameraRotation,
   orthographicCameraScale = 1,
-  orbitControlsTarget = new Vector3(0, 0, 0),
-  orbitControlsEnabled = false,
   children,
 }: GraphicsSceneProps) {
   const mountRef = useRef<HTMLDivElement>(null);
@@ -71,19 +66,10 @@ export default function GraphicsScene({
       renderer.setSize(current_mount.clientWidth, current_mount.clientHeight);
       current_mount.appendChild(renderer.domElement);
 
-      const controls = new OrbitControls(sceneCamera, renderer.domElement);
-      controls.enablePan = false;
-      controls.enableZoom = false;
-      controls.minPolarAngle = Math.PI / 2;
-      controls.maxPolarAngle = Math.PI / 2;
-      controls.enabled = orbitControlsEnabled;
-      controls.target = orbitControlsTarget;
-
       const updateRender = (time: number) => {
         if (update) {
           update(time);
         }
-        controls.update();
         renderer.render(scene, sceneCamera);
         requestAnimationFrame(updateRender);
       };
@@ -129,8 +115,6 @@ export default function GraphicsScene({
     cameraRotation,
     update,
     orthographicCameraScale,
-    orbitControlsTarget,
-    orbitControlsEnabled,
   ]);
 
   return (

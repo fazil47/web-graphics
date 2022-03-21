@@ -11,6 +11,7 @@ import {
   Vector3,
 } from "three";
 import GraphicsScene from "../../GraphicsScene";
+import Slider from "../../Slider";
 import Checkbox from "../../Checkbox";
 
 export function UnshadedDemo() {
@@ -75,9 +76,15 @@ export function FlatShadingDemo() {
         sphere.rotation.y = time;
       }}
       cameraPosition={new Vector3(0, 0, 3)}
-      orbitControlsEnabled
-      orbitControlsTarget={sphere.position}
     >
+      <Slider
+        label="Light Orbit"
+        min="-180"
+        max="180"
+        onChange={(value) => {
+          lightGroup.rotation.y = (value * Math.PI) / 180;
+        }}
+      />
       <Checkbox
         label="Ambient Light"
         onChange={(value) => {
@@ -121,9 +128,15 @@ export function GouraudShadingDemo() {
         sphere.rotation.y = time;
       }}
       cameraPosition={new Vector3(0, 0, 3)}
-      orbitControlsEnabled
-      orbitControlsTarget={sphere.position}
     >
+      <Slider
+        label="Light Orbit"
+        min="-180"
+        max="180"
+        onChange={(value) => {
+          lightGroup.rotation.y = (value * Math.PI) / 180;
+        }}
+      />
       <Checkbox
         label="Ambient Light"
         onChange={(value) => {
@@ -167,9 +180,15 @@ export function PhongShadingDemo() {
         sphere.rotation.y = time;
       }}
       cameraPosition={new Vector3(0, 0, 3)}
-      orbitControlsEnabled
-      orbitControlsTarget={sphere.position}
     >
+      <Slider
+        label="Light Orbit"
+        min="-180"
+        max="180"
+        onChange={(value) => {
+          lightGroup.rotation.y = (value * Math.PI) / 180;
+        }}
+      />
       <Checkbox
         label="Ambient Light"
         onChange={(value) => {
