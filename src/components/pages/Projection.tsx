@@ -56,7 +56,6 @@ export default function Projection() {
         scene={persScene}
         cameraType="perspective"
         cameraPosition={persCameraPosition}
-        cameraTarget={mesh1.position}
       >
         <Slider
           label="Distance from camera"
@@ -117,7 +116,8 @@ export default function Projection() {
       </GraphicsScene>
       <Quiz
         quizInfo={{
-          question: "In which kind of projection does the cube's size remain constant?",
+          question:
+            "In which kind of projection does the cube's size remain constant?",
           options: ["Orthographic", "Perspective", "Both"],
           answerIndex: 0,
         }}

@@ -17,7 +17,7 @@ interface GraphicsSceneProps {
   cameraPosition?: Vector3;
   cameraRotation?: Euler;
   orthographicCameraScale?: number;
-  cameraTarget?: Vector3;
+  orbitControlsTarget?: Vector3;
   orbitControlsEnabled?: boolean;
   children?: React.ReactNode;
 }
@@ -29,7 +29,7 @@ export default function GraphicsScene({
   cameraPosition,
   cameraRotation,
   orthographicCameraScale = 1,
-  cameraTarget = new Vector3(0, 0, 0),
+  orbitControlsTarget = new Vector3(0, 0, 0),
   orbitControlsEnabled = false,
   children,
 }: GraphicsSceneProps) {
@@ -77,7 +77,7 @@ export default function GraphicsScene({
       controls.minPolarAngle = Math.PI / 2;
       controls.maxPolarAngle = Math.PI / 2;
       controls.enabled = orbitControlsEnabled;
-      controls.target = cameraTarget;
+      controls.target = orbitControlsTarget;
 
       const updateRender = (time: number) => {
         if (update) {
@@ -129,6 +129,8 @@ export default function GraphicsScene({
     cameraRotation,
     update,
     orthographicCameraScale,
+    orbitControlsTarget,
+    orbitControlsEnabled,
   ]);
 
   return (
