@@ -1,56 +1,44 @@
 import {
+  AmbientLight,
   BoxGeometry,
   DirectionalLight,
-  Euler,
   Mesh,
   MeshPhongMaterial,
-  OrthographicCamera,
-  PerspectiveCamera,
   Scene,
   Vector3,
 } from "three";
 import Page from "../Page";
 import Quiz from "../Quiz";
 import GraphicsScene from "../GraphicsScene";
+import Slider from "../Slider";
 
 export default function Projection() {
   const orthoScene = new Scene();
   const persScene = new Scene();
 
-  const orthoCamera = new OrthographicCamera(-2.81, 2.81, 1, -1, 0.1, 2000);
-  const orthoCameraPosition = new Vector3(0.86, 2, 2.14);
-  const orthoCameraRotation = new Euler(
-    (Math.PI / 180) * -52.6,
-    (Math.PI / 180) * 31,
-    (Math.PI / 180) * 35.6
-  );
-  const persCamera = new PerspectiveCamera(
-    50,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
-  );
-  const persCameraPosition = new Vector3(1.98, 2.004, 1.99);
-  const persCameraRotation = new Euler(
-    (Math.PI / 180) * -45.2,
-    (Math.PI / 180) * 35.03,
-    (Math.PI / 180) * 30.03
-  );
+  const orthoCameraPosition = new Vector3(0, 0, 3);
+  const persCameraPosition = new Vector3(0, 0, 3);
 
-  var geometry = new BoxGeometry(1, 1, 1);
-  var material = new MeshPhongMaterial({ color: 0xffffff });
+  const geometry = new BoxGeometry(1, 1, 1);
+  const material = new MeshPhongMaterial({ color: 0xffffff });
 
-  var cube1 = new Mesh(geometry, material);
-  const light1 = new DirectionalLight(0x640202, 2);
+  const lightColor = 0x640202;
 
-  var cube2 = new Mesh(geometry, material);
-  const light2 = new DirectionalLight(0x640202, 2);
+  const mesh1 = new Mesh(geometry, material);
+  const light1 = new DirectionalLight(lightColor, 2);
+  const ambLight1 = new AmbientLight(lightColor, 0.5);
 
-  orthoScene.add(light1);
-  orthoScene.add(cube1);
+  const mesh2 = new Mesh(geometry, material);
+  const light2 = new DirectionalLight(lightColor, 2);
+  const ambLight2 = new AmbientLight(lightColor, 0.5);
 
-  persScene.add(light2);
-  persScene.add(cube2);
+  persScene.add(light1);
+  persScene.add(mesh1);
+  persScene.add(ambLight1);
+
+  orthoScene.add(light2);
+  orthoScene.add(mesh2);
+  orthoScene.add(ambLight2);
 
   light1.position.z = 7.5;
   light1.position.x = 5;
@@ -61,36 +49,77 @@ export default function Projection() {
   light2.position.y = 10;
 
   return (
-    <Page pageName="temp">
-      <h1>ABC</h1>
+    <Page pageName="projection">
+      <h1>Projection</h1>
+      <h2>Perspective Projection</h2>
       <GraphicsScene
         scene={persScene}
-        camera={persCamera}
+        cameraType="perspective"
         cameraPosition={persCameraPosition}
-        cameraRotation={persCameraRotation}
-        // update={(time: number) => {
-        //   time *= 0.001;
-        //   cube2.rotation.x = time / 2;
-        //   cube2.rotation.y = time / 2;
-        // }}
-      />
-
+        cameraTarget={mesh1.position}
+      >
+        <Slider
+          label="Distance from camera"
+          min="0"
+          max="10"
+          onChange={(distance) => {
+            mesh1.position.z = -distance;
+          }}
+        />
+        <Slider
+          label="Cube X rotation"
+          min="-180"
+          max="180"
+          onChange={(rotation) => {
+            mesh1.rotation.x = (Math.PI * rotation) / 180;
+          }}
+        />
+        <Slider
+          label="Cube Y rotation"
+          min="-180"
+          max="180"
+          onChange={(rotation) => {
+            mesh1.rotation.y = (Math.PI * rotation) / 180;
+          }}
+        />
+      </GraphicsScene>
+      <h2>Orthographic Projection</h2>
       <GraphicsScene
         scene={orthoScene}
-        camera={orthoCamera}
+        cameraType="orthographic"
         cameraPosition={orthoCameraPosition}
-        cameraRotation={orthoCameraRotation}
-        // update={(time: number) => {
-        //   time *= 0.001;
-        //   cube1.rotation.x = time / 2;
-        //   cube1.rotation.y = time / 2;
-        // }}
-      />
+        orthographicCameraScale={0.0065}
+      >
+        <Slider
+          label="Distance from camera"
+          min="0"
+          max="10"
+          onChange={(distance) => {
+            mesh2.position.z = -distance;
+          }}
+        />
+        <Slider
+          label="Cube X rotation"
+          min="-180"
+          max="180"
+          onChange={(rotation) => {
+            mesh2.rotation.x = (Math.PI * rotation) / 180;
+          }}
+        />
+        <Slider
+          label="Cube Y rotation"
+          min="-180"
+          max="180"
+          onChange={(rotation) => {
+            mesh2.rotation.y = (Math.PI * rotation) / 180;
+          }}
+        />
+      </GraphicsScene>
       <Quiz
         quizInfo={{
-          options: ["option1", "option2", "option3"],
-          answerIndex: 1,
-          question: "Enter an option.",
+          question: "In which kind of projection does the cube's size remain constant?",
+          options: ["Orthographic", "Perspective", "Both"],
+          answerIndex: 0,
         }}
       />
     </Page>

@@ -1,0 +1,11 @@
+.checkbox {
+  @apply flex flex-row align-middle justify-between max-w-[500px] mx-auto my-1 py-2 px-4 bg-white dark:bg-gray-800 rounded-md !important;
+}
+
+.checkbox > input[type="checkbox"] {
+  @apply mx-1 my-auto !important;
+}
+
+.checkbox > span {
+  @apply m-1 !important;
+}

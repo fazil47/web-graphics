@@ -8,22 +8,29 @@ import {
   Vector3,
   WebGLRenderer,
 } from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 interface GraphicsSceneProps {
   update?: (time: number) => void;
   scene: Scene;
-  camera?: OrthographicCamera | PerspectiveCamera;
+  cameraType?: string;
   cameraPosition?: Vector3;
   cameraRotation?: Euler;
+  orthographicCameraScale?: number;
+  cameraTarget?: Vector3;
+  orbitControlsEnabled?: boolean;
   children?: React.ReactNode;
 }
 
 export default function GraphicsScene({
   update,
   scene,
-  camera,
-  cameraPosition = new Vector3(0, 0, 0),
-  cameraRotation = new Euler(0, 0, 0),
+  cameraType = "perspective",
+  cameraPosition,
+  cameraRotation,
+  orthographicCameraScale = 1,
+  cameraTarget = new Vector3(0, 0, 0),
+  orbitControlsEnabled = false,
   children,
 }: GraphicsSceneProps) {
   const mountRef = useRef<HTMLDivElement>(null);
@@ -34,26 +41,49 @@ export default function GraphicsScene({
     let onMountResize = () => {};
 
     if (current_mount) {
-      let sceneCamera: OrthographicCamera | PerspectiveCamera =
-        new PerspectiveCamera(
+      let sceneCamera: OrthographicCamera | PerspectiveCamera;
+      if (cameraType === "orthographic") {
+        sceneCamera = new OrthographicCamera(
+          (orthographicCameraScale * current_mount.clientWidth) / -2,
+          (orthographicCameraScale * current_mount.clientWidth) / 2,
+          (orthographicCameraScale * current_mount.clientHeight) / 2,
+          (orthographicCameraScale * current_mount.clientHeight) / -2,
+          0.1,
+          1000
+        );
+      } else {
+        sceneCamera = new PerspectiveCamera(
           50,
           current_mount.clientWidth / current_mount.clientHeight,
           0.1,
           1000
         );
-      if (camera) {
-        sceneCamera = camera;
       }
-      sceneCamera.position.copy(cameraPosition);
-      sceneCamera.rotation.copy(cameraRotation);
+      if (cameraPosition) {
+        sceneCamera.position.copy(cameraPosition);
+      } else {
+        sceneCamera.position.z = 5;
+      }
+      if (cameraRotation) {
+        sceneCamera.rotation.copy(cameraRotation);
+      }
 
       renderer.setSize(current_mount.clientWidth, current_mount.clientHeight);
       current_mount.appendChild(renderer.domElement);
+
+      const controls = new OrbitControls(sceneCamera, renderer.domElement);
+      controls.enablePan = false;
+      controls.enableZoom = false;
+      controls.minPolarAngle = Math.PI / 2;
+      controls.maxPolarAngle = Math.PI / 2;
+      controls.enabled = orbitControlsEnabled;
+      controls.target = cameraTarget;
 
       const updateRender = (time: number) => {
         if (update) {
           update(time);
         }
+        controls.update();
         renderer.render(scene, sceneCamera);
         requestAnimationFrame(updateRender);
       };
@@ -66,6 +96,15 @@ export default function GraphicsScene({
         if (sceneCamera.type === "PerspectiveCamera") {
           sceneCamera.aspect =
             current_mount.clientWidth / current_mount.clientHeight;
+        } else if (sceneCamera.type === "OrthographicCamera") {
+          sceneCamera.left =
+            (orthographicCameraScale * current_mount.clientWidth) / -2;
+          sceneCamera.right =
+            (orthographicCameraScale * current_mount.clientWidth) / 2;
+          sceneCamera.top =
+            (orthographicCameraScale * current_mount.clientHeight) / 2;
+          sceneCamera.bottom =
+            (orthographicCameraScale * current_mount.clientHeight) / -2;
         }
         sceneCamera.updateProjectionMatrix();
         renderer.setSize(current_mount.clientWidth, current_mount.clientHeight);
@@ -83,7 +122,14 @@ export default function GraphicsScene({
       }
       window.removeEventListener("resize", onMountResize);
     };
-  }, [camera, scene, cameraPosition, cameraRotation, update]);
+  }, [
+    cameraType,
+    scene,
+    cameraPosition,
+    cameraRotation,
+    update,
+    orthographicCameraScale,
+  ]);
 
   return (
     <div className="graphicsScene">

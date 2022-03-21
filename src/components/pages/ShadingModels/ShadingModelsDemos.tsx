@@ -1,4 +1,5 @@
 import {
+  AmbientLight,
   DirectionalLight,
   Group,
   Mesh,
@@ -11,6 +12,7 @@ import {
 } from "three";
 import GraphicsScene from "../../GraphicsScene";
 import Slider from "../../Slider";
+import Checkbox from "../../Checkbox";
 
 export function UnshadedDemo() {
   const scene = new Scene();
@@ -43,11 +45,12 @@ export function FlatShadingDemo() {
 
   const lightGroup = new Group();
   const color = 0xffffff;
-  const intensity = 1.5;
-  const light = new DirectionalLight(color, intensity);
+  const light = new DirectionalLight(color, 1.5);
   light.position.set(-1, 2, 4);
   lightGroup.add(light);
   scene.add(lightGroup);
+  const ambLight = new AmbientLight(color, 0.5);
+  scene.add(ambLight);
 
   const radius = 1;
   const widthSegments = 16;
@@ -82,6 +85,13 @@ export function FlatShadingDemo() {
           lightGroup.rotation.y = (value * Math.PI) / 180;
         }}
       />
+      <Checkbox
+        label="Ambient Light"
+        onChange={(value) => {
+          ambLight.visible = value;
+        }}
+        initialChecked={true}
+      />
     </GraphicsScene>
   );
 }
@@ -96,6 +106,8 @@ export function GouraudShadingDemo() {
   light.position.set(-1, 2, 4);
   lightGroup.add(light);
   scene.add(lightGroup);
+  const ambLight = new AmbientLight(color, 0.5);
+  scene.add(ambLight);
 
   const radius = 1;
   const widthSegments = 16;
@@ -125,6 +137,13 @@ export function GouraudShadingDemo() {
           lightGroup.rotation.y = (value * Math.PI) / 180;
         }}
       />
+      <Checkbox
+        label="Ambient Light"
+        onChange={(value) => {
+          ambLight.visible = value;
+        }}
+        initialChecked={true}
+      />
     </GraphicsScene>
   );
 }
@@ -139,6 +158,8 @@ export function PhongShadingDemo() {
   light.position.set(-1, 2, 4);
   lightGroup.add(light);
   scene.add(lightGroup);
+  const ambLight = new AmbientLight(color, 0.5);
+  scene.add(ambLight);
 
   const radius = 1;
   const widthSegments = 16;
@@ -167,6 +188,13 @@ export function PhongShadingDemo() {
         onChange={(value) => {
           lightGroup.rotation.y = (value * Math.PI) / 180;
         }}
+      />
+      <Checkbox
+        label="Ambient Light"
+        onChange={(value) => {
+          ambLight.visible = value;
+        }}
+        initialChecked={true}
       />
     </GraphicsScene>
   );

@@ -6,6 +6,7 @@ interface sliderProps {
   min?: string;
   max?: string;
   step?: string;
+  initialValue?: number;
   onChange: (value: number) => void;
 }
 
@@ -14,9 +15,10 @@ export default function Slider({
   min = "0",
   max = "100",
   step = "1",
+  initialValue = 0,
   onChange,
 }: sliderProps) {
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(initialValue);
   return (
     <label className="slider">
       <div>
@@ -29,8 +31,8 @@ export default function Slider({
         min={min}
         max={max}
         step={step}
-        onChange={(e) => {
-          const value = parseInt(e.target.value);
+        onChange={(event) => {
+          const value = parseInt(event.target.value);
           setValue(value);
           onChange(value);
         }}
