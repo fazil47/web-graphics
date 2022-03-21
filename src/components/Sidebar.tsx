@@ -19,8 +19,9 @@ export default function Sidebar({
       </div>
       <div id="sidebarContent">
         <SidebarContentItem path="" name="Home" />
-        <SidebarContentItem path="shading_models" name="Shading Models" />
+        <SidebarContentItem path="modeling" name="Modeling" />
         <SidebarContentItem path="projection" name="Projection" />
+        <SidebarContentItem path="shading_models" name="Shading Models" />
         <SidebarContentItem path="placeholder" name="Placeholder" />
       </div>
     </div>

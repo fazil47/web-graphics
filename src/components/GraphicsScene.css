@@ -6,12 +6,16 @@
   @apply mx-auto h-[350px] !important;
 }
 
-.graphicsSceneControls {
+.controlGrid {
   @apply xl:grid xl:grid-cols-2;
 }
 
+.controlGrid > * {
+  @apply xl:w-[400px];
+}
+
 .graphicsSceneControls > * {
-  @apply max-w-[500px] xl:w-[400px] mx-auto mb-2 py-2 px-4 bg-white dark:bg-gray-800 rounded-md !important;
+  @apply max-w-[500px] mx-auto mb-2 py-2 px-4 bg-white dark:bg-gray-800 rounded-md !important;
 }
 
 .graphicsSceneControls > *:not(:last-child) {

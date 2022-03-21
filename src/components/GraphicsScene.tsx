@@ -1,5 +1,5 @@
 import "./GraphicsScene.css";
-import { useEffect, useRef } from "react";
+import { Children, useEffect, useRef } from "react";
 import {
   Euler,
   OrthographicCamera,
@@ -117,10 +117,13 @@ export default function GraphicsScene({
     orthographicCameraScale,
   ]);
 
+  const controlsClassName =
+    "graphicsSceneControls " + (Children.count(children) > 1 ? "controlGrid" : "");
+
   return (
     <div className="graphicsScene">
       <div className="graphicsSceneMount" ref={mountRef}></div>
-      <div className="graphicsSceneControls">{children}</div>
+      <div className={controlsClassName}>{children}</div>
     </div>
   );
 }
