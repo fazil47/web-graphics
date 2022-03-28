@@ -1,0 +1,11 @@
+.dropdown {
+  @apply flex flex-row align-middle justify-between !important;
+}
+
+.dropdown > select {
+  @apply mx-1 my-auto rounded-md p-1 focus:outline-none dark:bg-gray-700 !important;
+}
+
+.dropdown > span {
+  @apply m-1 my-auto !important;
+}

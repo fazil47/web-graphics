@@ -4,7 +4,7 @@ import "./Checkbox.css";
 interface checkboxProps {
   label: string;
   onChange: (value: boolean) => void;
-  initialChecked: boolean;
+  initialChecked?: boolean;
 }
 
 export default function Checkbox({
@@ -16,7 +16,7 @@ export default function Checkbox({
 
   return (
     <label className="checkbox">
-      <span>{label}</span>
+      <span>{label}: </span>
       <input
         type="checkbox"
         title={label}

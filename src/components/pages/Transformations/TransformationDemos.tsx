@@ -12,8 +12,8 @@ import {
   Scene,
   Vector3,
 } from "three";
-import GraphicsScene from "../../GraphicsScene";
-import Slider from "../../Slider";
+import GraphicsScene from "../../GraphicsScene/GraphicsScene";
+import Slider from "../../GraphicsScene/Slider";
 
 export function Translation() {
   const scene = new Scene();
