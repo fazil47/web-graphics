@@ -1,11 +1,12 @@
 import {
+  AmbientLight,
   BoxGeometry,
   CylinderGeometry,
   DirectionalLight,
   Group,
   Matrix4,
   Mesh,
-  MeshPhongMaterial,
+  MeshStandardMaterial,
   Scene,
   SphereGeometry,
   Vector3,
@@ -20,13 +21,17 @@ export function CSGDemo() {
   const light = new DirectionalLight(0xffffff, 1.5);
   light.position.set(-1, 2, 4);
   scene.add(light);
+  scene.add(new AmbientLight(0xf0f0f0, 0.5));
 
-  const redMaterial = new MeshPhongMaterial({ color: 0xf1365c });
-  const greenMaterial = new MeshPhongMaterial({ color: 0xaaffa2 });
-  const yellowMaterial = new MeshPhongMaterial({ color: 0xf1c40f });
-  redMaterial.specular.setRGB(0.1, 0.1, 0.1);
-  greenMaterial.specular.setRGB(0.1, 0.1, 0.1);
-  yellowMaterial.specular.setRGB(0.1, 0.1, 0.1);
+  const redMaterial = new MeshStandardMaterial({ color: 0xf1365c });
+  const greenMaterial = new MeshStandardMaterial({ color: 0xaaffa2 });
+  const yellowMaterial = new MeshStandardMaterial({ color: 0xf1c40f });
+  redMaterial.metalness = 0.8;
+  redMaterial.roughness = 0.8;
+  greenMaterial.metalness = 0.8;
+  greenMaterial.roughness = 0.8;
+  yellowMaterial.metalness = 0.8;
+  yellowMaterial.roughness = 0.8;
 
   const inputMeshGroup = new Group();
   const resultantMeshGroup = new Group();
@@ -41,7 +46,7 @@ export function CSGDemo() {
   let mesh1CSG = CSG.fromMesh(mesh1);
   let mesh2CSG = CSG.fromMesh(mesh2);
 
-  const getMesh = (meshType: string, material: MeshPhongMaterial): Mesh => {
+  const getMesh = (meshType: string, material: MeshStandardMaterial): Mesh => {
     switch (meshType) {
       case "sphere":
         return new Mesh(new SphereGeometry(0.56, 16, 16), material);
@@ -155,7 +160,7 @@ export function CSGDemo() {
         }}
       />
       <Slider
-        label="Orbit Angle"
+        label="Rotate Angle"
         min="-180"
         max="180"
         onChange={(value) => {
