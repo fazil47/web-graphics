@@ -32,8 +32,8 @@ export function CSGDemo() {
   const resultantMeshGroup = new Group();
   scene.add(inputMeshGroup);
   scene.add(resultantMeshGroup);
-  inputMeshGroup.position.set(-2, 0, 0);
-  resultantMeshGroup.position.set(2, 0, 0);
+  inputMeshGroup.position.set(-1, 0, 0);
+  resultantMeshGroup.position.set(1, 0, 0);
 
   let mesh1: Mesh = new Mesh(new BoxGeometry(0.8, 0.8, 0.8), redMaterial);
   let mesh2: Mesh = new Mesh(new SphereGeometry(0.56, 16, 16), greenMaterial);
