@@ -26,7 +26,6 @@ export default function Dropdown({
         }}
         value={selection}
       >
-        <option disabled selected>Select an option</option>
         {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}

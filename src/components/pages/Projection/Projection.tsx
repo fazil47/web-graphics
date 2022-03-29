@@ -9,7 +9,7 @@ import {
 } from "three";
 import Page from "../../Page";
 import Quiz from "../../Quiz";
-import GraphicsScene from "../../GraphicsScene/GraphicsScene";
+import GraphicsScene, { CameraType } from "../../GraphicsScene/GraphicsScene";
 import Slider from "../../GraphicsScene/Slider";
 
 export default function Projection() {
@@ -54,7 +54,7 @@ export default function Projection() {
       <h2>Perspective Projection</h2>
       <GraphicsScene
         scene={persScene}
-        cameraType="perspective"
+        cameraType={CameraType.Perspective}
         cameraPosition={persCameraPosition}
       >
         <Slider
@@ -93,7 +93,7 @@ export default function Projection() {
       <h2>Orthographic Projection</h2>
       <GraphicsScene
         scene={orthoScene}
-        cameraType="orthographic"
+        cameraType={CameraType.Orthographic}
         cameraPosition={orthoCameraPosition}
         orthographicCameraScale={0.0065}
       >

@@ -1,5 +1,6 @@
 import {
   BoxGeometry,
+  CylinderGeometry,
   DirectionalLight,
   Group,
   Matrix4,
@@ -10,7 +11,7 @@ import {
   Vector3,
 } from "three";
 import { CSG } from "../../../utils/csg/CSGUtils";
-import GraphicsScene from "../../GraphicsScene/GraphicsScene";
+import GraphicsScene, { CameraType } from "../../GraphicsScene/GraphicsScene";
 import Slider from "../../GraphicsScene/Slider";
 import Dropdown from "../../GraphicsScene/Dropdown";
 
@@ -34,55 +35,123 @@ export function CSGDemo() {
   inputMeshGroup.position.set(-2, 0, 0);
   resultantMeshGroup.position.set(2, 0, 0);
 
-  const cubeMesh = new Mesh(new BoxGeometry(0.8, 0.8, 0.8), redMaterial);
-  const sphereMesh = new Mesh(new SphereGeometry(0.56, 16, 16), greenMaterial);
+  let mesh1: Mesh = new Mesh(new BoxGeometry(0.8, 0.8, 0.8), redMaterial);
+  let mesh2: Mesh = new Mesh(new SphereGeometry(0.56, 16, 16), greenMaterial);
+  let csgOperation = "union";
+  let mesh1CSG = CSG.fromMesh(mesh1);
+  let mesh2CSG = CSG.fromMesh(mesh2);
 
-  inputMeshGroup.add(cubeMesh);
-  inputMeshGroup.add(sphereMesh);
-  cubeMesh.position.set(0, 1, 0);
-  sphereMesh.position.set(0, -1, 0);
+  const getMesh = (meshType: string, material: MeshPhongMaterial): Mesh => {
+    switch (meshType) {
+      case "sphere":
+        return new Mesh(new SphereGeometry(0.56, 16, 16), material);
+      case "cylinder":
+        return new Mesh(
+          new CylinderGeometry(0.56, 0.56, 0.8, 16, 16),
+          material
+        );
+      default:
+        return new Mesh(new BoxGeometry(0.8, 0.8, 0.8), material);
+    }
+  };
 
-  const cubeCSG = CSG.fromMesh(cubeMesh);
-  const sphereCSG = CSG.fromMesh(sphereMesh);
-  const remakeCSGMesh = (operation: string) => {
-    let mesh;
-    switch (operation) {
+  const remakeCSGMesh = ({
+    operation,
+    mesh1Type,
+    mesh2Type,
+  }: {
+    operation?: string;
+    mesh1Type?: string;
+    mesh2Type?: string;
+  }) => {
+    if (operation) {
+      csgOperation = operation;
+    }
+    if (mesh1Type) {
+      mesh1 = getMesh(mesh1Type, redMaterial);
+      mesh1CSG = CSG.fromMesh(mesh1);
+    }
+    if (mesh2Type) {
+      mesh2 = getMesh(mesh2Type, greenMaterial);
+      mesh2CSG = CSG.fromMesh(mesh2);
+    }
+    let resultantMesh;
+    switch (csgOperation) {
       case "intersection":
-        mesh = CSG.toMesh(
-          cubeCSG.intersect(sphereCSG),
+        resultantMesh = CSG.toMesh(
+          mesh1CSG.intersect(mesh2CSG),
           new Matrix4(),
           yellowMaterial
         );
         break;
       case "subtraction":
-        mesh = CSG.toMesh(
-          cubeCSG.subtract(sphereCSG),
+        resultantMesh = CSG.toMesh(
+          mesh1CSG.subtract(mesh2CSG),
           new Matrix4(),
           yellowMaterial
         );
         break;
       default:
-        mesh = CSG.toMesh(
-          cubeCSG.union(sphereCSG),
+        resultantMesh = CSG.toMesh(
+          mesh1CSG.union(mesh2CSG),
           new Matrix4(),
           yellowMaterial
         );
     }
+    inputMeshGroup.clear();
+    inputMeshGroup.add(mesh1);
+    inputMeshGroup.add(mesh2);
+    mesh1.position.set(0, 0.8, 0);
+    mesh2.position.set(0, -0.8, 0);
+    mesh1.rotation.set(45, 0, 0);
+    mesh2.rotation.set(45, 0, 0);
+    resultantMesh.rotation.set(45, 0, 0);
     resultantMeshGroup.clear();
-    resultantMeshGroup.add(mesh);
+    resultantMeshGroup.add(resultantMesh);
   };
+  remakeCSGMesh({});
 
   return (
-    <GraphicsScene scene={scene} cameraPosition={new Vector3(0, 0, 5)}>
+    <GraphicsScene
+      scene={scene}
+      cameraType={CameraType.Orthographic}
+      orthographicCameraScale={0.01}
+      cameraPosition={new Vector3(0, 0, 1)}
+    >
+      <Dropdown
+        label="Mesh #1"
+        initialSelection="cube"
+        options={[
+          { label: "Cube", value: "cube" },
+          { label: "Sphere", value: "sphere" },
+          { label: "Cylinder", value: "cylinder" },
+        ]}
+        onChange={(value) => {
+          remakeCSGMesh({ mesh1Type: value });
+        }}
+      />
       <Dropdown
         label="CSG Operation"
+        initialSelection="union"
         options={[
           { label: "Union", value: "union" },
           { label: "Intersection", value: "intersection" },
           { label: "Subtraction", value: "subtraction" },
         ]}
         onChange={(value) => {
-          remakeCSGMesh(value);
+          remakeCSGMesh({ operation: value });
+        }}
+      />
+      <Dropdown
+        label="Mesh #2"
+        initialSelection="sphere"
+        options={[
+          { label: "Cube", value: "cube" },
+          { label: "Sphere", value: "sphere" },
+          { label: "Cylinder", value: "cylinder" },
+        ]}
+        onChange={(value) => {
+          remakeCSGMesh({ mesh2Type: value });
         }}
       />
       <Slider

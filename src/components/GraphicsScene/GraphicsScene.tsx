@@ -9,11 +9,16 @@ import {
   WebGLRenderer,
 } from "three";
 
+export enum CameraType {
+  Perspective,
+  Orthographic,
+}
+
 interface GraphicsSceneProps {
   scene: Scene;
   update?: (time: number) => void;
   camera?: PerspectiveCamera | OrthographicCamera;
-  cameraType?: string;
+  cameraType?: CameraType;
   cameraPosition?: Vector3;
   cameraRotation?: Euler;
   orthographicCameraScale?: number;
@@ -24,7 +29,7 @@ export default function GraphicsScene({
   scene,
   update,
   camera,
-  cameraType = "perspective",
+  cameraType = CameraType.Perspective,
   cameraPosition,
   cameraRotation,
   orthographicCameraScale = 1,
@@ -62,7 +67,7 @@ export default function GraphicsScene({
         }
         sceneCamera.updateProjectionMatrix();
       } else {
-        if (cameraType === "orthographic") {
+        if (cameraType === CameraType.Orthographic) {
           sceneCamera = new OrthographicCamera(
             (orthographicCameraScale * current_mount.clientWidth) / -2,
             (orthographicCameraScale * current_mount.clientWidth) / 2,
