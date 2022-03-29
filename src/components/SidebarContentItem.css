@@ -1,5 +1,5 @@
 .sidebarContentItem {
-  @apply p-2 pl-4 rounded-md m-2 hover:bg-gray-200 dark:hover:bg-gray-600;
+  @apply p-2 pl-4 rounded-md m-2 mx-5 hover:bg-gray-200 select-none dark:hover:bg-gray-600;
 }
 
 .sidebarContentSelected {

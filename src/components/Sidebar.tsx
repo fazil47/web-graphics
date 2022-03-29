@@ -13,17 +13,20 @@ export default function Sidebar({
 }) {
   const className = isOpen ? "" : "closedSidebar";
   return (
-    <div id="sidebar" className={className}>
-      <div id="sidebarHeader">
-        <CloseButton setClose={closeSidebar} />
+    <>
+      <div id="sidebar" className={className}>
+        <div id="sidebarHeader">
+          <CloseButton setClose={closeSidebar} />
+        </div>
+        <div id="sidebarContent">
+          <SidebarContentItem path="" name="Home" />
+          <SidebarContentItem path="modeling" name="Modeling" />
+          <SidebarContentItem path="projection" name="Projection" />
+          <SidebarContentItem path="transformations" name="Transformations" />
+          <SidebarContentItem path="shading_models" name="Shading Models" />
+        </div>
       </div>
-      <div id="sidebarContent">
-        <SidebarContentItem path="" name="Home" />
-        <SidebarContentItem path="modeling" name="Modeling" />
-        <SidebarContentItem path="projection" name="Projection" />
-        <SidebarContentItem path="transformations" name="Transformations" />
-        <SidebarContentItem path="shading_models" name="Shading Models" />
-      </div>
-    </div>
+      {isOpen && <div id="sidebarBackground" onClick={closeSidebar} />}
+    </>
   );
 }

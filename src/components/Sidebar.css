@@ -1,5 +1,9 @@
 #sidebar {
-  @apply absolute z-20 drop-shadow-2xl sm:static sm:drop-shadow-md flex flex-col bg-gray-100 dark:bg-gray-700 w-48 h-screen min-w-[200px];
+  @apply absolute z-30 drop-shadow-2xl sm:static sm:drop-shadow-md flex flex-col bg-gray-100 dark:bg-gray-700 w-48 h-screen min-w-[200px];
+}
+
+#sidebarBackground {
+  @apply absolute z-20 backdrop-blur-sm h-screen w-screen sm:hidden;
 }
 
 #sidebarContent {
@@ -7,7 +11,7 @@
 }
 
 #sidebarHeader {
-  @apply flex flex-row justify-end sm:hidden py-2 px-2 h-[58px] mx-2 border-b-2 dark:border-gray-500;
+  @apply flex flex-row justify-start py-2 px-2 h-[58px] mx-5 border-b-2 dark:border-gray-500;
 }
 
 #sidebarHeader > * {

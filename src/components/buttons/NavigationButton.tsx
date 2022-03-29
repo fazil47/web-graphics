@@ -1,5 +1,3 @@
-import CloseButton from "./CloseButton";
-
 export default function NavigationButton({
   isOpen,
   setIsOpen,
@@ -8,7 +6,7 @@ export default function NavigationButton({
   setIsOpen: (isOpen: boolean) => void;
 }) {
   if (isOpen) {
-    return <CloseButton setClose={() => setIsOpen(false)} />;
+    return <></>;
   }
 
   // Otherwise show the navigation icon
