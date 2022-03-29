@@ -21,10 +21,8 @@ export function Translation() {
   const cameraOrbitGroup = new Group();
   cameraOrbitGroup.add(camera);
   scene.add(cameraOrbitGroup);
-  const axesHelper = new AxesHelper(15);
-  scene.add(axesHelper);
-  const gridHelper = new GridHelper(10, 10);
-  scene.add(gridHelper);
+  scene.add(new AxesHelper(10));
+  scene.add(new GridHelper(10, 10));
 
   const light = new DirectionalLight(0xffffff, 1.5);
   light.position.set(-1, 2, 4);
@@ -86,10 +84,8 @@ export function Rotation() {
   const cameraOrbitGroup = new Group();
   cameraOrbitGroup.add(camera);
   scene.add(cameraOrbitGroup);
-  const axesHelper = new AxesHelper(15);
-  scene.add(axesHelper);
-  const gridHelper = new GridHelper(10, 10);
-  scene.add(gridHelper);
+  scene.add(new AxesHelper(10));
+  scene.add(new GridHelper(10, 10));
 
   const light = new DirectionalLight(0xffffff, 1.5);
   light.position.set(-1, 2, 4);
@@ -151,10 +147,8 @@ export function Scale() {
   const cameraOrbitGroup = new Group();
   cameraOrbitGroup.add(camera);
   scene.add(cameraOrbitGroup);
-  const axesHelper = new AxesHelper(15);
-  scene.add(axesHelper);
-  const gridHelper = new GridHelper(10, 10);
-  scene.add(gridHelper);
+  scene.add(new AxesHelper(10));
+  scene.add(new GridHelper(10, 10));
 
   const light = new DirectionalLight(0xffffff, 1.5);
   light.position.set(-1, 2, 4);
