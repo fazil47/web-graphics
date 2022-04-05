@@ -1,0 +1,18 @@
+.vector3Control {
+  @apply flex flex-col align-middle justify-between !important;
+}
+
+.vector3Control > span {
+  @apply text-center;
+}
+
+.Vector3Inputs {
+  @apply m-1 flex flex-row align-middle justify-evenly text-center !important;
+}
+
+.Vector3Inputs input[type="number"] {
+  @apply m-1 p-2 rounded-md text-center w-16 h-6 bg-gray-200 dark:bg-gray-700 !important;
+}
+.vector3Control > div > span:nth-child(2) {
+  @apply ml-1 w-[30px] !important;
+}

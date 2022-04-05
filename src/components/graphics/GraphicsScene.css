@@ -11,7 +11,7 @@
 }
 
 .controlGrid > * {
-  @apply xl:w-[400px];
+  @apply xl:w-[400px] select-none;
 }
 
 .graphicsSceneControls > * {

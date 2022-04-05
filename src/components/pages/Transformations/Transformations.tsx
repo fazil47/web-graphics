@@ -1,16 +1,22 @@
 import Page from "../../Page";
-import { Translation, Rotation, Scale } from "./TransformationDemos";
+import {
+  TranslationDemo,
+  RotationDemo,
+  ScaleDemo,
+  RotationAroundAxisDemo,
+} from "./TransformationDemos";
 
 export default function Transformations() {
   return (
     <Page pageName="transformations">
       <h1>Transformations</h1>
       <h2>Translation</h2>
-      <Translation />
+      <TranslationDemo />
       <h2>Rotation</h2>
-      <Rotation />
+      <RotationDemo />
+      <RotationAroundAxisDemo />
       <h2>Scale</h2>
-      <Scale />
+      <ScaleDemo />
     </Page>
   );
 }
