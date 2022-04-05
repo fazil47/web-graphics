@@ -1,5 +1,6 @@
 import {
   AmbientLight,
+  Color,
   DirectionalLight,
   Group,
   Mesh,
@@ -13,6 +14,7 @@ import {
 import GraphicsScene from "../../GraphicsScene/GraphicsScene";
 import Slider from "../../GraphicsScene/Slider";
 import Checkbox from "../../GraphicsScene/Checkbox";
+import ColorPicker from "../../GraphicsScene/ColorPicker";
 
 export function UnshadedDemo() {
   const scene = new Scene();
@@ -37,6 +39,13 @@ export function UnshadedDemo() {
       }}
       cameraPosition={new Vector3(0, 0, 3)}
     >
+      <ColorPicker
+        label="Color"
+        initialColor={0xaa8844}
+        onChange={(color) => {
+          material.color = new Color(color);
+        }}
+      />
       <Checkbox
         label="Wireframe"
         initialChecked={material.wireframe}
@@ -85,6 +94,13 @@ export function FlatShadingDemo() {
       }}
       cameraPosition={new Vector3(0, 0, 3)}
     >
+      <ColorPicker
+        label="Color"
+        initialColor={0xaa8844}
+        onChange={(color) => {
+          material.color = new Color(color);
+        }}
+      />
       <Slider
         label="Light Orbit"
         min="-180"
@@ -147,6 +163,13 @@ export function GouraudShadingDemo() {
       }}
       cameraPosition={new Vector3(0, 0, 3)}
     >
+      <ColorPicker
+        label="Color"
+        initialColor={0xaa8844}
+        onChange={(color) => {
+          material.color = new Color(color);
+        }}
+      />
       <Slider
         label="Light Orbit"
         min="-180"
@@ -209,6 +232,13 @@ export function PhongShadingDemo() {
       }}
       cameraPosition={new Vector3(0, 0, 3)}
     >
+      <ColorPicker
+        label="Color"
+        initialColor={0xaa8844}
+        onChange={(color) => {
+          material.color = new Color(color);
+        }}
+      />
       <Slider
         label="Shininess"
         min="0"
