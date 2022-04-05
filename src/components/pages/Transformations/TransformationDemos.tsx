@@ -12,8 +12,8 @@ import {
   Scene,
   Vector3,
 } from "three";
-import GraphicsScene from "../../GraphicsScene/GraphicsScene";
-import Slider from "../../GraphicsScene/Slider";
+import GraphicsScene from "../../graphics/GraphicsScene";
+import Slider from "../../graphics/controls/Slider";
 
 export function Translation() {
   const scene = new Scene();
@@ -21,7 +21,7 @@ export function Translation() {
   const cameraOrbitGroup = new Group();
   cameraOrbitGroup.add(camera);
   scene.add(cameraOrbitGroup);
-  scene.add(new AxesHelper(10));
+  scene.add(new AxesHelper(10).translateY(0.001));
   scene.add(new GridHelper(10, 10));
 
   const light = new DirectionalLight(0xffffff, 1.5);
@@ -84,7 +84,7 @@ export function Rotation() {
   const cameraOrbitGroup = new Group();
   cameraOrbitGroup.add(camera);
   scene.add(cameraOrbitGroup);
-  scene.add(new AxesHelper(10));
+  scene.add(new AxesHelper(10).translateY(0.001));
   scene.add(new GridHelper(10, 10));
 
   const light = new DirectionalLight(0xffffff, 1.5);
@@ -147,7 +147,7 @@ export function Scale() {
   const cameraOrbitGroup = new Group();
   cameraOrbitGroup.add(camera);
   scene.add(cameraOrbitGroup);
-  scene.add(new AxesHelper(10));
+  scene.add(new AxesHelper(10).translateY(0.001));
   scene.add(new GridHelper(10, 10));
 
   const light = new DirectionalLight(0xffffff, 1.5);

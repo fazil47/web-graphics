@@ -12,9 +12,9 @@ import {
   Vector3,
 } from "three";
 import { CSG } from "../../../utils/csg/CSGUtils";
-import GraphicsScene, { CameraType } from "../../GraphicsScene/GraphicsScene";
-import Slider from "../../GraphicsScene/Slider";
-import Dropdown from "../../GraphicsScene/Dropdown";
+import GraphicsScene, { CameraType } from "../../graphics/GraphicsScene";
+import Slider from "../../graphics/controls/Slider";
+import Dropdown from "../../graphics/controls/Dropdown";
 
 export function CSGDemo() {
   const scene = new Scene();

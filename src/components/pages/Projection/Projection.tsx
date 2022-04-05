@@ -9,8 +9,8 @@ import {
 } from "three";
 import Page from "../../Page";
 import Quiz from "../../Quiz";
-import GraphicsScene, { CameraType } from "../../GraphicsScene/GraphicsScene";
-import Slider from "../../GraphicsScene/Slider";
+import GraphicsScene, { CameraType } from "../../graphics/GraphicsScene";
+import Slider from "../../graphics/controls/Slider";
 
 export default function Projection() {
   const orthoScene = new Scene();

@@ -11,10 +11,10 @@ import {
   SphereGeometry,
   Vector3,
 } from "three";
-import GraphicsScene from "../../GraphicsScene/GraphicsScene";
-import Slider from "../../GraphicsScene/Slider";
-import Checkbox from "../../GraphicsScene/Checkbox";
-import ColorPicker from "../../GraphicsScene/ColorPicker";
+import GraphicsScene from "../../graphics/GraphicsScene";
+import Slider from "../../graphics/controls/Slider";
+import Checkbox from "../../graphics/controls/Checkbox";
+import ColorPicker from "../../graphics/controls/ColorPicker";
 
 export function UnshadedDemo() {
   const scene = new Scene();
