@@ -36,7 +36,15 @@ export function UnshadedDemo() {
         sphere.rotation.y = time;
       }}
       cameraPosition={new Vector3(0, 0, 3)}
-    />
+    >
+      <Checkbox
+        label="Wireframe"
+        initialChecked={material.wireframe}
+        onChange={(value) => {
+          material.wireframe = value;
+        }}
+      />
+    </GraphicsScene>
   );
 }
 
@@ -85,12 +93,22 @@ export function FlatShadingDemo() {
           lightGroup.rotation.y = (value * Math.PI) / 180;
         }}
       />
-      <Checkbox
-        label="Ambient Light"
+      <Slider
+        label="Ambient Light Intensity"
+        min="0"
+        max="0.5"
+        step="0.01"
+        initialValue={ambLight.intensity.toString()}
         onChange={(value) => {
-          ambLight.visible = value;
+          ambLight.intensity = value;
         }}
-        initialChecked={true}
+      />
+      <Checkbox
+        label="Wireframe"
+        initialChecked={material.wireframe}
+        onChange={(value) => {
+          material.wireframe = value;
+        }}
       />
     </GraphicsScene>
   );
@@ -137,12 +155,22 @@ export function GouraudShadingDemo() {
           lightGroup.rotation.y = (value * Math.PI) / 180;
         }}
       />
-      <Checkbox
-        label="Ambient Light"
+      <Slider
+        label="Ambient Light Intensity"
+        min="0"
+        max="0.5"
+        step="0.01"
+        initialValue={ambLight.intensity.toString()}
         onChange={(value) => {
-          ambLight.visible = value;
+          ambLight.intensity = value;
         }}
-        initialChecked={true}
+      />
+      <Checkbox
+        label="Wireframe"
+        initialChecked={material.wireframe}
+        onChange={(value) => {
+          material.wireframe = value;
+        }}
       />
     </GraphicsScene>
   );
@@ -182,6 +210,15 @@ export function PhongShadingDemo() {
       cameraPosition={new Vector3(0, 0, 3)}
     >
       <Slider
+        label="Shininess"
+        min="0"
+        max="100"
+        initialValue={material.shininess.toString()}
+        onChange={(value) => {
+          material.shininess = value;
+        }}
+      />
+      <Slider
         label="Light Orbit"
         min="-180"
         max="180"
@@ -189,12 +226,22 @@ export function PhongShadingDemo() {
           lightGroup.rotation.y = (value * Math.PI) / 180;
         }}
       />
-      <Checkbox
-        label="Ambient Light"
+      <Slider
+        label="Ambient Light Intensity"
+        min="0"
+        max="0.5"
+        step="0.01"
+        initialValue={ambLight.intensity.toString()}
         onChange={(value) => {
-          ambLight.visible = value;
+          ambLight.intensity = value;
         }}
-        initialChecked={true}
+      />
+      <Checkbox
+        label="Wireframe"
+        initialChecked={material.wireframe}
+        onChange={(value) => {
+          material.wireframe = value;
+        }}
       />
     </GraphicsScene>
   );
