@@ -1,0 +1,11 @@
+.colorPicker {
+  @apply flex flex-row align-middle justify-between !important;
+}
+
+.colorPicker > input[type="color"] {
+  @apply mx-1 my-auto !important;
+}
+
+.colorPicker > span {
+  @apply m-1 my-auto !important;
+}
