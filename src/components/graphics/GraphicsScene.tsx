@@ -24,6 +24,7 @@ interface GraphicsSceneProps {
   orthographicCameraScale?: number;
   children?: React.ReactNode;
   disableHighDPI?: boolean;
+  enableAntiAliasing?: boolean;
 }
 
 export default function GraphicsScene({
@@ -36,12 +37,13 @@ export default function GraphicsScene({
   orthographicCameraScale = 1,
   children,
   disableHighDPI = false,
+  enableAntiAliasing = true,
 }: GraphicsSceneProps) {
   const mountRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const current_mount = mountRef.current;
-    const renderer = new WebGLRenderer();
+    const renderer = new WebGLRenderer({ antialias: enableAntiAliasing });
     let onMountResize = () => {};
 
     if (current_mount) {
@@ -156,6 +158,7 @@ export default function GraphicsScene({
     orthographicCameraScale,
     camera,
     disableHighDPI,
+    enableAntiAliasing,
   ]);
 
   const controlsClassName =
