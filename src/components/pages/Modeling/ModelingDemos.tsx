@@ -15,6 +15,7 @@ import { CSG } from "../../../utils/csg/CSGUtils";
 import GraphicsScene, { CameraType } from "../../graphics/GraphicsScene";
 import Slider from "../../graphics/controls/Slider";
 import Dropdown from "../../graphics/controls/Dropdown";
+import Checkbox from "../../graphics/controls/Checkbox";
 
 export function CSGDemo() {
   const scene = new Scene();
@@ -166,6 +167,15 @@ export function CSGDemo() {
         onChange={(value) => {
           inputMeshGroup.rotation.y = (value * Math.PI) / 180;
           resultantMeshGroup.rotation.y = (value * Math.PI) / 180;
+        }}
+      />
+      <Checkbox
+        label="Show Wireframes"
+        initialChecked={false}
+        onChange={(value) => {
+          redMaterial.wireframe = value;
+          greenMaterial.wireframe = value;
+          yellowMaterial.wireframe = value;
         }}
       />
     </GraphicsScene>
