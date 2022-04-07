@@ -163,7 +163,7 @@ export function CSGDemo() {
         }}
       />
       <Slider
-        label="Rotate Angle"
+        label="Rotation Angle"
         min="-180"
         max="180"
         initialValue="0"
