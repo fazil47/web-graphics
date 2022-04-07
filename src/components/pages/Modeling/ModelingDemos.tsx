@@ -104,18 +104,21 @@ export function CSGDemo() {
           yellowMaterial
         );
     }
+
     inputMeshGroup.clear();
     inputMeshGroup.add(mesh1);
     inputMeshGroup.add(mesh2);
-    inputMeshGroup.rotation.y = Math.PI / 4;
     mesh1.position.set(0, 0.8, 0);
     mesh2.position.set(0, -0.8, 0);
-    mesh1.rotation.set(45, 0, 0);
-    mesh2.rotation.set(45, 0, 0);
-    resultantMesh.rotation.set(45, 0, 0);
+    mesh1.rotateOnWorldAxis(new Vector3(1, 0, 0), Math.PI / 4);
+    mesh1.rotateOnWorldAxis(new Vector3(0, 1, 0), Math.PI / 4);
+    mesh2.rotateOnWorldAxis(new Vector3(1, 0, 0), Math.PI / 4);
+    mesh2.rotateOnWorldAxis(new Vector3(0, 1, 0), Math.PI / 4);
+
     resultantMeshGroup.clear();
     resultantMeshGroup.add(resultantMesh);
-    resultantMeshGroup.rotation.y = Math.PI / 4;
+    resultantMesh.rotateOnWorldAxis(new Vector3(1, 0, 0), Math.PI / 4);
+    resultantMesh.rotateOnWorldAxis(new Vector3(0, 1, 0), Math.PI / 4);
   };
   remakeCSGMesh({});
 
@@ -177,8 +180,8 @@ export function CSGDemo() {
         max="180"
         initialValue="0"
         onChange={(value) => {
-          inputMeshGroup.rotation.y = ((value + 45) * Math.PI) / 180;
-          resultantMeshGroup.rotation.y = ((value + 45) * Math.PI) / 180;
+          inputMeshGroup.rotation.y = (value * Math.PI) / 180;
+          resultantMeshGroup.rotation.y = (value * Math.PI) / 180;
         }}
       />
     </GraphicsScene>
