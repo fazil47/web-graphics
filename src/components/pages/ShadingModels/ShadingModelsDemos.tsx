@@ -101,8 +101,15 @@ export function FlatShadingDemo() {
           material.color = new Color(color);
         }}
       />
+      <Checkbox
+        label="Show Wireframe"
+        initialChecked={material.wireframe}
+        onChange={(value) => {
+          material.wireframe = value;
+        }}
+      />
       <Slider
-        label="Light Orbit"
+        label="Directional Light Orbit"
         min="-180"
         max="180"
         initialValue="0"
@@ -118,13 +125,6 @@ export function FlatShadingDemo() {
         initialValue={ambLight.intensity.toString()}
         onChange={(value) => {
           ambLight.intensity = value;
-        }}
-      />
-      <Checkbox
-        label="Show Wireframe"
-        initialChecked={material.wireframe}
-        onChange={(value) => {
-          material.wireframe = value;
         }}
       />
     </GraphicsScene>
@@ -171,8 +171,15 @@ export function GouraudShadingDemo() {
           material.color = new Color(color);
         }}
       />
+      <Checkbox
+        label="Show Wireframe"
+        initialChecked={material.wireframe}
+        onChange={(value) => {
+          material.wireframe = value;
+        }}
+      />
       <Slider
-        label="Light Orbit"
+        label="Directional Light Orbit"
         min="-180"
         max="180"
         initialValue="0"
@@ -188,13 +195,6 @@ export function GouraudShadingDemo() {
         initialValue={ambLight.intensity.toString()}
         onChange={(value) => {
           ambLight.intensity = value;
-        }}
-      />
-      <Checkbox
-        label="Show Wireframe"
-        initialChecked={material.wireframe}
-        onChange={(value) => {
-          material.wireframe = value;
         }}
       />
     </GraphicsScene>
@@ -241,6 +241,13 @@ export function PhongShadingDemo() {
           material.color = new Color(color);
         }}
       />
+      <Checkbox
+        label="Show Wireframe"
+        initialChecked={material.wireframe}
+        onChange={(value) => {
+          material.wireframe = value;
+        }}
+      />
       <Slider
         label="Shininess"
         min="0"
@@ -251,7 +258,7 @@ export function PhongShadingDemo() {
         }}
       />
       <Slider
-        label="Light Orbit"
+        label="Directional Light Orbit"
         min="-180"
         max="180"
         initialValue="0"
@@ -267,13 +274,6 @@ export function PhongShadingDemo() {
         initialValue={ambLight.intensity.toString()}
         onChange={(value) => {
           ambLight.intensity = value;
-        }}
-      />
-      <Checkbox
-        label="Show Wireframe"
-        initialChecked={material.wireframe}
-        onChange={(value) => {
-          material.wireframe = value;
         }}
       />
     </GraphicsScene>

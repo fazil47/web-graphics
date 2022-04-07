@@ -162,6 +162,15 @@ export function CSGDemo() {
           remakeCSGMesh({ mesh2Type: value });
         }}
       />
+      <Checkbox
+        label="Show Wireframes"
+        initialChecked={false}
+        onChange={(value) => {
+          redMaterial.wireframe = value;
+          greenMaterial.wireframe = value;
+          yellowMaterial.wireframe = value;
+        }}
+      />
       <Slider
         label="Rotation Angle"
         min="-180"
@@ -170,15 +179,6 @@ export function CSGDemo() {
         onChange={(value) => {
           inputMeshGroup.rotation.y = ((value + 45) * Math.PI) / 180;
           resultantMeshGroup.rotation.y = ((value + 45) * Math.PI) / 180;
-        }}
-      />
-      <Checkbox
-        label="Show Wireframes"
-        initialChecked={false}
-        onChange={(value) => {
-          redMaterial.wireframe = value;
-          greenMaterial.wireframe = value;
-          yellowMaterial.wireframe = value;
         }}
       />
     </GraphicsScene>
