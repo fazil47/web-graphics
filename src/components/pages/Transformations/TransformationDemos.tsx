@@ -21,12 +21,15 @@ import Vector3Control from "../../graphics/controls/Vector3Control";
 
 export function TranslationDemo() {
   const scene = new Scene();
+
   const camera = new PerspectiveCamera();
   const cameraOrbitGroup = new Group();
   cameraOrbitGroup.add(camera);
+  cameraOrbitGroup.rotation.y = Math.PI / 4;
   scene.add(cameraOrbitGroup);
+
   scene.add(new AxesHelper(20));
-  scene.add(new GridHelper(10, 10).translateY(-0.001));
+  scene.add(new GridHelper(10, 10).translateY(-0.01));
 
   const light = new DirectionalLight(0xffffff, 1.5);
   light.position.set(-1, 2, 4);
@@ -48,8 +51,9 @@ export function TranslationDemo() {
     >
       <Slider
         label="X Translation"
-        min="-5"
-        max="5"
+        min="-3"
+        max="3"
+        step="0.1"
         initialValue="0"
         onChange={(value) => {
           mesh.position.x = value;
@@ -59,6 +63,7 @@ export function TranslationDemo() {
         label="Y Translation"
         min="-2"
         max="2"
+        step="0.1"
         initialValue="0"
         onChange={(value) => {
           mesh.position.y = value;
@@ -66,8 +71,9 @@ export function TranslationDemo() {
       />
       <Slider
         label="Z Translation"
-        min="-4"
-        max="4"
+        min="-3"
+        max="3"
+        step="0.1"
         initialValue="0"
         onChange={(value) => {
           mesh.position.z = value;
@@ -79,7 +85,7 @@ export function TranslationDemo() {
         max="180"
         initialValue="0"
         onChange={(value) => {
-          cameraOrbitGroup.rotation.y = (value * Math.PI) / 180;
+          cameraOrbitGroup.rotation.y = ((value + 45) * Math.PI) / 180;
         }}
       />
     </GraphicsScene>
@@ -88,13 +94,15 @@ export function TranslationDemo() {
 
 export function RotationDemo() {
   const scene = new Scene();
+
   const camera = new PerspectiveCamera();
   const cameraOrbitGroup = new Group();
   cameraOrbitGroup.add(camera);
+  cameraOrbitGroup.rotation.y = Math.PI / 4;
   scene.add(cameraOrbitGroup);
-  const axisHelper = new AxesHelper(20);
-  scene.add(axisHelper);
-  scene.add(new GridHelper(10, 10).translateY(-0.001));
+
+  scene.add(new AxesHelper(20));
+  scene.add(new GridHelper(10, 10).translateY(-0.01));
 
   const light = new DirectionalLight(0xffffff, 1.5);
   light.position.set(-1, 2, 4);
@@ -156,7 +164,7 @@ export function RotationDemo() {
         max="180"
         initialValue="0"
         onChange={(value) => {
-          cameraOrbitGroup.rotation.y = (value * Math.PI) / 180;
+          cameraOrbitGroup.rotation.y = ((value + 45) * Math.PI) / 180;
         }}
       />
     </GraphicsScene>
@@ -165,13 +173,15 @@ export function RotationDemo() {
 
 export function RotationAroundAxisDemo() {
   const scene = new Scene();
+
   const camera = new PerspectiveCamera();
   const cameraOrbitGroup = new Group();
   cameraOrbitGroup.add(camera);
+  cameraOrbitGroup.rotation.y = Math.PI / 4;
   scene.add(cameraOrbitGroup);
-  const axisHelper = new AxesHelper(20);
-  scene.add(axisHelper);
-  scene.add(new GridHelper(10, 10).translateY(-0.001));
+
+  scene.add(new AxesHelper(20));
+  scene.add(new GridHelper(10, 10).translateY(-0.01));
 
   const light = new DirectionalLight(0xffffff, 1.5);
   light.position.set(-1, 2, 4);
@@ -182,7 +192,7 @@ export function RotationAroundAxisDemo() {
   const lineMaterial = new LineBasicMaterial({
     color: 0xffff22,
   });
-  const lineDirection = new Vector3(1, 1, 1);
+  const lineDirection = new Vector3(-1, 1, 1);
   const getLineGeometry = (direction: Vector3) => {
     const lineGeometry = new BufferGeometry().setFromPoints([
       new Vector3(-direction.x, -direction.y, -direction.z).multiplyScalar(10),
@@ -208,7 +218,7 @@ export function RotationAroundAxisDemo() {
       <Vector3Control
         label="Rotation Axis"
         initialValue={lineDirection}
-        min="1"
+        min="-10"
         max="10"
         step="0.1"
         onChange={(value) => {
@@ -238,7 +248,7 @@ export function RotationAroundAxisDemo() {
         max="180"
         initialValue="0"
         onChange={(value) => {
-          cameraOrbitGroup.rotation.y = (value * Math.PI) / 180;
+          cameraOrbitGroup.rotation.y = ((value + 45) * Math.PI) / 180;
         }}
       />
     </GraphicsScene>
@@ -247,12 +257,15 @@ export function RotationAroundAxisDemo() {
 
 export function ScaleDemo() {
   const scene = new Scene();
+
   const camera = new PerspectiveCamera();
   const cameraOrbitGroup = new Group();
   cameraOrbitGroup.add(camera);
+  cameraOrbitGroup.rotation.y = Math.PI / 4;
   scene.add(cameraOrbitGroup);
-  scene.add(new AxesHelper(20).translateY(0.001));
-  scene.add(new GridHelper(10, 10));
+
+  scene.add(new AxesHelper(20));
+  scene.add(new GridHelper(10, 10).translateY(-0.01));
 
   const light = new DirectionalLight(0xffffff, 1.5);
   light.position.set(-1, 2, 4);
@@ -275,8 +288,8 @@ export function ScaleDemo() {
       <Slider
         label="X Scale"
         min="1"
-        max="5"
-        initialValue="1"
+        max="3"
+        step="0.1"
         onChange={(value) => {
           mesh.scale.x = value;
         }}
@@ -284,8 +297,8 @@ export function ScaleDemo() {
       <Slider
         label="Y Scale"
         min="1"
-        max="5"
-        initialValue="1"
+        max="3"
+        step="0.1"
         onChange={(value) => {
           mesh.scale.y = value;
         }}
@@ -293,8 +306,8 @@ export function ScaleDemo() {
       <Slider
         label="Z Scale"
         min="1"
-        max="5"
-        initialValue="1"
+        max="3"
+        step="0.1"
         onChange={(value) => {
           mesh.scale.z = value;
         }}
@@ -305,7 +318,7 @@ export function ScaleDemo() {
         max="180"
         initialValue="0"
         onChange={(value) => {
-          cameraOrbitGroup.rotation.y = (value * Math.PI) / 180;
+          cameraOrbitGroup.rotation.y = ((value + 45) * Math.PI) / 180;
         }}
       />
     </GraphicsScene>

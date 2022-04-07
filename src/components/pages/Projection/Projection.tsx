@@ -69,6 +69,7 @@ export default function Projection() {
           label="Cube X rotation"
           min="-180"
           max="180"
+          initialValue="0"
           onChange={(rotation) => {
             mesh1.rotation.x = (Math.PI * rotation) / 180;
           }}
@@ -77,6 +78,7 @@ export default function Projection() {
           label="Cube Y rotation"
           min="-180"
           max="180"
+          initialValue="0"
           onChange={(rotation) => {
             mesh1.rotation.y = (Math.PI * rotation) / 180;
           }}
@@ -85,6 +87,7 @@ export default function Projection() {
           label="Cube X translation"
           min="-3"
           max="3"
+          initialValue="0"
           onChange={(distance) => {
             mesh1.position.x = distance;
           }}
@@ -109,6 +112,7 @@ export default function Projection() {
           label="Cube X rotation"
           min="-180"
           max="180"
+          initialValue="0"
           onChange={(rotation) => {
             mesh2.rotation.x = (Math.PI * rotation) / 180;
           }}
@@ -117,6 +121,7 @@ export default function Projection() {
           label="Cube Y rotation"
           min="-180"
           max="180"
+          initialValue="0"
           onChange={(rotation) => {
             mesh2.rotation.y = (Math.PI * rotation) / 180;
           }}
@@ -125,6 +130,7 @@ export default function Projection() {
           label="Cube X translation"
           min="-3"
           max="3"
+          initialValue="0"
           onChange={(distance) => {
             mesh2.position.x = distance;
           }}

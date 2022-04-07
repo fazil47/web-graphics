@@ -19,20 +19,20 @@ import Checkbox from "../../graphics/controls/Checkbox";
 
 export function CSGDemo() {
   const scene = new Scene();
-  const light = new DirectionalLight(0xffffff, 1.5);
+  const light = new DirectionalLight(0xffffff, 0.6);
   light.position.set(-1, 2, 4);
   scene.add(light);
-  scene.add(new AmbientLight(0xf0f0f0, 0.5));
+  scene.add(new AmbientLight(0xffffff, 0.4));
 
   const redMaterial = new MeshStandardMaterial({ color: 0xf1365c });
   const greenMaterial = new MeshStandardMaterial({ color: 0xaaffa2 });
   const yellowMaterial = new MeshStandardMaterial({ color: 0xf1c40f });
-  redMaterial.metalness = 0.8;
-  redMaterial.roughness = 0.8;
-  greenMaterial.metalness = 0.8;
-  greenMaterial.roughness = 0.8;
-  yellowMaterial.metalness = 0.8;
-  yellowMaterial.roughness = 0.8;
+  redMaterial.metalness = 0.0;
+  redMaterial.roughness = 1.0;
+  greenMaterial.metalness = 0.0;
+  greenMaterial.roughness = 1.0;
+  yellowMaterial.metalness = 0.0;
+  yellowMaterial.roughness = 1.0;
 
   const inputMeshGroup = new Group();
   const resultantMeshGroup = new Group();
@@ -107,6 +107,7 @@ export function CSGDemo() {
     inputMeshGroup.clear();
     inputMeshGroup.add(mesh1);
     inputMeshGroup.add(mesh2);
+    inputMeshGroup.rotation.y = Math.PI / 4;
     mesh1.position.set(0, 0.8, 0);
     mesh2.position.set(0, -0.8, 0);
     mesh1.rotation.set(45, 0, 0);
@@ -114,6 +115,7 @@ export function CSGDemo() {
     resultantMesh.rotation.set(45, 0, 0);
     resultantMeshGroup.clear();
     resultantMeshGroup.add(resultantMesh);
+    resultantMeshGroup.rotation.y = Math.PI / 4;
   };
   remakeCSGMesh({});
 
@@ -164,9 +166,10 @@ export function CSGDemo() {
         label="Rotate Angle"
         min="-180"
         max="180"
+        initialValue="0"
         onChange={(value) => {
-          inputMeshGroup.rotation.y = (value * Math.PI) / 180;
-          resultantMeshGroup.rotation.y = (value * Math.PI) / 180;
+          inputMeshGroup.rotation.y = ((value + 45) * Math.PI) / 180;
+          resultantMeshGroup.rotation.y = ((value + 45) * Math.PI) / 180;
         }}
       />
       <Checkbox

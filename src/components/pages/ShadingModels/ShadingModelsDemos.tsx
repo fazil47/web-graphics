@@ -47,7 +47,7 @@ export function UnshadedDemo() {
         }}
       />
       <Checkbox
-        label="Wireframe"
+        label="Show Wireframe"
         initialChecked={material.wireframe}
         onChange={(value) => {
           material.wireframe = value;
@@ -66,7 +66,7 @@ export function FlatShadingDemo() {
   light.position.set(-1, 2, 4);
   lightGroup.add(light);
   scene.add(lightGroup);
-  const ambLight = new AmbientLight(color, 0.5);
+  const ambLight = new AmbientLight(color, 0.25);
   scene.add(ambLight);
 
   const radius = 1;
@@ -105,6 +105,7 @@ export function FlatShadingDemo() {
         label="Light Orbit"
         min="-180"
         max="180"
+        initialValue="0"
         onChange={(value) => {
           lightGroup.rotation.y = (value * Math.PI) / 180;
         }}
@@ -120,7 +121,7 @@ export function FlatShadingDemo() {
         }}
       />
       <Checkbox
-        label="Wireframe"
+        label="Show Wireframe"
         initialChecked={material.wireframe}
         onChange={(value) => {
           material.wireframe = value;
@@ -140,7 +141,7 @@ export function GouraudShadingDemo() {
   light.position.set(-1, 2, 4);
   lightGroup.add(light);
   scene.add(lightGroup);
-  const ambLight = new AmbientLight(color, 0.5);
+  const ambLight = new AmbientLight(color, 0.25);
   scene.add(ambLight);
 
   const radius = 1;
@@ -174,6 +175,7 @@ export function GouraudShadingDemo() {
         label="Light Orbit"
         min="-180"
         max="180"
+        initialValue="0"
         onChange={(value) => {
           lightGroup.rotation.y = (value * Math.PI) / 180;
         }}
@@ -189,7 +191,7 @@ export function GouraudShadingDemo() {
         }}
       />
       <Checkbox
-        label="Wireframe"
+        label="Show Wireframe"
         initialChecked={material.wireframe}
         onChange={(value) => {
           material.wireframe = value;
@@ -209,7 +211,7 @@ export function PhongShadingDemo() {
   light.position.set(-1, 2, 4);
   lightGroup.add(light);
   scene.add(lightGroup);
-  const ambLight = new AmbientLight(color, 0.5);
+  const ambLight = new AmbientLight(color, 0.25);
   scene.add(ambLight);
 
   const radius = 1;
@@ -252,6 +254,7 @@ export function PhongShadingDemo() {
         label="Light Orbit"
         min="-180"
         max="180"
+        initialValue="0"
         onChange={(value) => {
           lightGroup.rotation.y = (value * Math.PI) / 180;
         }}
@@ -267,7 +270,7 @@ export function PhongShadingDemo() {
         }}
       />
       <Checkbox
-        label="Wireframe"
+        label="Show Wireframe"
         initialChecked={material.wireframe}
         onChange={(value) => {
           material.wireframe = value;
