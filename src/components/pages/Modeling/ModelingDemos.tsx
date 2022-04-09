@@ -110,8 +110,10 @@ export function CSGDemo() {
     inputMeshGroup.add(mesh2);
     mesh1.position.set(0, 0.8, 0);
     mesh2.position.set(0, -0.8, 0);
+    mesh1.rotation.set(0, 0, 0);
     mesh1.rotateOnWorldAxis(new Vector3(1, 0, 0), Math.PI / 4);
     mesh1.rotateOnWorldAxis(new Vector3(0, 1, 0), Math.PI / 4);
+    mesh2.rotation.set(0, 0, 0);
     mesh2.rotateOnWorldAxis(new Vector3(1, 0, 0), Math.PI / 4);
     mesh2.rotateOnWorldAxis(new Vector3(0, 1, 0), Math.PI / 4);
 
