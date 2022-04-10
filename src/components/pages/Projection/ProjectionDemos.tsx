@@ -187,12 +187,12 @@ export function StereoCameraDemo() {
     envMap: textureCube,
     refractionRatio: 0.95,
   });
-  for (let i = 0; i < 500; i++) {
+  for (let i = 0; i < 200; i++) {
     const mesh = new Mesh(geometry, material);
     mesh.position.x = Math.random() * 10000 - 5000;
     mesh.position.y = Math.random() * 10000 - 5000;
     mesh.position.z = Math.random() * 10000 - 5000;
-    mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 3 + 1;
+    mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 1 + 1;
     scene.add(mesh);
     spheres.push(mesh);
   }
@@ -210,6 +210,7 @@ export function StereoCameraDemo() {
           const sphere = spheres[i];
           sphere.position.x = 5000 * Math.cos(time + i);
           sphere.position.y = 5000 * Math.sin(time + i * 1.1);
+          sphere.position.z = 5000 * Math.cos(time + i * 0.7);
         }
       }}
     >
@@ -230,7 +231,7 @@ export function StereoCameraDemo() {
         step="0.01"
         initialValue="0"
         onChange={(degree) => {
-          camera.rotation.y = (Math.PI * degree) / 180;
+          camera.rotation.y = -(Math.PI * degree) / 180;
         }}
       />
     </StereoGraphicsScene>
