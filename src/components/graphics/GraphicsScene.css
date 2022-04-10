@@ -3,7 +3,11 @@
 }
 
 .graphicsSceneMount {
-  @apply mx-auto h-[350px] !important;
+  @apply mx-auto mb-4 h-[350px] !important;
+}
+
+.graphicsSceneMount > canvas {
+  @apply rounded-md;
 }
 
 .controlGrid {

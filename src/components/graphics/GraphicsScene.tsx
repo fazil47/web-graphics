@@ -23,7 +23,6 @@ interface GraphicsSceneProps {
   cameraRotation?: Euler;
   orthographicCameraScale?: number;
   children?: React.ReactNode;
-  disableHighDPI?: boolean;
   enableAntiAliasing?: boolean;
 }
 
@@ -36,7 +35,6 @@ export default function GraphicsScene({
   cameraRotation,
   orthographicCameraScale = 1,
   children,
-  disableHighDPI = false,
   enableAntiAliasing = true,
 }: GraphicsSceneProps) {
   const mountRef = useRef<HTMLDivElement>(null);
@@ -113,13 +111,7 @@ export default function GraphicsScene({
         const canvas = renderer.domElement;
         canvas.style.width = current_mount.clientWidth + "px";
         canvas.style.height = current_mount.clientHeight + "px";
-        const rendererSizeMultiplier = disableHighDPI
-          ? 1
-          : window.devicePixelRatio | 0;
-        renderer.setSize(
-          current_mount.clientWidth * rendererSizeMultiplier,
-          current_mount.clientHeight * rendererSizeMultiplier
-        );
+
         if (sceneCamera.type === "PerspectiveCamera") {
           sceneCamera.aspect =
             current_mount.clientWidth / current_mount.clientHeight;
@@ -157,7 +149,6 @@ export default function GraphicsScene({
     update,
     orthographicCameraScale,
     camera,
-    disableHighDPI,
     enableAntiAliasing,
   ]);
 

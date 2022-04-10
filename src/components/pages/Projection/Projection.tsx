@@ -3,6 +3,7 @@ import Quiz from "../../Quiz";
 import {
   PerspectiveProjectionDemo,
   OrthographicProjectionDemo,
+  StereoCameraDemo,
 } from "./ProjectionDemos";
 
 export default function Projection() {
@@ -13,6 +14,8 @@ export default function Projection() {
       <PerspectiveProjectionDemo />
       <h2>Orthographic Projection</h2>
       <OrthographicProjectionDemo />
+      <h2>Stereo Effect</h2>
+      <StereoCameraDemo />
       <Quiz
         quizInfo={{
           question:
