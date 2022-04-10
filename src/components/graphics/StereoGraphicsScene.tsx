@@ -3,12 +3,7 @@ import "./GraphicsScene.css";
 import { Euler, PerspectiveCamera, Scene, Vector3, WebGLRenderer } from "three";
 import { StereoEffect } from "three/examples/jsm/effects/StereoEffect";
 
-export enum CameraType {
-  Perspective,
-  Orthographic,
-}
-
-interface GraphicsSceneProps {
+interface StereoGraphicsSceneProps {
   scene: Scene;
   renderer: WebGLRenderer;
   stereoEffect: StereoEffect;
@@ -20,7 +15,7 @@ interface GraphicsSceneProps {
   enableAntiAliasing?: boolean;
 }
 
-export default function GraphicsScene({
+export default function StereoGraphicsScene({
   scene,
   renderer,
   stereoEffect,
@@ -30,7 +25,7 @@ export default function GraphicsScene({
   cameraRotation,
   children,
   enableAntiAliasing = true,
-}: GraphicsSceneProps) {
+}: StereoGraphicsSceneProps) {
   const mountRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

@@ -218,7 +218,7 @@ export function StereoCameraDemo() {
       <Slider
         label="Stereo Camera Eye Separation"
         min="0"
-        max="5"
+        max="2.5"
         step="0.01"
         initialValue="0.064"
         onChange={(distance) => {

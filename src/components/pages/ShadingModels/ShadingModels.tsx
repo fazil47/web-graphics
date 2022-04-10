@@ -6,7 +6,7 @@ import {
   FlatShadingDemo,
   GouraudShadingDemo,
   PhongShadingDemo,
-} from "./ShadingModelsDemos";
+} from "./ShadingModelDemos";
 
 export default function ShadingModels() {
   const quizInfo1 = {
@@ -17,7 +17,7 @@ export default function ShadingModels() {
   };
 
   return (
-    <Page pageName="shading_models">
+    <Page pageName="shadingModels">
       <h1>Shading Models</h1>
       <h2>Unshaded</h2>
       <UnshadedDemo />

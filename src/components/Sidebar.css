@@ -7,7 +7,7 @@
 }
 
 #sidebarContent {
-  @apply flex flex-col flex-grow overflow-y-hidden;
+  @apply flex flex-col flex-grow overflow-y-scroll;
 }
 
 #sidebarHeader {

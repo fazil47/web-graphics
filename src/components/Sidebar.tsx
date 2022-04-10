@@ -23,7 +23,11 @@ export default function Sidebar({
           <SidebarContentItem path="modeling" name="Modeling" />
           <SidebarContentItem path="projection" name="Projection" />
           <SidebarContentItem path="transformations" name="Transformations" />
-          <SidebarContentItem path="shading_models" name="Shading Models" />
+          <SidebarContentItem path="shadingModels" name="Shading Models" />
+          <SidebarContentItem path="lighting" name="Lighting" />
+          <SidebarContentItem path="textures" name="Textures" />
+          <SidebarContentItem path="shaders" name="Shaders" />
+          <SidebarContentItem path="misc" name="Miscellaneous" />
         </div>
       </div>
       {isOpen && <div id="sidebarBackground" onClick={closeSidebar} />}

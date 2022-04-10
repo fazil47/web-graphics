@@ -21,8 +21,12 @@ import LoadingIndicator from "./components/LoadingIndicator";
 import Home from "./components/pages/Home";
 import Modeling from "./components/pages/Modeling/Modeling";
 import Projection from "./components/pages/Projection/Projection";
-import ShadingModels from "./components/pages/ShadingModels/ShadingModels";
 import Transformations from "./components/pages/Transformations/Transformations";
+import ShadingModels from "./components/pages/ShadingModels/ShadingModels";
+import Lighting from "./components/pages/Shadows/Lighting";
+import Textures from "./components/pages/Textures/Textures";
+import Shaders from "./components/pages/Shaders/Shaders";
+import Misc from "./components/pages/Misc/Misc";
 
 function App(): JSX.Element {
   const [isAuthenticated, setIsAuthenticated] = useState(false); // Local signed-in state.
@@ -89,8 +93,12 @@ function App(): JSX.Element {
               <Route index element={<Home />} />
               <Route path="modeling" element={<Modeling />} />
               <Route path="projection" element={<Projection />} />
-              <Route path="shading_models" element={<ShadingModels />} />
               <Route path="transformations" element={<Transformations />} />
+              <Route path="shadingModels" element={<ShadingModels />} />
+              <Route path="lighting" element={<Lighting />} />
+              <Route path="textures" element={<Textures />} />
+              <Route path="shaders" element={<Shaders />} />
+              <Route path="misc" element={<Misc />} />
             </Route>
           </Routes>
         </FirebaseAuthContext.Provider>
