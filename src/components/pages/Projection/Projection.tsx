@@ -14,8 +14,6 @@ export default function Projection() {
       <PerspectiveProjectionDemo />
       <h2>Orthographic Projection</h2>
       <OrthographicProjectionDemo />
-      <h2>Stereo Effect</h2>
-      <StereoCameraDemo />
       <Quiz
         quizInfo={{
           question:
@@ -24,6 +22,8 @@ export default function Projection() {
           answerIndex: 0,
         }}
       />
+      <h2>Stereo Effect</h2>
+      <StereoCameraDemo />
     </Page>
   );
 }

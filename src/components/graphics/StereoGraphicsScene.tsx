@@ -10,10 +10,10 @@ export enum CameraType {
 
 interface GraphicsSceneProps {
   scene: Scene;
-  update?: (time: number) => void;
   renderer: WebGLRenderer;
-  camera?: PerspectiveCamera;
   stereoEffect: StereoEffect;
+  update?: (time: number) => void;
+  camera?: PerspectiveCamera;
   cameraPosition?: Vector3;
   cameraRotation?: Euler;
   children?: React.ReactNode;
@@ -22,10 +22,10 @@ interface GraphicsSceneProps {
 
 export default function GraphicsScene({
   scene,
-  update,
   renderer,
-  camera,
   stereoEffect,
+  update,
+  camera,
   cameraPosition,
   cameraRotation,
   children,

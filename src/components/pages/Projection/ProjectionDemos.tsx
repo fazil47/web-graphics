@@ -13,10 +13,11 @@ import {
   Vector3,
   WebGLRenderer,
 } from "three";
+import { StereoEffect } from "three/examples/jsm/effects/StereoEffect";
+
 import GraphicsScene, { CameraType } from "../../graphics/GraphicsScene";
 import StereoGraphicsScene from "../../graphics/StereoGraphicsScene";
 import Slider from "../../graphics/controls/Slider";
-import { StereoEffect } from "three/examples/jsm/effects/StereoEffect";
 
 import parkNx from "../../../textures/cube/Park3Med/nx.jpg";
 import parkNy from "../../../textures/cube/Park3Med/ny.jpg";

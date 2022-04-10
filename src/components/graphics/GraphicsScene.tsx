@@ -8,6 +8,7 @@ import {
   Vector3,
   WebGLRenderer,
 } from "three";
+import { VRButton } from "three/examples/jsm/webxr/VRButton";
 
 export enum CameraType {
   Perspective,
@@ -24,6 +25,7 @@ interface GraphicsSceneProps {
   orthographicCameraScale?: number;
   children?: React.ReactNode;
   enableAntiAliasing?: boolean;
+  enableXR?: boolean;
 }
 
 export default function GraphicsScene({
@@ -36,12 +38,17 @@ export default function GraphicsScene({
   orthographicCameraScale = 1,
   children,
   enableAntiAliasing = true,
+  enableXR = false,
 }: GraphicsSceneProps) {
   const mountRef = useRef<HTMLDivElement>(null);
+  const controlsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const current_mount = mountRef.current;
     const renderer = new WebGLRenderer({ antialias: enableAntiAliasing });
+    renderer.xr.enabled = enableXR;
+    renderer.xr.setReferenceSpaceType("local");
+
     let onMountResize = () => {};
 
     if (current_mount) {
@@ -98,6 +105,10 @@ export default function GraphicsScene({
 
       renderer.setSize(current_mount.clientWidth, current_mount.clientHeight);
       current_mount.appendChild(renderer.domElement);
+      if (enableXR) {
+        renderer.setPixelRatio(window.devicePixelRatio);
+        controlsRef.current?.appendChild(VRButton.createButton(renderer));
+      }
 
       const updateRender = (time: number) => {
         if (update) {
@@ -150,6 +161,7 @@ export default function GraphicsScene({
     orthographicCameraScale,
     camera,
     enableAntiAliasing,
+    enableXR,
   ]);
 
   const controlsClassName =
@@ -159,7 +171,9 @@ export default function GraphicsScene({
   return (
     <div className="graphicsScene">
       <div className="graphicsSceneMount" ref={mountRef}></div>
-      <div className={controlsClassName}>{children}</div>
+      <div className={controlsClassName} ref={controlsRef}>
+        {children}
+      </div>
     </div>
   );
 }
