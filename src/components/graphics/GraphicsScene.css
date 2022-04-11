@@ -1,5 +1,5 @@
 .graphicsScene {
-  @apply rounded-md bg-black shadow-md my-5 p-4 !important;
+  @apply rounded-md bg-black shadow-md shadow-black my-5 p-4 !important;
 }
 
 .graphicsSceneMount {
