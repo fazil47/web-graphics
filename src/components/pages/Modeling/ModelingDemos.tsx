@@ -196,7 +196,6 @@ export function SweepRepresentationDemo() {
   const scene = new Scene();
 
   const light = new DirectionalLight(0xffffff, 1);
-  // light.lookAt(new Vector3(0, 0, 0));
   light.rotateY(Math.PI / 6);
   light.position.set(0, 0, 1);
   scene.add(light);
@@ -219,8 +218,10 @@ export function SweepRepresentationDemo() {
   function newMesh(numPoints: number) {
     const circlePoints = circlePointsArray(2, numPoints);
     const extrudePath = new CatmullRomCurve3(circlePoints);
-    const geometry = new TubeGeometry(extrudePath, 1000, 0.5, 100, false);
+    const geometry = new TubeGeometry(extrudePath, 100, 0.5, 50, false);
     const material = new MeshStandardMaterial({ color: 0x00ff00 });
+    material.metalness = 0.7;
+    material.roughness = 0.7;
     return new Mesh(geometry, material);
   }
 
@@ -236,6 +237,7 @@ export function SweepRepresentationDemo() {
         label="Angle"
         min="0"
         max="360"
+        step="1"
         initialValue="0"
         onChange={(value) => {
           mesh = newMesh(value + 2);
