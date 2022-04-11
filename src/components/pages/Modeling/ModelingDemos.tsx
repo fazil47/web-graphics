@@ -197,7 +197,7 @@ export function SweepRepresentationDemo() {
 
   const light = new DirectionalLight(0xffffff, 1);
   light.rotateY(Math.PI / 6);
-  light.position.set(0, 0, 1);
+  light.position.set(1, 0, 1);
   scene.add(light);
   scene.add(new AmbientLight(0xffffff, 0.5));
 
