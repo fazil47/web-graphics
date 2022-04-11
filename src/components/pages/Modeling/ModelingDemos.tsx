@@ -1,6 +1,7 @@
 import {
   AmbientLight,
   BoxGeometry,
+  CatmullRomCurve3,
   CylinderGeometry,
   DirectionalLight,
   Group,
@@ -9,6 +10,7 @@ import {
   MeshStandardMaterial,
   Scene,
   SphereGeometry,
+  TubeGeometry,
   Vector3,
 } from "three";
 import { CSG } from "../../../utils/csg/CSGUtils";
@@ -184,6 +186,70 @@ export function CSGDemo() {
         onChange={(value) => {
           inputMeshGroup.rotation.y = (value * Math.PI) / 180;
           resultantMeshGroup.rotation.y = (value * Math.PI) / 180;
+        }}
+      />
+    </GraphicsScene>
+  );
+}
+
+export function SweepRepresentationDemo() {
+  const scene = new Scene();
+
+  const light = new DirectionalLight(0xffffff, 1);
+  // light.lookAt(new Vector3(0, 0, 0));
+  light.rotateY(Math.PI / 6);
+  light.position.set(0, 0, 1);
+  scene.add(light);
+  scene.add(new AmbientLight(0xffffff, 0.5));
+
+  function circlePointsArray(radius: number, numPoints: number) {
+    const circlePoints: Vector3[] = [];
+    for (let i = 0; i < numPoints; i++) {
+      circlePoints.push(
+        new Vector3(
+          Math.cos((i * Math.PI) / 180) * radius,
+          Math.sin((i * Math.PI) / 180) * radius,
+          0
+        )
+      );
+    }
+    return circlePoints;
+  }
+
+  function newMesh(numPoints: number) {
+    const circlePoints = circlePointsArray(2, numPoints);
+    const extrudePath = new CatmullRomCurve3(circlePoints);
+    const geometry = new TubeGeometry(extrudePath, 1000, 0.5, 100, false);
+    const material = new MeshStandardMaterial({ color: 0x00ff00 });
+    return new Mesh(geometry, material);
+  }
+
+  let mesh = newMesh(2);
+  const meshGroup = new Group();
+  scene.add(meshGroup);
+  meshGroup.add(mesh);
+  meshGroup.position.set(0, 0, -5);
+
+  return (
+    <GraphicsScene scene={scene}>
+      <Slider
+        label="Angle"
+        min="0"
+        max="360"
+        initialValue="0"
+        onChange={(value) => {
+          mesh = newMesh(value + 2);
+          meshGroup.clear();
+          meshGroup.add(mesh);
+        }}
+      />
+      <Slider
+        label="Rotation"
+        min="-180"
+        max="180"
+        initialValue="0"
+        onChange={(value) => {
+          meshGroup.rotation.y = (value * Math.PI) / 180;
         }}
       />
     </GraphicsScene>

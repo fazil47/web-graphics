@@ -11,11 +11,11 @@
 }
 
 #sidebarHeader {
-  @apply flex flex-row justify-start py-2 px-2 h-[58px] mx-5 border-b-2 dark:border-gray-500;
+  @apply flex flex-row justify-start py-2 px-2 h-[58px] border-b-2 dark:border-gray-500;
 }
 
 #sidebarHeader > * {
-  @apply hover:bg-gray-200 dark:hover:bg-gray-600 rounded-md hover:cursor-pointer;
+  @apply hover:bg-gray-200 dark:hover:bg-gray-600 mx-5 rounded-md hover:cursor-pointer;
 }
 
 .closedSidebar {
