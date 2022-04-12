@@ -4,7 +4,9 @@ import {
   Euler,
   OrthographicCamera,
   PerspectiveCamera,
+  ReinhardToneMapping,
   Scene,
+  sRGBEncoding,
   Vector3,
   WebGLRenderer,
 } from "three";
@@ -26,6 +28,7 @@ interface GraphicsSceneProps {
   children?: React.ReactNode;
   enableAntiAliasing?: boolean;
   enableXR?: boolean;
+  enableShadows?: boolean;
 }
 
 export default function GraphicsScene({
@@ -39,6 +42,7 @@ export default function GraphicsScene({
   children,
   enableAntiAliasing = true,
   enableXR = false,
+  enableShadows = false,
 }: GraphicsSceneProps) {
   const mountRef = useRef<HTMLDivElement>(null);
   const controlsRef = useRef<HTMLDivElement>(null);
@@ -48,6 +52,12 @@ export default function GraphicsScene({
     const renderer = new WebGLRenderer({ antialias: enableAntiAliasing });
     renderer.xr.enabled = enableXR;
     renderer.xr.setReferenceSpaceType("local");
+    if (enableShadows) {
+      renderer.physicallyCorrectLights = true;
+      renderer.outputEncoding = sRGBEncoding;
+      renderer.shadowMap.enabled = true;
+      renderer.toneMapping = ReinhardToneMapping;
+    }
 
     let onMountResize = () => {};
 
@@ -162,6 +172,7 @@ export default function GraphicsScene({
     camera,
     enableAntiAliasing,
     enableXR,
+    enableShadows,
   ]);
 
   const controlsClassName =
