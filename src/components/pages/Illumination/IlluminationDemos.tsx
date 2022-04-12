@@ -11,7 +11,11 @@ import {
   Vector2,
   Vector3,
   PointLight,
+  RectAreaLight,
+  TorusKnotGeometry,
 } from "three";
+import { RectAreaLightHelper } from "three/examples/jsm/helpers/RectAreaLightHelper";
+import { RectAreaLightUniformsLib } from "three/examples/jsm/lights/RectAreaLightUniformsLib";
 
 import GraphicsScene from "../../graphics/GraphicsScene";
 import ColorPicker from "../../graphics/controls/ColorPicker";
@@ -135,5 +139,82 @@ export function ShadowDemo() {
 
 export function ReflectionDemo() {
   const scene = new Scene();
-  return <GraphicsScene scene={scene} />;
+
+  RectAreaLightUniformsLib.init();
+
+  const rectLight1 = new RectAreaLight(0x118407, 5, 4, 10);
+  rectLight1.position.set(-5, 5, 5);
+  scene.add(rectLight1);
+
+  const rectLight2 = new RectAreaLight(0xffffff, 5, 4, 10);
+  rectLight2.position.set(0, 5, 5);
+  scene.add(rectLight2);
+
+  const rectLight3 = new RectAreaLight(0xf79431, 5, 4, 10);
+  rectLight3.position.set(5, 5, 5);
+  scene.add(rectLight3);
+
+  scene.add(new RectAreaLightHelper(rectLight1));
+  scene.add(new RectAreaLightHelper(rectLight2));
+  scene.add(new RectAreaLightHelper(rectLight3));
+
+  const geoFloor = new BoxGeometry(2000, 0.1, 2000);
+  const matStdFloor = new MeshStandardMaterial({
+    color: 0x808080,
+    roughness: 0.1,
+    metalness: 0,
+  });
+  const mshStdFloor = new Mesh(geoFloor, matStdFloor);
+  scene.add(mshStdFloor);
+
+  const geoKnot = new TorusKnotGeometry(1.5, 0.5, 200, 16);
+  const matKnot = new MeshStandardMaterial({
+    color: 0xffffff,
+    roughness: 0.1,
+    metalness: 0,
+  });
+  const meshKnot = new Mesh(geoKnot, matKnot);
+  meshKnot.name = "meshKnot";
+  meshKnot.position.set(0, 5, 0);
+  scene.add(meshKnot);
+
+  return (
+    <GraphicsScene
+      scene={scene}
+      cameraPosition={new Vector3(10, 5, -10)}
+      cameraRotation={new Euler(0, (2 / 3) * Math.PI, 0)}
+    >
+      <Slider
+        label="Roughness"
+        min="0"
+        max="1"
+        step="0.01"
+        initialValue={matKnot.roughness.toString()}
+        onChange={(value) => {
+          matKnot.roughness = value;
+          matStdFloor.roughness = value;
+        }}
+      />
+      <Slider
+        label="Light Rotation"
+        min="-180"
+        max="180"
+        initialValue="0"
+        onChange={(value) => {
+          rectLight1.rotation.y = (value * Math.PI) / 180;
+          rectLight2.rotation.y = (value * Math.PI) / 180;
+          rectLight3.rotation.y = (value * Math.PI) / 180;
+        }}
+      />
+      <Slider
+        label="Mesh Rotation"
+        min="-180"
+        max="180"
+        initialValue="0"
+        onChange={(value) => {
+          meshKnot.rotation.y = (value * Math.PI) / 180;
+        }}
+      />
+    </GraphicsScene>
+  );
 }
