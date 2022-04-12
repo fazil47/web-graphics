@@ -36,6 +36,17 @@ export default function Projection() {
       </p>
       <OrthographicProjectionDemo />
       <h2>Stereo Effect</h2>
+      <p>
+        The concept behind the working of VR headset is that stereoscopic
+        projection is displayed which splits VR screen into two, with an
+        individual view for each eye to create a 3D perspective. This is done
+        using the angle and type of lenses in the headset. The lenses distortthe
+        two independent images, one for each side, into the correct shape for
+        how our eyes would otherwise see the real world. The actual images for
+        each eye are displayed slightly off from one another. If you close one
+        eye back and forth in the headset, you can see the objects in VR dance
+        back and forth. It's this principle that lets the VR be 3D.
+      </p>
       <StereoCameraDemo />
       <Quiz
         quizInfo={{
