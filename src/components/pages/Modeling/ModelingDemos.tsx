@@ -232,6 +232,7 @@ export function SweepRepresentationDemo() {
   scene.add(meshGroup);
   meshGroup.add(mesh);
   meshGroup.position.set(0, 0, -5);
+  meshGroup.rotation.set(Math.PI / 6, 0, 0);
 
   return (
     <GraphicsScene scene={scene}>

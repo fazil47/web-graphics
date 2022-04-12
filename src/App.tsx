@@ -23,10 +23,10 @@ import Modeling from "./components/pages/Modeling/Modeling";
 import Projection from "./components/pages/Projection/Projection";
 import Transformations from "./components/pages/Transformations/Transformations";
 import ShadingModels from "./components/pages/ShadingModels/ShadingModels";
-import Lighting from "./components/pages/Shadows/Lighting";
 import Textures from "./components/pages/Textures/Textures";
 import Shaders from "./components/pages/Shaders/Shaders";
 import Misc from "./components/pages/Misc/Misc";
+import Illumination from "./components/pages/Illumination/Illumination";
 
 function App(): JSX.Element {
   const [isAuthenticated, setIsAuthenticated] = useState(false); // Local signed-in state.
@@ -95,7 +95,7 @@ function App(): JSX.Element {
               <Route path="projection" element={<Projection />} />
               <Route path="transformations" element={<Transformations />} />
               <Route path="shadingModels" element={<ShadingModels />} />
-              <Route path="lighting" element={<Lighting />} />
+              <Route path="illumination" element={<Illumination />} />
               <Route path="textures" element={<Textures />} />
               <Route path="shaders" element={<Shaders />} />
               <Route path="misc" element={<Misc />} />

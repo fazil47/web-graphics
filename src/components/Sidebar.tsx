@@ -24,7 +24,7 @@ export default function Sidebar({
           <SidebarContentItem path="projection" name="Projection" />
           <SidebarContentItem path="transformations" name="Transformations" />
           <SidebarContentItem path="shadingModels" name="Shading Models" />
-          <SidebarContentItem path="lighting" name="Lighting" />
+          <SidebarContentItem path="illumination" name="Illumination" />
           <SidebarContentItem path="textures" name="Textures" />
           <SidebarContentItem path="shaders" name="Shaders" />
           <SidebarContentItem path="misc" name="Miscellaneous" />

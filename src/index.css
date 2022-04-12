@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300&display=swap");
+
+@font-face {
+  font-family: "NotoSans";
+  src: url("./fonts/NotoSans-Regular.ttf");
+}
+
 @layer base {
   body {
     @apply bg-white dark:bg-gray-800 dark:text-white;
