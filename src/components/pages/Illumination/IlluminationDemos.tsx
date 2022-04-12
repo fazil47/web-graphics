@@ -13,7 +13,6 @@ import {
   PointLight,
   RectAreaLight,
   TorusKnotGeometry,
-  PerspectiveCamera,
 } from "three";
 import { RectAreaLightHelper } from "three/examples/jsm/helpers/RectAreaLightHelper";
 import { RectAreaLightUniformsLib } from "three/examples/jsm/lights/RectAreaLightUniformsLib";
