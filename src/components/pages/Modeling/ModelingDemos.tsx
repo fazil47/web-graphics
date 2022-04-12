@@ -4,6 +4,7 @@ import {
   CatmullRomCurve3,
   CylinderGeometry,
   DirectionalLight,
+  DoubleSide,
   Group,
   Matrix4,
   Mesh,
@@ -220,6 +221,7 @@ export function SweepRepresentationDemo() {
     const extrudePath = new CatmullRomCurve3(circlePoints);
     const geometry = new TubeGeometry(extrudePath, 100, 0.5, 50, false);
     const material = new MeshStandardMaterial({ color: 0x00ff00 });
+    material.side = DoubleSide;
     material.metalness = 0.7;
     material.roughness = 0.7;
     return new Mesh(geometry, material);
