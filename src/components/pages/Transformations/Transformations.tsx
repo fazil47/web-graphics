@@ -32,7 +32,6 @@ export default function Transformations() {
         <HL>(x, y, z)</HL> is translated, then after translation its coordinates
         will be <HL>(x1, y1, z1)</HL> after translation. <HL>Tx, Ty and Tz</HL>{" "}
         are translation vectors in <HL>x, y and z</HL> directions respectively.
-        <br />
         <HLB>
           x1 = x + Tx
           <br />
@@ -57,7 +56,6 @@ export default function Transformations() {
         transformations are required. First of all, alignment is needed, and
         then the object is being back to the original position. The following
         steps are required:
-        <br />
         <HLB>
           1. Translate the object to the origin.
           <br />
@@ -77,7 +75,6 @@ export default function Transformations() {
         Scaling is used to change the size of an object. The size can be
         increased or decreased. The scaling three factors are required{" "}
         <HL>Sx, Sy and Sz</HL>.
-        <br />
         <HLB>
           Sx = Scaling factor in x-direction
           <br />
