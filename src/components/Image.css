@@ -11,5 +11,5 @@
 }
 
 .image > .attrib {
-  @apply text-xs text-gray-300;
+  @apply text-xs text-gray-300 mt-0;
 }
