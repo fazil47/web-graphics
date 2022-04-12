@@ -35,6 +35,14 @@ export default function Projection() {
         the plan drawn.
       </p>
       <OrthographicProjectionDemo />
+      <Quiz
+        quizInfo={{
+          question:
+            "In which kind of projection does the cube's size remain constant?",
+          options: ["Orthographic", "Perspective", "Both"],
+          answerIndex: 0,
+        }}
+      />
       <h2>Stereo Effect</h2>
       <p>
         The concept behind the working of VR headset is that stereoscopic
@@ -48,14 +56,6 @@ export default function Projection() {
         back and forth. It's this principle that lets the VR be 3D.
       </p>
       <StereoCameraDemo />
-      <Quiz
-        quizInfo={{
-          question:
-            "In which kind of projection does the cube's size remain constant?",
-          options: ["Orthographic", "Perspective", "Both"],
-          answerIndex: 0,
-        }}
-      />
     </Page>
   );
 }
