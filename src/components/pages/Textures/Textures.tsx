@@ -1,6 +1,6 @@
 import Page from "../../Page";
 import Image from "../../Image";
-import { CombinedTextureDemo, DecalDemo, TextureUVDemo } from "./TextureDemos";
+import { CombinedTextureDemo, TextureUVDemo } from "./TextureDemos";
 
 import uvImage from "../../../images/CubeUVMapping.png";
 
@@ -36,8 +36,6 @@ export default function Textures() {
         attribAsLink
       />
       <CombinedTextureDemo />
-      {/* <h2>Decals</h2>
-      <DecalDemo /> */}
     </Page>
   );
 }
