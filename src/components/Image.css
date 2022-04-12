@@ -9,3 +9,7 @@
 .image > img {
   @apply rounded-md max-w-full;
 }
+
+.image > .attrib {
+  @apply text-xs text-gray-300;
+}

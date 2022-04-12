@@ -16,8 +16,8 @@ export default function Image({
       <img alt={alt} src={path} />
       <label>{alt}</label>
       {attribution && (
-        <label>
-          <i>Attribution: </i>
+        <label className="attrib">
+          <i>Source: </i>
           {attribAsLink ? (
             <a href={"//" + attribution}>{attribution}</a>
           ) : (
