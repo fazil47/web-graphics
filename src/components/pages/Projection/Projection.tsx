@@ -24,9 +24,10 @@ export default function Projection() {
       <PerspectiveProjectionDemo />
       <h2>Orthographic Projection</h2>
       <p>
-        Orthographic projections are most often used to produce the front, side
-        and top views of an object. The front, side and rear projections are
-        called elevations. The top is called plan. Orthographic projections that
+        Orthographic projection is a type of parallel projection. Orthographic
+        projections are most often used to produce the front, side and top views
+        of an object. The front, side and rear projections are called
+        elevations. The top is called plan. Orthographic projections that
         display more than one face of the object are called axonometric
         projections. The most commonly used axonometric projection is isometric
         projection. Here, as we move the sliders and observe the changes in the
@@ -41,6 +42,26 @@ export default function Projection() {
             "In which kind of projection does the cube's size remain constant?",
           options: ["Orthographic", "Perspective", "Both"],
           answerIndex: 0,
+        }}
+      />
+      <Quiz
+        quizInfo={{
+          question:
+            "Which projection is used by architects who need a better measure of plan drawn?",
+          options: ["Orthographic", "Perspective", "Both"],
+          answerIndex: 0,
+        }}
+      />
+      <Quiz
+        quizInfo={{
+          question:
+            "Which statement is correct in context to perspective projection?",
+          options: [
+            "It maintains the object dimension proportion",
+            "It gives a better understanding of a 3D object",
+            "It is a type of parallel projection",
+          ],
+          answerIndex: 1,
         }}
       />
       <h2>Stereo Effect</h2>
