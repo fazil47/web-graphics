@@ -13,6 +13,7 @@ import {
   PointLight,
   RectAreaLight,
   TorusKnotGeometry,
+  PerspectiveCamera,
 } from "three";
 import { RectAreaLightHelper } from "three/examples/jsm/helpers/RectAreaLightHelper";
 import { RectAreaLightUniformsLib } from "three/examples/jsm/lights/RectAreaLightUniformsLib";
@@ -181,7 +182,7 @@ export function ReflectionDemo() {
   return (
     <GraphicsScene
       scene={scene}
-      cameraPosition={new Vector3(10, 5, -10)}
+      cameraPosition={new Vector3(12, 5, -4)}
       cameraRotation={new Euler(0, (2 / 3) * Math.PI, 0)}
     >
       <Slider
