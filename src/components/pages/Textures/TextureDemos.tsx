@@ -165,3 +165,47 @@ export function CombinedTextureDemo() {
     </GraphicsScene>
   );
 }
+
+export function DecalDemo() {
+  const scene = new Scene();
+  const light = new PointLight(0xffffff, 1);
+  light.position.set(-1, 2, 2);
+  scene.add(light);
+
+  const base = new TextureLoader().load(mossyBarkBase);
+  const normal = new TextureLoader().load(mossyBarkNormal);
+  const roughness = new TextureLoader().load(mossyBarkRoughness);
+
+  const material = new MeshStandardMaterial({ color: 0xffffff });
+  material.map = base;
+  material.normalMap = normal;
+  material.roughnessMap = roughness;
+
+  const mesh = new Mesh(new BoxGeometry(1, 1, 1), material);
+  scene.add(mesh);
+
+  return (
+    <GraphicsScene scene={scene} cameraPosition={new Vector3(0, 0, 2)}>
+      <Slider
+        label="X Rotation"
+        min="-180"
+        max="180"
+        step="1"
+        initialValue="0"
+        onChange={(value) => {
+          mesh.rotation.x = (value * Math.PI) / 180;
+        }}
+      />
+      <Slider
+        label="Y Rotation"
+        min="-180"
+        max="180"
+        step="1"
+        initialValue="0"
+        onChange={(value) => {
+          mesh.rotation.y = (value * Math.PI) / 180;
+        }}
+      />
+    </GraphicsScene>
+  );
+}
