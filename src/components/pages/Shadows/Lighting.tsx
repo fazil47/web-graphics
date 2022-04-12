@@ -1,5 +1,5 @@
 import Page from "../../Page";
-import { ShadowDemo } from "./LightingDemos";
+import { ReflectionDemo, ShadowDemo } from "./LightingDemos";
 
 export default function Lighting() {
   return (
@@ -7,6 +7,8 @@ export default function Lighting() {
       <h1>Lighting</h1>
       <h2>Shadows</h2>
       <ShadowDemo />
+      <h2>Reflections</h2>
+      <ReflectionDemo />
     </Page>
   );
 }
