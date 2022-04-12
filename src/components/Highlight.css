@@ -1,3 +1,3 @@
 .highlight {
-  @apply bg-gray-200 dark:bg-gray-700 px-1 text-center inline rounded-md font-semibold font-mono;
+  @apply bg-gray-200 dark:bg-gray-700 px-1 py-0 my-0 text-center inline-block rounded-md font-semibold font-mono;
 }
