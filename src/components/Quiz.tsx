@@ -87,7 +87,7 @@ export default function Quiz({
                 name="quiz"
                 value={option}
               />
-              {option}
+              <span>{option}</span>
             </label>
           );
         })}

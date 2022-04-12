@@ -169,8 +169,8 @@ export function StereoCameraDemo() {
 
   const renderer = new WebGLRenderer({ antialias: true });
   const stereoEffect = new StereoEffect(renderer);
-  const camera = new PerspectiveCamera(50, 1, 0.1, 100000);
-  const cameraPosition = new Vector3(0, 0, 3200);
+  const camera = new PerspectiveCamera(50, 1, 0.1, 2000);
+  const cameraPosition = new Vector3(0, 0, 600);
 
   const spheres: Mesh[] = [];
   const geometry = new SphereGeometry(100, 32, 16);
@@ -188,12 +188,12 @@ export function StereoCameraDemo() {
     envMap: textureCube,
     refractionRatio: 0.95,
   });
-  for (let i = 0; i < 200; i++) {
+  for (let i = 0; i < 100; i++) {
     const mesh = new Mesh(geometry, material);
-    mesh.position.x = Math.random() * 10000 - 5000;
-    mesh.position.y = Math.random() * 10000 - 5000;
-    mesh.position.z = Math.random() * 10000 - 5000;
-    mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 1 + 1;
+    mesh.position.x = Math.random() * 100 - 50;
+    mesh.position.y = Math.random() * 100 - 50;
+    mesh.position.z = Math.random() * 100 - 50;
+    mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 0.8 + 0.2;
     scene.add(mesh);
     spheres.push(mesh);
   }
@@ -209,9 +209,10 @@ export function StereoCameraDemo() {
         time *= 0.0001;
         for (let i = 0, il = spheres.length; i < il; i++) {
           const sphere = spheres[i];
-          sphere.position.x = 5000 * Math.cos(time + i);
-          sphere.position.y = 5000 * Math.sin(time + i * 1.1);
-          sphere.position.z = 5000 * Math.cos(time + i * 0.7);
+          sphere.position.x = 1200 * Math.cos(time + i);
+          sphere.position.z = 1200 * Math.sin(time + i * 1.1);
+          sphere.position.y =
+            800 * Math.cos(time + i * 0.7) * Math.sin(i * 0.81);
         }
       }}
     >
