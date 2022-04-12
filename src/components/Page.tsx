@@ -85,7 +85,9 @@ export default function Page({ pageName, children }: PageProps) {
           handleQuizStateUpdate: (quizState: QuizState) => {
             handleQuizStateUpdate(quizIndex, quizState);
           },
-          initialQuizState: quizStates[quizIndex],
+          initialQuizState: quizStates[quizIndex]
+            ? quizStates[quizIndex]
+            : QuizAnswerState.Unanswered,
         });
       }
       return child;
