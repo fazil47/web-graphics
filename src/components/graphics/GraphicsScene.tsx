@@ -60,6 +60,7 @@ export default function GraphicsScene({
     }
 
     let onMountResize = () => {};
+    let requestAnimationHandle: number;
 
     if (current_mount) {
       let sceneCamera: OrthographicCamera | PerspectiveCamera;
@@ -125,7 +126,7 @@ export default function GraphicsScene({
           update(time);
         }
         renderer.render(scene, sceneCamera);
-        requestAnimationFrame(updateRender);
+        requestAnimationHandle = requestAnimationFrame(updateRender);
       };
 
       onMountResize = () => {
@@ -158,6 +159,10 @@ export default function GraphicsScene({
     // Cleanup
     return () => {
       if (current_mount) {
+        if (requestAnimationHandle) {
+          cancelAnimationFrame(requestAnimationHandle);
+        }
+        renderer.dispose();
         current_mount.removeChild(renderer.domElement);
       }
       window.removeEventListener("resize", onMountResize);
