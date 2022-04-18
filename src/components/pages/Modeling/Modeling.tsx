@@ -32,8 +32,8 @@ export default function Modeling() {
         from primitives by means of allowable operations, which are typically
         Boolean operations on sets: union, intersection and difference, as well
         as geometric transformations of those sets. Here, in the demo given
-        below, change the primitive meshes and the CSG operation and analyse
-        yourself the changes in the output structure.
+        below, change the primitive meshes and the CSG operation and analyze the
+        changes in the output mesh.
       </p>
       <CSGDemo />
     </Page>

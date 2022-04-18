@@ -8,7 +8,10 @@ import {
 
 export default function Projection() {
   return (
-    <Page pageName="projection" pagePaths={{ prev: "/modeling", next: "/transformations" }}>
+    <Page
+      pageName="projection"
+      pagePaths={{ prev: "/modeling", next: "/transformations" }}
+    >
       <h1>Projection</h1>
       <h2>Perspective Projection</h2>
       <p>
@@ -22,6 +25,18 @@ export default function Projection() {
         but at the same time, the proportion of the object dimensions vary.
       </p>
       <PerspectiveProjectionDemo />
+      <Quiz
+        quizInfo={{
+          question:
+            "Which statement is correct with respect to perspective projection?",
+          options: [
+            "It maintains the object dimension proportion",
+            "It gives a better understanding of a 3D object",
+            "It is a type of parallel projection",
+          ],
+          answerIndex: 1,
+        }}
+      />
       <h2>Orthographic Projection</h2>
       <p>
         Orthographic projection is a type of parallel projection. Orthographic
@@ -50,18 +65,6 @@ export default function Projection() {
             "Which projection is used by architects who need a better measure of plan drawn?",
           options: ["Orthographic", "Perspective", "Both"],
           answerIndex: 0,
-        }}
-      />
-      <Quiz
-        quizInfo={{
-          question:
-            "Which statement is correct in context to perspective projection?",
-          options: [
-            "It maintains the object dimension proportion",
-            "It gives a better understanding of a 3D object",
-            "It is a type of parallel projection",
-          ],
-          answerIndex: 1,
         }}
       />
       <h2>Stereo Effect</h2>

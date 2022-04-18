@@ -17,10 +17,16 @@ export default function ShadingModels() {
   };
 
   return (
-    <Page pageName="shadingModels" pagePaths={{ prev: "/transformations", next: "/illumination" }}>
+    <Page
+      pageName="shadingModels"
+      pagePaths={{ prev: "/transformations", next: "/illumination" }}
+    >
       <h1>Shading Models</h1>
       <h2>Unshaded</h2>
-      <p></p>
+      <p>
+        When an object shouldn't be affected by light we use a unshaded
+        material. It's most often used in UI.
+      </p>
       <UnshadedDemo />
       <h2>Flat Shading</h2>
       <p>
@@ -46,8 +52,8 @@ export default function ShadingModels() {
         performed by interpolating the vectors across the surface and computing
         the color for each point of interest. Interpolating the normal vectors
         gives a reasonable approximation to a smoothly-curved surface while
-        using a limited number of polygons. We use phong shading if quality is
-        everything.
+        using a limited number of polygons. We use Phong shading if quality is
+        the priority.
       </p>
       <PhongShadingDemo />
       <Quiz quizInfo={quizInfo1} />
