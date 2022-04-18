@@ -17,7 +17,8 @@ export default function ShadingModels() {
   };
 
   return (
-    <Page pageName="shadingModels">
+    //<Page pageName="shadingModels">
+    <Page pageName="shadingModels" pagePaths={{ next: "/illumination" }}>
       <h1>Shading Models</h1>
       <h2>Unshaded</h2>
       <p></p>
