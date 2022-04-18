@@ -11,7 +11,7 @@
 }
 
 .graphicsScene > .note {
-  @apply text-gray-400 text-sm text-center mb-4 flex flex-row align-middle justify-center self-center;
+  @apply px-2 text-gray-400 text-sm text-center mb-4 flex flex-row align-middle justify-center self-center;
 }
 
 .graphicsScene > .note > .noteInfoIcon {
