@@ -26,7 +26,6 @@ export default function Sidebar({
           <SidebarContentItem path="shadingModels" name="Shading Models" />
           <SidebarContentItem path="illumination" name="Illumination" />
           <SidebarContentItem path="textures" name="Textures" />
-          <SidebarContentItem path="misc" name="Miscellaneous" />
         </div>
       </div>
       {isOpen && <div id="sidebarBackground" onClick={closeSidebar} />}
