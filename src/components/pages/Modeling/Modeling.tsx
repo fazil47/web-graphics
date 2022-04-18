@@ -4,7 +4,7 @@ import { CSGDemo, SweepRepresentationDemo } from "./ModelingDemos";
 export default function Modeling() {
   return (
     //<Page pageName="modeling">
-    <Page pageName="modeling" pagePaths={{ next: "/projection" }}>
+    <Page pageName="modeling" pagePaths={{ prev: "/", next: "/projection" }}>
       <h1>Modeling</h1>
       {/* <h2>Implicit Surfaces</h2>
       <p>TODO</p>
