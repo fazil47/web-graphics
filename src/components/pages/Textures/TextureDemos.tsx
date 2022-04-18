@@ -49,7 +49,7 @@ export function TextureUVDemo() {
   scene.add(mesh);
 
   return (
-    <GraphicsScene scene={scene} note="It might take some time for the textures to load.">
+    <GraphicsScene scene={scene} note="It might take some time for the texture to load.">
       <Slider
         label="U Offset"
         min="0"
@@ -134,7 +134,7 @@ export function CombinedTextureDemo() {
   return (
     <GraphicsScene
       scene={scene}
-      note="It might take some time for the textures to load."
+      note="It might take some time for the texture to load."
       update={(time) => {
         time *= 0.001;
         lightBulb.position.x = Math.sin(time) * 0.8;

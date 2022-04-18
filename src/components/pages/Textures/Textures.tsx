@@ -11,7 +11,7 @@ import mossyBarkRoughness from "../../../textures/MossyBark/MossyBark02_1K_Rough
 
 export default function Textures() {
   return (
-    <Page pageName="textures">
+    <Page pageName="textures" pagePaths={{ prev: "/illumination" }}>
       <h1>Textures</h1>
       <p>
         In computer graphics, the application of a type of surface to a 3D

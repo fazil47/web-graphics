@@ -48,6 +48,14 @@
   code {
     @apply font-mono;
   }
+
+  ul {
+    @apply list-disc;
+  }
+
+  li {
+    @apply list-inside;
+  }
 }
 
 #root {

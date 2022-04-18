@@ -29,21 +29,29 @@ export default function Home() {
         <a href="https://www.firebase.com/">Firebase</a>.
       </p>
       <h2>References</h2>
-      <p>
-        <a href="https://threejs.org/docs/index.html">three.js Docs</a>
-        <br />
-        <a href="https://graphics.cs.utah.edu/courses/cs4600/">
-          CS 4600 - Introduction to Computer Graphics
-        </a>
-        <br />
-        <a href="https://cglearn.codelight.eu/pub/computer-graphics/">
-          cglearn.codelight.eu
-        </a>
-      </p>
+      <ul>
+        <li>
+          <a href="https://threejs.org/docs/index.html">
+            three.js documentation
+          </a>
+        </li>
+        <li>
+          <a href="https://graphics.cs.utah.edu/courses/cs4600/">
+            CS 4600 - Introduction to Computer Graphics
+          </a>
+        </li>
+        <li>
+          <a href="https://cglearn.codelight.eu/pub/computer-graphics/">
+            cglearn.codelight.eu
+          </a>
+        </li>
+      </ul>
       <h2>Attribution</h2>
-      <p>
-        <a href="https://sbcode.net/threejs/csg/">three.js CSG Utilities</a>
-      </p>
+      <ul>
+        <li>
+          <a href="https://sbcode.net/threejs/csg/">three.js CSG Utilities</a>
+        </li>
+      </ul>
     </Page>
   );
 }

@@ -205,6 +205,7 @@ export function StereoCameraDemo() {
       stereoEffect={stereoEffect}
       camera={camera}
       cameraPosition={cameraPosition}
+      note="It might take some time for the texture to load."
       update={(time) => {
         time *= 0.0001;
         for (let i = 0, il = spheres.length; i < il; i++) {

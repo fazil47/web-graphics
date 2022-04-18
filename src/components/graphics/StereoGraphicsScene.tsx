@@ -13,6 +13,7 @@ interface StereoGraphicsSceneProps {
   cameraRotation?: Euler;
   children?: React.ReactNode;
   enableAntiAliasing?: boolean;
+  note?: string;
 }
 
 export default function StereoGraphicsScene({
@@ -25,12 +26,14 @@ export default function StereoGraphicsScene({
   cameraRotation,
   children,
   enableAntiAliasing = true,
+  note,
 }: StereoGraphicsSceneProps) {
   const mountRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const current_mount = mountRef.current;
     let onMountResize = () => {};
+    let requestAnimationHandle: number;
 
     if (current_mount) {
       let sceneCamera: PerspectiveCamera;
@@ -70,7 +73,7 @@ export default function StereoGraphicsScene({
           update(time);
         }
         stereoEffect.render(scene, sceneCamera);
-        requestAnimationFrame(updateRender);
+        requestAnimationHandle = requestAnimationFrame(updateRender);
       };
 
       onMountResize = () => {
@@ -96,6 +99,10 @@ export default function StereoGraphicsScene({
     // Cleanup
     return () => {
       if (current_mount) {
+        if (requestAnimationHandle) {
+          cancelAnimationFrame(requestAnimationHandle);
+        }
+        renderer.dispose();
         current_mount.removeChild(renderer.domElement);
       }
       window.removeEventListener("resize", onMountResize);
@@ -118,6 +125,12 @@ export default function StereoGraphicsScene({
   return (
     <div className="graphicsScene">
       <div className="graphicsSceneMount" ref={mountRef}></div>
+      {note && (
+        <div className="note">
+          <span className="noteInfoIcon">i</span>{" "}
+          <span className="noteText">{note}</span>
+        </div>
+      )}
       <div className={controlsClassName}>{children}</div>
     </div>
   );
