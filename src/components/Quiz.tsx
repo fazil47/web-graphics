@@ -99,7 +99,7 @@ export default function Quiz({
           );
         })}
       </div>
-      <button className="quizSubmitButton" onClick={SubmitHandler}>
+      <button className="primaryButton quizSubmitButton" onClick={SubmitHandler}>
         Submit
       </button>
       {quizState.answerState === QuizAnswerState.Correct ? (

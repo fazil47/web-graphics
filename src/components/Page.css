@@ -1,3 +1,17 @@
 #page {
   @apply flex-grow px-5 pt-5 pb-2 h-screen overflow-y-scroll !important;
 }
+
+#pageFooter {
+  @apply mt-4 p-5 border-t-2 dark:border-gray-500 flex align-middle justify-between;
+}
+
+#prevButtonDiv > .prevPageButton {
+  @apply bg-red-100 hover:shadow-lg hover:bg-red-200 dark:hover:bg-red-800 hover:shadow-red-300 dark:hover:shadow-red-900
+   dark:bg-red-700;
+}
+
+#nextButtonDiv > .nextPageButton {
+  @apply bg-green-100 hover:shadow-lg hover:bg-green-200 dark:hover:bg-green-800 hover:shadow-green-300 dark:hover:shadow-green-900
+   dark:bg-green-700;
+}

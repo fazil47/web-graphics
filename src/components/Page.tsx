@@ -17,13 +17,15 @@ import {
 
 import Quiz, { QuizAnswerState, QuizState } from "./Quiz";
 import LoadingIndicator from "./LoadingIndicator";
+import { Link } from "react-router-dom";
 
 interface PageProps {
   pageName: string;
   children: React.ReactNode;
+  pagePaths?: { next?: string; prev?: string };
 }
 
-export default function Page({ pageName, children }: PageProps) {
+export default function Page({ pageName, children, pagePaths }: PageProps) {
   const [quizStates, setQuizStates] = useState<Array<QuizState>>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -114,10 +116,36 @@ export default function Page({ pageName, children }: PageProps) {
   if (isLoading === false) {
     return (
       <div id="page">
-        {quizStates.length > 0 && (
-          <h3>Progress: {progressPercentage.toFixed(2)}%</h3>
+        <div id="pageContent">
+          {quizStates.length > 0 && (
+            <h3>Progress: {progressPercentage.toFixed(2)}%</h3>
+          )}
+          {getchildrenWithProps()}
+        </div>
+        {pagePaths && (
+          <div id="pageFooter">
+            <div id="prevButtonDiv">
+              {pagePaths.prev && (
+                <Link
+                  className="primaryButton prevPageButton"
+                  to={pagePaths.prev}
+                >
+                  Previous
+                </Link>
+              )}
+            </div>
+            <div id="nextButtonDiv">
+              {pagePaths.next && (
+                <Link
+                  className="primaryButton nextPageButton"
+                  to={pagePaths.next}
+                >
+                  Next
+                </Link>
+              )}
+            </div>
+          </div>
         )}
-        {getchildrenWithProps()}
       </div>
     );
   } else {

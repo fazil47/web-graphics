@@ -6,35 +6,45 @@
   body {
     @apply bg-white dark:bg-gray-800 dark:text-white;
   }
+
   form {
     @apply rounded-lg bg-gray-100
       dark:bg-gray-700 dark:text-white
         drop-shadow-md;
   }
+
   p {
     @apply text-base;
   }
+
   p:not(:first-child) {
     @apply mt-4 mb-1;
   }
+
   h1 {
     @apply text-4xl font-bold;
   }
+
   h1:not(:first-child) {
     @apply mt-9 mb-1;
   }
+
   h2 {
     @apply text-2xl font-bold;
   }
+
   h2:not(:first-child) {
     @apply mt-9 mb-1;
   }
+
   h3 {
     @apply text-xl font-bold;
   }
+
   h3:not(:first-child) {
     @apply mt-9 mb-1;
   }
+
   code {
     @apply font-mono;
   }
@@ -42,4 +52,14 @@
 
 #root {
   @apply h-screen;
+}
+
+.primaryButton {
+  @apply bg-blue-100 hover:shadow-lg hover:bg-blue-200 dark:hover:bg-blue-800 hover:shadow-blue-300 dark:hover:shadow-blue-900
+   text-black dark:bg-blue-700 dark:text-white rounded-lg py-2 px-4;
+}
+
+.callToActionButton {
+  @apply text-center w-fit text-xl bg-blue-100 hover:shadow-lg hover:bg-blue-200 dark:hover:bg-blue-800 block hover:shadow-blue-300 dark:hover:shadow-blue-900
+  text-black dark:bg-blue-700 dark:text-white rounded-lg my-4 mx-auto p-4;
 }
