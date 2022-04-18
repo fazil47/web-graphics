@@ -29,6 +29,7 @@ interface GraphicsSceneProps {
   enableAntiAliasing?: boolean;
   enableXR?: boolean;
   enableShadows?: boolean;
+  note?: string;
 }
 
 export default function GraphicsScene({
@@ -43,6 +44,7 @@ export default function GraphicsScene({
   enableAntiAliasing = true,
   enableXR = false,
   enableShadows = false,
+  note,
 }: GraphicsSceneProps) {
   const mountRef = useRef<HTMLDivElement>(null);
   const controlsRef = useRef<HTMLDivElement>(null);
@@ -187,6 +189,11 @@ export default function GraphicsScene({
   return (
     <div className="graphicsScene">
       <div className="graphicsSceneMount" ref={mountRef}></div>
+      {note && (
+        <div className="note">
+          <span className="noteInfoIcon">i</span> <span className="noteText">{note}</span>
+        </div>
+      )}
       <div className={controlsClassName} ref={controlsRef}>
         {children}
       </div>

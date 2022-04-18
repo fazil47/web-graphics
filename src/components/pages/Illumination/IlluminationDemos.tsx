@@ -105,6 +105,7 @@ export function ShadowDemo() {
       cameraPosition={new Vector3(0, 2, 5)}
       cameraRotation={new Euler(-Math.PI / 6, 0, 0)}
       enableShadows
+      note="It might take some time for the textures to load."
     >
       <ColorPicker
         label="Light Color"
