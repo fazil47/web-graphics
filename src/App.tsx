@@ -68,7 +68,14 @@ function App(): JSX.Element {
   }
 
   if (!isAuthenticated && firebaseAuth && showAuthPage) {
-    return <Authentication firebaseAuth={firebaseAuth} />;
+    return (
+      <Authentication
+        firebaseAuth={firebaseAuth}
+        cancelAuthentication={() => {
+          setShowAuthPage(false);
+        }}
+      />
+    );
   }
 
   return (
