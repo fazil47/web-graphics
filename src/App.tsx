@@ -97,7 +97,7 @@ function App(): JSX.Element {
               <Route path="shadingModels" element={<ShadingModels />} />
               <Route path="illumination" element={<Illumination />} />
               <Route path="textures" element={<Textures />} />
-              <Route path="shaders" element={<Shaders />} />
+              {/* <Route path="shaders" element={<Shaders />} /> */}
               <Route path="misc" element={<Misc />} />
             </Route>
           </Routes>

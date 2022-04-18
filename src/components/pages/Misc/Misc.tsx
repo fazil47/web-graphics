@@ -1,5 +1,5 @@
 import Page from "../../Page";
-import { FractalDemo, RayTracingDemo } from "./MiscDemos";
+import { FractalDemo } from "./MiscDemos";
 
 export default function Misc() {
   return (
@@ -7,8 +7,6 @@ export default function Misc() {
       <h1>Miscellaneous</h1>
       <h2>Fractals</h2>
       <FractalDemo />
-      <h2>Ray Tracing</h2>
-      <RayTracingDemo />
     </Page>
   );
 }

@@ -26,7 +26,7 @@ export default function Sidebar({
           <SidebarContentItem path="shadingModels" name="Shading Models" />
           <SidebarContentItem path="illumination" name="Illumination" />
           <SidebarContentItem path="textures" name="Textures" />
-          <SidebarContentItem path="shaders" name="Shaders" />
+          {/* <SidebarContentItem path="shaders" name="Shaders" /> */}
           <SidebarContentItem path="misc" name="Miscellaneous" />
         </div>
       </div>
