@@ -3,7 +3,8 @@ import { CSGDemo, SweepRepresentationDemo } from "./ModelingDemos";
 
 export default function Modeling() {
   return (
-    <Page pageName="modeling">
+    //<Page pageName="modeling">
+    <Page pageName="modeling" pagePaths={{ next: "/Projection" }}>
       <h1>Modeling</h1>
       {/* <h2>Implicit Surfaces</h2>
       <p>TODO</p>
@@ -15,9 +16,9 @@ export default function Modeling() {
         sweeping a 2D object over a path. For example, a 2D rectangle moved in a
         linear path results in the formation of cuboid. To get a better overview
         of what sweep representation is, lets check the demo below. You can see
-        a small ring but when you sweep it in a circular path using the
-        slider, it leads to the formation of toroid shape. Similarly, we can
-        form cylinder using translational sweep of a circle, prism using a
+        a small ring but when you sweep it in a circular path using the slider,
+        it leads to the formation of toroid shape. Similarly, we can form
+        cylinder using translational sweep of a circle, prism using a
         translational sweep of a triangle.
       </p>
       <SweepRepresentationDemo />
