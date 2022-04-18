@@ -3,7 +3,7 @@ import Page from "../Page";
 
 export default function Home() {
   return (
-    <Page pageName="home" pagePaths={{ next: "modeling" }}>
+    <Page pageName="home" pagePaths={{ next: "/modeling" }}>
       <h1>Learn 3D Computer Graphics</h1>
       <p>
         This is a website for learning about computer graphics, specifically for
