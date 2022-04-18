@@ -3,7 +3,7 @@ import { ReflectionDemo, ShadowDemo } from "./IlluminationDemos";
 
 export default function Illumination() {
   return (
-    <Page pageName="illumination">
+    <Page pageName="illumination" pagePaths={{ prev: "/shadingModels", next: "/textures" }}>
       <h1>Illumination</h1>
       <p>
         In computer graphics, light usually consists of multiple components. The

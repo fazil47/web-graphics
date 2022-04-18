@@ -8,7 +8,7 @@ import {
 
 export default function Projection() {
   return (
-    <Page pageName="projection">
+    <Page pageName="projection" pagePaths={{ prev: "/modeling", next: "/transformations" }}>
       <h1>Projection</h1>
       <h2>Perspective Projection</h2>
       <p>

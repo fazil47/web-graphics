@@ -10,7 +10,7 @@ import {
 
 export default function Transformations() {
   return (
-    <Page pageName="transformations">
+    <Page pageName="transformations" pagePaths={{ prev: "/projection", next: "/shadingModels" }}>
       <h1>Transformations</h1>
       <p>
         The geometric transformations play a vital role in generating images of
