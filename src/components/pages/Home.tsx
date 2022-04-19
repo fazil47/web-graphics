@@ -21,7 +21,8 @@ export default function Home() {
         <a href="https://www.github.com/fazil47">Fazil Babu</a>,{" "}
         <a href="https://www.github.com/Aron-droid">Aron C Anand</a> and{" "}
         <a href="https://www.github.com/Akhilsoe">Akhil BR</a> as a mini-project
-        for semester 6 at CUSAT.
+        for semester 6 at CUSAT. The source code is available on{" "}
+        <a href="https://github.com/fazil47/web-graphics">GitHub</a>.
       </p>
       <p>
         It was made using <a href="https://reactjs.org/">React</a>,{" "}
