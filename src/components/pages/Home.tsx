@@ -6,8 +6,7 @@ export default function Home() {
     <Page pageName="home" pagePaths={{ next: "/modeling" }}>
       <h1>Learn 3D Computer Graphics</h1>
       <p>
-        This is a website for learning about computer graphics, specifically for
-        the semester 5 computer graphics course at CUSAT. If you open the
+        This is a website for learning about computer graphics. If you open the
         sidebar you'll see different pages. Each page contains demos and
         exercises for you to gain a deep understanding of different topics in
         computer graphics.
@@ -16,14 +15,6 @@ export default function Home() {
         Start Learning!
       </Link>
       <h2>About</h2>
-      <p>
-        This project was made by{" "}
-        <a href="https://www.github.com/fazil47">Fazil Babu</a>,{" "}
-        <a href="https://www.linkedin.com/in/aron-anand-6334ab198/">Aron C Anand</a> and{" "}
-        <a href="https://www.linkedin.com/in/akhil-b-r-a04169240/">Akhil BR</a> as a mini-project
-        for semester 6 at CUSAT. The source code is available on{" "}
-        <a href="https://github.com/fazil47/web-graphics">GitHub</a>.
-      </p>
       <p>
         It was made using <a href="https://reactjs.org/">React</a>,{" "}
         <a href="https://threejs.org/">three.js</a> and{" "}
